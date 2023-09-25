@@ -37,7 +37,7 @@ class ApiUserList {
 
 
   //setar a conta principal e receber o user_instance
-  static Future<AuthToken> setSchema({required String userId, required String tenantId, required String personId}) async {
+  static Future<AuthToken> setSchema({required int userId, required int tenantId, required int personId}) async {
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString(AppConstant.keyToken);
@@ -45,7 +45,7 @@ class ApiUserList {
     //setar a conta principal
     Response<String> response = await _dio.post<String>(
       '/v1/usertenant/enter',
-      data: <String, String>{
+      data: <String, int>{
         'userId': userId,
         'tenantId': tenantId,
         'personId': personId,

@@ -265,24 +265,37 @@ class _LoginPageState extends State<LoginPage> {
 
     setState(() => _onSend = true);
     AccountProvider provider = context.read<AccountProvider>();
-    AuthToken auth = await provider.login(
-      email: emailController.text,
-      password: passwordController.text,
-    );
 
-    if (auth.token == null) {
-      NotificationService.showNotification(auth.message ?? 'Oops! Something went wrong...', NotificationType.warning, context);
-    } else {
-      Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(
-          builder: (BuildContext context) {
-            return ListAccountPage();
-          },
-        ),
-        (Route<dynamic> route) => false,
+    // Tenta realizar o login
+    try {
+      AuthToken auth = await provider.login(
+        email: emailController.text,
+        password: passwordController.text,
       );
+
+      if (auth.token == null) {
+        NotificationService.showNotification(auth.message ?? 'Oops! Something went wrong...', NotificationType.warning, context);
+      } else {
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+            builder: (BuildContext context) {
+              return ListAccountPage();
+            },
+          ),
+              (Route<dynamic> route) => false,
+        );
+      }
+      setState(() => _onSend = false);
+
+
+    } catch (e) {
+      NotificationService.showNotification('Oops! Something went wrong...', NotificationType.warning, context);
     }
-    setState(() => _onSend = false);
+
+
+
+
+
   }
 }

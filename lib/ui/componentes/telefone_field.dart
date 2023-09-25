@@ -4,11 +4,13 @@ class TelefoneField extends StatelessWidget {
   final TextEditingController controller;
   final bool obrigatorio;
   final bool enabled;
+  final ValueChanged<String>? onValueChanged; // Adicione esta linha
 
   TelefoneField({
     required this.controller,
     this.obrigatorio = false,
     this.enabled = false,
+    this.onValueChanged,
   });
 
   @override
@@ -23,6 +25,11 @@ class TelefoneField extends StatelessWidget {
         TextField(
           controller: controller,
           enabled: !enabled,
+          onChanged: (value) {
+            if (onValueChanged != null) {
+              onValueChanged!(value);
+            }
+          },
         ),
         SizedBox(height: 20),
       ],

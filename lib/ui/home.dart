@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:KirkDigital/model/person_me.dart';
 import 'package:KirkDigital/ui/componentes/foto_field.dart';
 import 'package:KirkDigital/ui/pessoa/CriarPessoaPage.dart';
 import 'package:KirkDigital/ui/pessoa/ListPage.dart';
@@ -16,6 +17,7 @@ import '../service/notification_service.dart';
 import 'ListAccountPage.dart';
 import 'UserProfilePage.dart';
 import 'auth/login.dart';
+import 'componentes/fotoNova_field.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -29,43 +31,47 @@ class _HomePageState extends State<HomePage> {
   int selectedIndex = 0;
   String nomeDaConta = 'Igreja Demo';
   String get nameConta => nomeDaConta;
-  late List<Permission> permissions;
+  late List<Permission> permissions = [];
   bool showMultiAccounts = false;
-
+  PersonMe personMe = PersonMe(); // Inicialize com um objeto vazio
 
   @override
   void initState() {
     super.initState();
     _loadSavedValues();
+
   }
 
+
+
   Future<void> _loadSavedValues() async {
+    personMe = await context.read<AccountProvider>().getDadosPessoais();
+
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
+
       nomeDaConta = prefs.getString('name_conta')!;
       showMultiAccounts = prefs.getBool('keyMultiConta')!;
       // Verifique se a chave 'permissions' existe
       String? permissionsJson = prefs.getString(AppConstant.keyPermission);
-      //if (permissionsJson != null && permissionsJson.isNotEmpty) {
+
       if (permissionsJson != null) {
         // Decodifique o JSON para uma lista de permissões
         permissions = Permission.permissionsFromJson(json.decode(permissionsJson));
-        NotificationService.showNotification('Conta selecionada com sucesso!', NotificationType.success, context);
-
       }
       else{
         //retornar para a tela de listagem de contas
         NotificationService.showNotification('Você não possui permissão para acessar o sistema, verifique com o administrador!', NotificationType.error, context);
-        Navigator.push(
-          context,
-          MaterialPageRoute(
+        Navigator.push(context, MaterialPageRoute(
             builder: (BuildContext context) {
               return ListAccountPage();
             },
           ),
         );
       }
-    });
+
+      setState(() {
+      });
+
   }
 
   List<MenuItem> buildMenuItems(List<Permission> permissions) {
@@ -129,6 +135,7 @@ class _HomePageState extends State<HomePage> {
     await context.read<AccountProvider>().logout();
     NotificationService.showNotification('Logout realizado com sucesso!', NotificationType.success, context);
 
+
     Navigator.pushAndRemoveUntil(
       context,
       MaterialPageRoute(builder: (BuildContext context) {
@@ -161,9 +168,9 @@ class _HomePageState extends State<HomePage> {
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      FotoField(
-                        name: context.read<AccountProvider>().getMe().name,
-                        imageUrl: context.read<AccountProvider>().getMe().image,
+                      FotoNovaField(
+                        imageUrl: personMe.image,
+                        name: personMe.name,
                       ),
                     ],
                   ),
@@ -173,7 +180,7 @@ class _HomePageState extends State<HomePage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Olá, ${context.read<AccountProvider>().getMe().name}" ?? '',
+                      "Olá, ${personMe.name}" ?? '',
                       style: const TextStyle(
                         fontSize: 19,
                         fontWeight: FontWeight.bold,
@@ -243,10 +250,11 @@ class _HomePageState extends State<HomePage> {
         onTap: (index) {
           setState(() {
             selectedIndex = index;
-            if (index == 1)
+            if (index == 1) {
               Navigator.of(context).push(MaterialPageRoute<void>(
                 builder: (BuildContext context) => UserProfilePage(),
               ));
+            }
           });
         },
         currentIndex: selectedIndex,

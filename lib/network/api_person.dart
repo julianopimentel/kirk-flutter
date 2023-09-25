@@ -35,7 +35,7 @@ class ApiPerson{
 
   static Future<List<SimplesPessoaDto>> getList() async {
     Dio dioInstance = await createDioInstance();
-    Response apiResponse = await dioInstance.get('/v1/person');
+    Response apiResponse = await dioInstance.get('/v1/person/foto');
 
     if (apiResponse.statusCode == 200) {
       // Verifique se a resposta da API foi bem-sucedida (código 200)

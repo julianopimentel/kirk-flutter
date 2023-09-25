@@ -22,6 +22,9 @@ class _PessoaListPageState extends State<PessoaListPage> {
   void _loadData() async {
     PessoaProvider provider = context.read<PessoaProvider>();
     await provider.getList();
+    setState(() {
+
+    });
   }
 
   // Função para exibir um diálogo de confirmação

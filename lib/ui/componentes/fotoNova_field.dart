@@ -3,7 +3,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-class FotoField extends StatefulWidget {
+class FotoNovaField extends StatefulWidget {
   final String? imageUrl;
   final double imageSize;
   final String? name;
@@ -12,8 +12,8 @@ class FotoField extends StatefulWidget {
   final void Function(String?)? onImageSelected; // Atualize a definição
   final String? selectedImageFilePath;
 
-  FotoField({
-    this.imageUrl = '',
+  FotoNovaField({
+    this.imageUrl,
     this.imageSize = 48.0,
     this.name,
     this.fontSize = 24.0,
@@ -26,19 +26,31 @@ class FotoField extends StatefulWidget {
   _FotoFieldState createState() => _FotoFieldState();
 }
 
-class _FotoFieldState extends State<FotoField> {
+class _FotoFieldState extends State<FotoNovaField> {
   final ImagePicker _imagePicker = ImagePicker();
-
   Uint8List? _imageData;
 
   @override
   void initState() {
     super.initState();
-    if (widget.imageUrl != null) {
-      _imageData = _decodeBase64Image(widget.imageUrl!);
+    // Inicialize _imageData com um valor padrão (por exemplo, null)
+    _imageData = null;
+  }
 
+  @override
+  void didUpdateWidget(FotoNovaField oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    // Verifique se widget.imageUrl foi alterado e atualize _imageData
+    if (widget.imageUrl != oldWidget.imageUrl) {
+      _updateImageData();
     }
+  }
+
+  void _updateImageData() {
     setState(() {
+      _imageData = widget.imageUrl != null
+          ? _decodeBase64Image(widget.imageUrl!)
+          : null;
     });
   }
 
@@ -51,7 +63,7 @@ class _FotoFieldState extends State<FotoField> {
           child: ClipOval(
             child: _imageData != null
                 ? Image.memory(
-                    _decodeBase64Image(widget.imageUrl!), // Converte para base64
+                    _imageData!,
                     width: widget.imageSize,
                     height: widget.imageSize,
                     fit: BoxFit.cover,
@@ -88,11 +100,9 @@ class _FotoFieldState extends State<FotoField> {
     );
   }
 
+
   // Função para decodificar a imagem a partir de uma string Base64
   Uint8List _decodeBase64Image(String base64String) {
-    if(base64String.isEmpty) {
-      return Uint8List(0);
-    }
     return Uint8List.fromList(base64.decode(base64String));
   }
 

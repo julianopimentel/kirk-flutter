@@ -70,7 +70,7 @@ class _ListAccountPageState extends State<ListAccountPage> {
             child: Consumer<ListAccountProvider>(
               builder: (context, provider, child) {
                 if (provider.accountList.isEmpty) {
-                  provider.getSchema(); // Chame a função para buscar os dados
+                  provider.getSchema(context); // Chame a função para buscar os dados
                   return Center(child: CircularProgressIndicator());
                 } else {
                   return ListView.builder(
@@ -99,8 +99,8 @@ Widget buildClickableRow(BuildContext context, String itemName, int tenantId, in
   return InkWell(
     onTap: () {
       context.read<ListAccountProvider>().setSchema(
-        tenantId: tenantId.toString(),
-        personId: personId.toString(),
+        tenantId: tenantId,
+        personId: personId,
         name_conta: itemName,
         context: context,
       );

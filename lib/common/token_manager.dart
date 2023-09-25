@@ -8,12 +8,12 @@ class TokenManager {
 
   String? _token;
   String? _user_instance;
-  String? _person_id;
+  int? _person_id;
   String? _name_conta;
 
   String? get token => _token;
   String? get user_instance => _user_instance;
-  String? get person_id => _person_id;
+  int? get person_id => _person_id;
   String? get name_conta => _name_conta;
 
   void setTokenFromJson(String jsonToken) {
@@ -39,7 +39,7 @@ class TokenManager {
   }
 
   //set person_id e name_conta
-  void setSchema(String person_id, String name_conta) {
+  void setSchema(int person_id, String name_conta) {
     _person_id = person_id;
     _name_conta = name_conta;
   }

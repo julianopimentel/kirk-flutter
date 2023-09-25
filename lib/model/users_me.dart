@@ -5,7 +5,7 @@ class UsersMe {
     this.code,
     this.message,
     this.data,
-    this.userId,
+    required this.userId,
     this.name,
     this.email,
     this.roles,
@@ -16,7 +16,7 @@ class UsersMe {
   String? code;
   String? message;
   Data? data;
-  int? userId;
+  int userId;
   String? name;
   String? email;
   String? roles;
@@ -74,7 +74,7 @@ class UsersMe {
     return encoder.convert(toMap());
   }
 
-  int? getUserId() {
+  int getUserId() {
     return userId;
   }
 

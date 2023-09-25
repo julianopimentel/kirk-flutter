@@ -4,12 +4,16 @@ class NomeField extends StatelessWidget {
   final TextEditingController controller;
   final bool obrigatorio;
   final bool enabled;
+  final ValueChanged<String>? onValueChanged; // Adicione esta linha
 
   NomeField({
     required this.controller,
     this.obrigatorio = false,
     this.enabled = false,
+    this.onValueChanged,
   });
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +27,11 @@ class NomeField extends StatelessWidget {
         TextField(
           controller: controller,
           enabled: !enabled,
+          onChanged: (value) {
+            if (onValueChanged != null) {
+              onValueChanged!(value);
+            }
+          },
         ),
         SizedBox(height: 20),
       ],

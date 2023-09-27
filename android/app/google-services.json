@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "140101484711",
+    "project_id": "kirk-9aadd",
+    "storage_bucket": "kirk-9aadd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:140101484711:android:3507b18c112a929f755b82",
+        "android_client_info": {
+          "package_name": "com.example.kirkdigital"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDm9TDFnOYB4wd4vnwsM7OVWK3jTRS5-Hg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

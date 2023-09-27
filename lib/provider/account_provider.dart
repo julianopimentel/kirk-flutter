@@ -3,7 +3,6 @@ import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../common/app_constant.dart';
-import '../common/token_manager.dart';
 import '../model/auth_token.dart';
 import '../model/person_me.dart';
 import '../model/users_me.dart';

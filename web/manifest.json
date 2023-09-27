@@ -1,6 +1,6 @@
 {
-    "name": "cloud_files",
-    "short_name": "cloud_files",
+    "name": "kirkdigital",
+    "short_name": "kirkdigital",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

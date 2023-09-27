@@ -37,6 +37,8 @@ dependencies:
   image_picker:
   permission_handler:
   qr_flutter:
+  firebase_messaging:
+  firebase_core:
   flutter:
     sdk: flutter
 

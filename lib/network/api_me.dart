@@ -69,4 +69,23 @@ class ApiMe {
     }
   }
 
+  static Future<void> saveTokenNotification(
+      {required String tokenNotification}) async {
+    Dio dioInstance = await createDioInstance();
+    Response apiResponse = await dioInstance.post(
+      '/v1/notification',
+      data: {
+        'app_token': tokenNotification,
+      },
+    );
+
+    if (apiResponse.statusCode == 200) {
+      // Verifique se a resposta da API foi bem-sucedida (código 200)
+      return apiResponse.data;
+    } else {
+      // Lidar com erros de resposta da API, se necessário
+      throw Exception('Erro ao salvar o token de notificação');
+    }
+  }
+
 }

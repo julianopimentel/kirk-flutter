@@ -6,4 +6,5 @@ class AppConstant {
   //usuario tem mais de uma conta?
   static const bool keyMultiAccount = false;
   static const String keyDadosPessoais = 'dados_pessoais';
+  static const String tokenNotification = 'token_notification';
 }

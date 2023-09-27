@@ -103,7 +103,8 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      body: Column(
+        body: SingleChildScrollView(
+        child: Column(
         children: [
           Stack(
             children: [
@@ -213,7 +214,7 @@ class _LoginPageState extends State<LoginPage> {
                     height: 20,
                   ),
                   const SizedBox(
-                    height: 200,
+                    height: 150,
                   ),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.end,
@@ -253,7 +254,7 @@ class _LoginPageState extends State<LoginPage> {
               ))
         ],
       ),
-    );
+    ));
   }
 
   Future<void> _login() async {

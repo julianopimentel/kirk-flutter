@@ -53,7 +53,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
       _nameController.text = personMe.name ?? '';
       _phoneController.text = personMe.phone ?? '';
       _emailController.text = personMe.email ?? '';
-      _selectedImageFile = personMe.image ?? '';
+      _selectedImageFile = personMe.image;
       setState(() {
       }); // Atualizar o estado para exibir a imagem
     } catch (error) {

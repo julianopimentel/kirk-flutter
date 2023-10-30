@@ -18,17 +18,12 @@ import '../common/app_constant.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class ListAccountProvider with ChangeNotifier {
-  String? _token;
   List<Account> _accountList = []; // Lista de contas
-
   List<Account> get accountList => _accountList;
 
-  Future<void> init() async {
-    _token = TokenManager().getToken();
-  }
+  Future<void> init() async {}
 
   Future<void> getSchema(context) async {
-
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     try {
@@ -40,30 +35,15 @@ class ListAccountProvider with ChangeNotifier {
 
       _accountList = accounts; // Armazene a lista de contas no provider
 
-
       //possui mais de uma conta?
       if (accounts.length > 1) {
         //salvar o tenantId e personId no shared_preferences
         prefs.setBool('keyMultiConta', true);
-      }
-
-/*      if (accounts.length < 1) {
+      } else {
         //salvar o tenantId e personId no shared_preferences
-        SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.setBool('keyMultiConta', false);
-
-        //utilizar o metodo setSchema para salvar o tenantId e personId do future
-        setSchema(
-          tenantId: accounts[0].tenantId,
-          personId: accounts[0].personId,
-          name_conta: accounts[0].nameConta,
-          context: context
-        );
-      }*/
-
+      }
       notifyListeners(); // Notifique os ouvintes sobre a atualização
-
-
     } catch (error) {
       // Trate os erros, se necessário
       print("Erro ao buscar os dados: $error");
@@ -78,8 +58,7 @@ class ListAccountProvider with ChangeNotifier {
   }) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-
-    String? token = prefs.getString('token');
+    String? token = prefs.getString(AppConstant.keyToken);
     //deixar a permissão vazia
     //pegar o UserId
     UsersMe user = UsersMe.fromJwtToken(token!);
@@ -93,21 +72,19 @@ class ListAccountProvider with ChangeNotifier {
       ); // Obtenha a lista de contas
 
       //salvar o tenantId e personId no shared_preferences
-      prefs.setInt('tenantId', tenantId);
-      prefs.setInt('personId', personId);
-      prefs.setString('name_conta', name_conta);
+      prefs.setInt(AppConstant.keyTenantId, tenantId);
+      prefs.setInt(AppConstant.keyPersonId, personId);
+      prefs.setString(AppConstant.keyNameConta, name_conta);
 
       //consultar os dados pessoais
       PersonMe personMe = await ApiMe.getMe();
       //salvar os dados pessoais no shared_preferences
-      prefs.setString('dadosPessoais', personMe.toJson().toString());
+      prefs.setString(AppConstant.keyDadosPessoais, personMe.toJson().toString());
 
       //salvar o token_notification no shared_preferences
       setupToken();
 
       notifyListeners(); // Notifique os ouvintes sobre a atualização
-      NotificationService.showNotification('Conta selecionada com sucesso!', NotificationType.success, context);
-
       // Redirecione para a tela inicial
       Navigator.pushReplacement(
         context,
@@ -117,9 +94,9 @@ class ListAccountProvider with ChangeNotifier {
 
     } catch (error) {
       //remover o name_conta e persoId
-      prefs.remove('tenantId');
-      prefs.remove('personId');
-      prefs.remove('name_conta');
+      prefs.remove(AppConstant.keyTenantId);
+      prefs.remove(AppConstant.keyPersonId);
+      prefs.remove(AppConstant.keyNameConta);
       // Trate os erros, se necessário
       print("Erro ao buscar os dados: $error");
       NotificationService.showNotification('Erro ao selecionar a conta!', NotificationType.error, context);
@@ -128,7 +105,6 @@ class ListAccountProvider with ChangeNotifier {
 
   Future<void> setupToken() async {
     Stream<String> _tokenStream;
-
     requestNotificationPermission(); // Solicitar permissão de notificação ao iniciar o aplicativo.
 
     try {
@@ -140,11 +116,8 @@ class ListAccountProvider with ChangeNotifier {
       FirebaseMessaging messaging = FirebaseMessaging.instance;
       String? token = await messaging.getToken();
 
-      print('FCM Token: $token');
-
       _tokenStream = FirebaseMessaging.instance.onTokenRefresh;
       _tokenStream.listen((token) async {
-        print('FCM Token: $token');
         SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.setString(AppConstant.tokenNotification, token);
       });
@@ -167,8 +140,7 @@ class ListAccountProvider with ChangeNotifier {
   }
 
   Future<void> saveTokenToDatabase(String token) async {
-    // Você pode implementar o envio do token para o servidor aqui.
-    print('token: $token');
-
+    //identificar o tipo de plataforma
+    await ApiMe.saveTokenNotification(app_id: token);
   }
 }

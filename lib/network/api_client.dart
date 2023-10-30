@@ -19,6 +19,8 @@ class ApiClient {
     required String email,
     required String password,
   }) async {
+
+    print('Destino API:' + AppConstant.baseUrl);
     Response<String> response = await _dio.post<String>(
       '/auth/signin',
       //dados dentro do body

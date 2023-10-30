@@ -22,7 +22,7 @@ class ApiUserList {
   //buscar lista com as contas do usuario
   static Future<List<Map<String, dynamic>>> getSchema() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? token = prefs.getString('token');
+    String? token = prefs.getString(AppConstant.keyToken);
     Response<String> response = await _dio.get(
       '/v1/usertenant',
       options: Options(
@@ -31,6 +31,10 @@ class ApiUserList {
         },
       ),
     );
+    if(response.data == "") {
+      return [];
+    }
+
     List<dynamic> jsonData = json.decode(response.data ?? '{}');
     return jsonData.cast<Map<String, dynamic>>();
   }

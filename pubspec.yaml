@@ -39,6 +39,7 @@ dependencies:
   qr_flutter:
   firebase_messaging:
   firebase_core:
+  shimmer:
   flutter:
     sdk: flutter
 

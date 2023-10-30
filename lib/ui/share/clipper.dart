@@ -1,11 +1,14 @@
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../provider/ThemeProvider.dart';
 class RPSCustomPainter extends CustomPainter{
   @override
   void paint(Canvas canvas,Size size){
     Paint paint0 =Paint()
-    //azul forte
-      ..color = const Color(0xff0f4c81)
+    //grey forte
+      ..color = const Color.fromARGB(255, 39, 39, 42)
       ..style =PaintingStyle.fill
       ..strokeWidth = 1;
 
@@ -19,7 +22,7 @@ class RPSCustomPainter extends CustomPainter{
 
 
     canvas.drawPath(path0,paint0);
-    ;
+
   }
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate){

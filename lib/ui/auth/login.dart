@@ -1,11 +1,10 @@
-import 'package:KirkDigital/ui/ListAccountPage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../model/auth_token.dart';
+import '../../provider/ThemeProvider.dart';
 import '../../provider/account_provider.dart';
 import '../../service/notification_service.dart';
-import '../home.dart';
 import '../share/clipper.dart';
 import '../share/clipper2.dart';
 import 'register.dart';
@@ -101,7 +100,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-
+    final themeProvider = Provider.of<ThemeProvider>(context);
     return Scaffold(
         body: SingleChildScrollView(
         child: Column(
@@ -113,7 +112,7 @@ class _LoginPageState extends State<LoginPage> {
                 painter: RPSCustomPainter(),
               ),
               Positioned(
-                top: 16,
+                top: 26,
                 right: -5,
                 child: CustomPaint(
                   size: Size(MediaQuery.of(context).size.width, 300),
@@ -164,12 +163,12 @@ class _LoginPageState extends State<LoginPage> {
                   const SizedBox(
                     height: 20,
                   ),
-                  const Text(
+                  Text(
                     'Esqueceu sua senha?',
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
-                      color: Colors.blue,
+                      color: themeProvider.currentTheme.primaryColor,
                     ),
                   ),
                   const SizedBox(
@@ -180,7 +179,7 @@ class _LoginPageState extends State<LoginPage> {
                       _login(); // Ação a ser executada ao clicar no botão
                     },
                     style: ElevatedButton.styleFrom(
-                      primary: Color(0xff0f4c81), // Cor de fundo do botão
+                      primary: themeProvider.currentTheme.primaryColor,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30),
                       ),
@@ -237,12 +236,12 @@ class _LoginPageState extends State<LoginPage> {
                                   MaterialPageRoute(
                                       builder: (_) => RegisterPage()));
                             },
-                            child: const Text(
+                            child: Text(
                               ' Cadastre-se',
                               style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w400,
-                                color: Colors.blue,
+                                color: themeProvider.currentTheme.primaryColor,
                               ),
                             ),
                           ),
@@ -263,40 +262,24 @@ class _LoginPageState extends State<LoginPage> {
       NotificationService.showNotification('Por favor, preencha email e senha.', NotificationType.warning, context);
       return;
     }
-
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() => _onSend = true);
     AccountProvider provider = context.read<AccountProvider>();
 
     // Tenta realizar o login
     try {
-      AuthToken auth = await provider.login(
+       await provider.loginNovo(
         email: emailController.text,
         password: passwordController.text,
+        context: context,
       );
 
-      if (auth.token == null) {
-        NotificationService.showNotification(auth.message ?? 'Oops! Something went wrong...', NotificationType.warning, context);
-      } else {
-        Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(
-            builder: (BuildContext context) {
-              return ListAccountPage();
-            },
-          ),
-              (Route<dynamic> route) => false,
-        );
-      }
+      // Se o login for realizado com sucesso, redireciona para a tela de home
       setState(() => _onSend = false);
-
-
     } catch (e) {
-      NotificationService.showNotification('Oops! Something went wrong...', NotificationType.warning, context);
+      NotificationService.showNotification('Oops! Verifique sua conexão com a internet e tente novamente.'
+          , NotificationType.error, context);
+
     }
-
-
-
-
-
   }
 }

@@ -115,7 +115,7 @@ Widget buildClickableRow(BuildContext context, String itemName, int tenantId, in
           children: [
             Icon(
               Icons.layers_outlined,
-              color: Colors.blue[200],
+              color: Colors.grey,
             ),
             const SizedBox(width: 12),
             Text(

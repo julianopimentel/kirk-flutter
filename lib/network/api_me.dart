@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../common/app_constant.dart';
@@ -10,7 +11,7 @@ class ApiMe {
   static Future<Dio> createDioInstance() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? userInstance = prefs.getString(AppConstant.keyUserInstance);
-    String? token = prefs.getString('token');
+    String? token = prefs.getString(AppConstant.keyToken);
 
     final dio = Dio(
       BaseOptions(
@@ -61,7 +62,6 @@ class ApiMe {
 
     if (apiResponse.statusCode == 200) {
       // Verifique se a resposta da API foi bem-sucedida (código 200)
-
       return apiResponse.data;
     } else {
       // Lidar com erros de resposta da API, se necessário
@@ -69,17 +69,19 @@ class ApiMe {
     }
   }
 
-  static Future<void> saveTokenNotification(
-      {required String tokenNotification}) async {
+  static Future<void> saveTokenNotification({required String app_id}) async {
+
+    String? platform = await getPlatform();
     Dio dioInstance = await createDioInstance();
-    Response apiResponse = await dioInstance.post(
-      '/v1/notification',
+    Response apiResponse = await dioInstance.put(
+      '/v1/app/notification',
       data: {
-        'app_token': tokenNotification,
+        'app_id': app_id,
+        'platform': platform,
       },
     );
 
-    if (apiResponse.statusCode == 200) {
+    if (apiResponse.statusCode == 202) {
       // Verifique se a resposta da API foi bem-sucedida (código 200)
       return apiResponse.data;
     } else {
@@ -88,4 +90,46 @@ class ApiMe {
     }
   }
 
+  //metodo para retornar qual a plataforma do dispositivo
+  static Future<String?> getPlatform() async {
+    String? platform;
+
+    switch (defaultTargetPlatform) {
+      case TargetPlatform.android:
+        platform = 'ANDROID';
+        break;
+      case TargetPlatform.iOS:
+        platform = 'IOS';
+        break;
+      case TargetPlatform.macOS:
+        platform = 'MACOS';
+        break;
+      case TargetPlatform.windows:
+        platform = 'WINDOWS';
+        break;
+      case TargetPlatform.linux:
+        platform = 'LINUX';
+        break;
+      default:
+        null;
+    }
+    return platform;
+  }
+
+  static Future<void> removeToken({
+    required String app_id}) async {
+
+    String? platform = await getPlatform();
+
+    Dio dioInstance = await createDioInstance();
+    Response apiResponse = await dioInstance.delete(
+      '/v1/app/notification',
+      data: {
+        'app_id': app_id,
+        'platform': platform,
+      },
+    );
+
+   return apiResponse.data;
+  }
 }

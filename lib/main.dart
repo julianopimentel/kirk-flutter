@@ -1,3 +1,4 @@
+import 'package:KirkDigital/provider/ThemeProvider.dart';
 import 'package:KirkDigital/provider/account_provider.dart';
 import 'package:KirkDigital/provider/list_account.dart';
 import 'package:KirkDigital/provider/pessoa_provider.dart';
@@ -9,19 +10,22 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:provider/provider.dart';
 import 'dart:io'; // Importe a classe Platform do pacote dart:io
 import 'ui/splash/splash_page.dart';
+import 'package:flutter/services.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-
   // Crie canais de notificação no Android
   _createNotificationChannels();
-
-
   // Inicialize o Firebase Messaging
   FirebaseMessaging.onBackgroundMessage(_backgroundMessageHandler);
-
-  runApp(const MainApp());
+  // Configure a cor da barra de status
+  runApp(
+    ChangeNotifierProvider(
+      create: (_) => ThemeProvider(),
+      child: MainApp(),
+    ),
+  );
 }
 
 // Função para manipular mensagens em segundo plano
@@ -39,7 +43,6 @@ Future<void> _backgroundMessageHandler(RemoteMessage message) async {
     icon: '@mipmap/ic_launcher'
   );
 
-
   // Crie uma instância do NotificationDetails
   const NotificationDetails platformChannelSpecifics =
   NotificationDetails(android: androidPlatformChannelSpecifics);
@@ -54,8 +57,6 @@ Future<void> _backgroundMessageHandler(RemoteMessage message) async {
     platformChannelSpecifics,
     payload: message.data['payload'],
   );
-
-
 
 }
 
@@ -78,11 +79,23 @@ void _createNotificationChannels() {
   }
 }
 
+void setStatusBarColor() {
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    statusBarColor: Colors.grey, // Cor da barra de status
+    statusBarBrightness: Brightness.light, // Brilho do texto da barra de status
+    statusBarIconBrightness: Brightness.light, // Cor dos ícones da barra de status (por exemplo, ícone de bateria)
+  ));
+}
+
 class MainApp extends StatelessWidget {
   const MainApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+
+    themeProvider.switchTheme("red");
+
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => AccountProvider()),
@@ -90,12 +103,23 @@ class MainApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => VisitorProvider()),
         ChangeNotifierProvider(create: (_) => PessoaProvider())
       ],
-      child: const MaterialApp(
-        home: SplashPage(),
+      child: MaterialApp(
+        theme: ThemeData(
+          primaryColor: themeProvider.currentTheme.primaryColor,
+          iconTheme: IconThemeData(
+            color: themeProvider.currentTheme.iconColor,
+          ),
+          appBarTheme: AppBarTheme(
+            backgroundColor: themeProvider.currentTheme.primaryColor,
+            iconTheme: IconThemeData(
+              color: themeProvider.currentTheme.iconColor,
+            ),
+          ),
+        ),
+        home: const SplashPage(),
         debugShowCheckedModeBanner: false,
       ),
     );
   }
-
 }
 

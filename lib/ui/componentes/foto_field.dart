@@ -2,6 +2,9 @@ import 'dart:convert';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
+
+import '../../provider/ThemeProvider.dart';
 
 class FotoField extends StatefulWidget {
   final String? imageUrl;
@@ -36,7 +39,6 @@ class _FotoFieldState extends State<FotoField> {
     super.initState();
     if (widget.imageUrl != null) {
       _imageData = _decodeBase64Image(widget.imageUrl!);
-
     }
     setState(() {
     });
@@ -44,6 +46,7 @@ class _FotoFieldState extends State<FotoField> {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     return Column(
       children: [
         GestureDetector(
@@ -59,15 +62,15 @@ class _FotoFieldState extends State<FotoField> {
                 : Container(
                     width: widget.imageSize,
                     height: widget.imageSize,
-                    decoration: const BoxDecoration(
+                    decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: Colors.blue, // Cor de fundo para o círculo
+                      color: themeProvider.currentTheme.accentColor,
                     ),
                     child: Center(
                       child: Text(
                         widget.name != null && widget.name!.isNotEmpty
                             ? widget.name![0]
-                            : '?',
+                            : '',
                         style: TextStyle(
                           color: Colors.white, // Cor do texto
                           fontSize: widget.fontSize, // Tamanho da fonte
@@ -82,7 +85,11 @@ class _FotoFieldState extends State<FotoField> {
         if (widget.isEditable!)
           ElevatedButton(
             onPressed: _pickImage,
-            child: Text('Alterar Foto'),
+            style: ElevatedButton.styleFrom(
+              primary: themeProvider.currentTheme.accentColor,
+            ),
+            child: Text('Alterar foto'),
+
           ),
       ],
     );

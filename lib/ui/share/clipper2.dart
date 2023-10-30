@@ -5,8 +5,8 @@ class PSCustomPainter extends CustomPainter{
   @override
   void paint(Canvas canvas,Size size){
     Paint paint0 =Paint()
-    //azul mais claaro
-      ..color = const Color.fromARGB(255, 0, 122, 255)
+    //grey mais claro
+      ..color = const Color.fromARGB(173, 39, 39, 42)
       ..style =PaintingStyle.fill
       ..strokeWidth = 1;
 
@@ -20,7 +20,7 @@ class PSCustomPainter extends CustomPainter{
 
 
     canvas.drawPath(path0,paint0);
-    ;
+
   }
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate){

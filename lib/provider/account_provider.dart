@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:KirkDigital/network/api_me.dart';
 import 'package:KirkDigital/provider/list_account.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -5,6 +7,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:jwt_decode/jwt_decode.dart';
 
 import '../common/app_constant.dart';
 import '../model/auth_token.dart';
@@ -15,15 +18,18 @@ import '../network/api_UserList.dart';
 import '../network/api_client.dart';
 import '../service/notification_service.dart';
 import '../ui/ListAccountPage.dart';
+import '../ui/auth/login.dart';
 
 class AccountProvider with ChangeNotifier {
   String? _token;
+  String? _refreshToken;
   String? _userInstance;
   String? _dadosDaPessoa;
   late final SharedPreferences _preferences;
   List<Account> _accountList = []; // Lista de contas
 
   String? get token => _token;
+  String? get refreshToken => _refreshToken;
   String? get userInstance => _userInstance;
   String? get dadosDaPessoa => _dadosDaPessoa;
   List<Account> get accountList => _accountList;
@@ -73,6 +79,7 @@ class AccountProvider with ChangeNotifier {
       password: password,
     );
     _token = auth.token;
+    _refreshToken = auth.refreshToken;
 
     if (auth.token == null) {
       NotificationService.showNotification(auth.message ?? 'Seu email ou senha estão incorretos', NotificationType.warning, context);
@@ -81,6 +88,8 @@ class AccountProvider with ChangeNotifier {
 
     //salvar o token no shared_preferences
     await _preferences.setString(AppConstant.keyToken, auth.token!);
+    await _preferences.setString(AppConstant.keyRefreshToken, auth.refreshToken!);
+
 
     //verificar quis contas o usuario tem acesso
     List<Map<String, dynamic>> jsonList =
@@ -128,21 +137,6 @@ class AccountProvider with ChangeNotifier {
     return user;
   }
 
-  Future<PersonMe> getDadosPessoais() async {
-    try {
-      PersonMe personMe = await ApiMe.getMe();
-
-      notifyListeners();
-      return personMe;
-    } catch (error) {
-
-      logout();
-      notifyListeners();
-
-      throw Exception('Erro ao buscar os dados');
-    }
-  }
-
   Future<PersonMe> putDadosPessoais({
     required String name,
     required String phone,
@@ -164,15 +158,104 @@ class AccountProvider with ChangeNotifier {
   }
 
 
+  Future<PersonMe> getDadosPessoais(BuildContext context) async {
+    try {
+      // Verifique se o token ainda é válido
+      if (await isTokenValid()) {
+        // Token válido, obtenha os dados pessoais
+        PersonMe personMe = await ApiMe.getMe();
+        notifyListeners();
+        return personMe;
+      } else {
+        // Token não é válido, faça o refresh do token
+        await refreshTokenConsulta(context);
+
+        // Após o refresh, tente novamente obter os dados pessoais
+        PersonMe refreshedPersonMe = await ApiMe.getMe();
+        notifyListeners();
+        return refreshedPersonMe;
+      }
+    } catch (error) {
+      Navigator.pushAndRemoveUntil(
+        context as BuildContext,
+        MaterialPageRoute(
+          builder: (BuildContext context) {
+            return LoginPage();
+          },
+        ),
+            (Route<dynamic> route) => false,
+      );
+      NotificationService.showNotification('Faça o login novamente', NotificationType.warning, context);
+      throw Exception('Erro ao obter os dados pessoais, saindo do app');
+
+    }
+  }
+
+  Future<void> refreshTokenConsulta(context) async {
+    // Obtenha o refreshToken do SharedPreferences
+    String? refreshToken = _preferences.getString(AppConstant.keyRefreshToken);
+    String? token = _preferences.getString(AppConstant.keyToken);
+
+    // Verifique se há refreshToken disponível
+    if (refreshToken == null) {
+      // Tratar a ausência de refreshToken (por exemplo, solicitar login novamente)
+      return;
+    }
+
+    try {
+      // Faça uma solicitação para renovar o token usando o refreshToken
+      TokenModal response = await ApiClient.refreshToken(refreshToken: refreshToken, token: token);
+
+      if (response.statusCode == 200) {
+        _token = response.token;
+        _refreshToken = response.refreshToken;
+        await _preferences.setString(AppConstant.keyToken, response.token!);
+        await _preferences.setString(AppConstant.keyRefreshToken, response.refreshToken!);
+        notifyListeners();
+      } else {
+        //faça o logout
+        logout();
+        //ir para a tela de login
+        Navigator.pushAndRemoveUntil(
+          context as BuildContext,
+          MaterialPageRoute(
+            builder: (BuildContext context) {
+              return LoginPage();
+            },
+          ),
+              (Route<dynamic> route) => false,
+        );
+        // Tratar o erro na renovação do token (por exemplo, solicitar login novamente)
+        NotificationService.showNotification('Sua sessão expirou, faça o login novamente', NotificationType.warning, context);
+      }
+    } catch (error) {
+      NotificationService.showNotification('Verifique sua conexão de internet!', NotificationType.warning, context);
+      Navigator.pushAndRemoveUntil(
+        context as BuildContext,
+        MaterialPageRoute(
+          builder: (BuildContext context) {
+            return LoginPage();
+          },
+        ),
+            (Route<dynamic> route) => false,
+      );
+    }
+  }
+
+
   Future<void> logout() async {
-    String? token = await FirebaseMessaging.instance.getToken();
-    await ApiMe.removeToken(app_id: token!);
-    //remover o token do firebase
+    String? tokenFirebase = await FirebaseMessaging.instance.getToken();
+    String? token = _preferences.getString(AppConstant.keyToken);
+    //remover o token no servidor
+    await ApiClient.logout(token: token!);
+    //
+    await ApiMe.removeToken(app_id: tokenFirebase!);
     //remover o token do shared preferences
     await _preferences.remove(AppConstant.keyToken);
     await _preferences.remove(AppConstant.keyUserInstance);
     await _preferences.remove(AppConstant.keyDadosPessoais);
     await _preferences.remove(AppConstant.keyPermission);
+    await _preferences.remove(AppConstant.keyRefreshToken);
 
     await _preferences.remove(AppConstant.keyPersonId);
     await _preferences.remove(AppConstant.keyNameConta);
@@ -183,4 +266,36 @@ class AccountProvider with ChangeNotifier {
 
     return;
   }
+
+  Future<bool> isTokenValid() {
+    // Obtenha o token do SharedPreferences
+    String? token = _preferences.getString(AppConstant.keyToken);
+
+    // Verifique se há token disponível
+    if (token == null) {
+    // Tratar a ausência de token (por exemplo, solicitar login novamente)
+    return Future.value(false);
+    }
+
+    try {
+    Map<String, dynamic> decodedToken = Jwt.parseJwt(token);
+
+    // Verifique o tempo de uso do token (1 hora neste exemplo)
+    DateTime issuedAt = DateTime.fromMillisecondsSinceEpoch(decodedToken['iat'] * 1000);
+    DateTime now = DateTime.now();
+    Duration tokenUsageDuration = now.difference(issuedAt);
+
+        if (tokenUsageDuration.inHours >= 6) {
+          // O token foi usado por mais de 6 hora, renove o token
+          return Future.value(false);
+          } else {
+          // O token é válido
+          return Future.value(true);
+        }
+    } catch (error) {
+      // Tratar o erro na validação do token
+      return Future.value(false);
+    }
+  }
+
 }

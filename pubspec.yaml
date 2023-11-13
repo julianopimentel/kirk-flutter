@@ -33,13 +33,13 @@ dependencies:
   flutter_local_notifications:
   provider:
   shared_preferences:
-  jwt_decoder:
   image_picker:
   permission_handler:
   qr_flutter:
   firebase_messaging:
   firebase_core:
   shimmer:
+  jwt_decode:
   flutter:
     sdk: flutter
 

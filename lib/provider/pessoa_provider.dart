@@ -47,8 +47,7 @@ class PessoaProvider with ChangeNotifier {
   Future<void> create(Pessoa pessoa, BuildContext context) async {
     try {
       _isLoading = true; // Define isLoading como verdadeiro ao iniciar a operação
-      Pessoa responseData = await ApiPerson.create(pessoa);
-
+      await ApiPerson.create(pessoa);
       // GetList para atualizar a lista de pessoas
       await getList();
 

@@ -6,21 +6,30 @@ class AuthToken {
     this.message,
     this.data,
     this.token,
+    this.refreshToken,
+    this.tokenType,
     this.userEmail,
-    this.userName,
+    this.userId,
     this.userInstance,
+    this.userRole,
   });
 
   String? code;
   String? message;
   Data? data;
   String? token;
+  String? refreshToken;
+  String? tokenType;
   String? userEmail;
+  int? userId;
   String? userName;
-  String? userDisplayName;
   String? userInstance;
+  List<String>? userRole;
 
+  //login normal
   factory AuthToken.fromJson(String str) => AuthToken.fromMap(json.decode(str));
+  //token e user_instance
+  factory AuthToken.fromJsonTokenUser(String str) => AuthToken.fromTokenUserMap(json.decode(str));
 
   String toJson() => json.encode(toMap());
 
@@ -28,20 +37,34 @@ class AuthToken {
     code: json["code"],
     message: json["message"],
     data: Data.fromMap(json["data"] ?? {}),
-    token: json["token"],
+    token: json["accessToken"],
+    refreshToken: json["refreshToken"],
+    tokenType: json["tokenType"],
+    userId: json["id"],
+    userEmail: json["email"],
     userInstance: json["user_instance"],
-    userEmail: json["user_email"],
-    userName: json["user_name"],
+    userRole: List<String>.from(json["roles"].map((x) => x)),
+  );
+
+  factory AuthToken.fromTokenUserMap(Map<String, dynamic> json) => AuthToken(
+    code: json["code"],
+    message: json["message"],
+    data: Data.fromMap(json["data"] ?? {}),
+    userInstance: json["user_instance"],
+    refreshToken: json["refreshToken"],
   );
 
   Map<String, dynamic> toMap() => {
     "code": code,
     "message": message,
     "data": data?.toMap(),
-    "token": token,
-    "user_email": userEmail,
-    "user_nicename": userName,
+    "accessToken": token,
+    "refreshToken": refreshToken,
+    "tokenType": tokenType,
+    "id": userId,
+    "email": userEmail,
     "user_instance": userInstance,
+    "roles": userRole,
   };
   @override
   String toString() {
@@ -67,5 +90,40 @@ class Data {
 
   Map<String, dynamic> toMap() => {
     "status": status,
+  };
+}
+
+//class simples do refresh token e token
+class TokenModal {
+  TokenModal({
+    this.statusCode,
+    this.message,
+    this.data,
+    this.token,
+    this.refreshToken,
+  });
+
+  String? token;
+  String? refreshToken;
+  int? statusCode;
+  String? message;
+  Data? data;
+
+  factory TokenModal.fromJson(String str) => TokenModal.fromMap(json.decode(str));
+
+  String toJson() => json.encode(toMap());
+
+  factory TokenModal.fromMap(Map<String, dynamic> json) => TokenModal(
+    token: json["accessToken"],
+    refreshToken: json["refreshToken"],
+    statusCode: json["statusCode"],
+    message: json["message"],
+  );
+
+  Map<String, dynamic> toMap() => {
+    "accessToken": token,
+    "refreshToken": refreshToken,
+    "statusCode": statusCode,
+    "message": message,
   };
 }

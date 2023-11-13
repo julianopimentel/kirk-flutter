@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'dart:async';
 
 import '../AppTheme.dart';
 
@@ -53,8 +51,6 @@ class ThemeProvider extends ChangeNotifier {
 
     setTheme(currentTheme);
     _currentTheme = currentTheme;
-
-    notifyListeners();
   }
 
 
@@ -69,6 +65,5 @@ class ThemeProvider extends ChangeNotifier {
 
   void setTheme(AppTheme theme) {
     _currentTheme = theme;
-    notifyListeners();
-  }
+    }
   }

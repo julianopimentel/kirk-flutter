@@ -115,6 +115,22 @@ class MainApp extends StatelessWidget {
               color: themeProvider.currentTheme.iconColor,
             ),
           ),
+          floatingActionButtonTheme: FloatingActionButtonThemeData(
+              backgroundColor: themeProvider.currentTheme.primaryColor,
+              foregroundColor: themeProvider.currentTheme.iconColor,
+          ),
+          elevatedButtonTheme: ElevatedButtonThemeData(
+              style: ElevatedButton.styleFrom(
+                primary: themeProvider.currentTheme.primaryColor,
+                onPrimary: themeProvider.currentTheme.iconColor,
+              ),
+            ),
+          outlinedButtonTheme: OutlinedButtonThemeData(
+            style: OutlinedButton.styleFrom(
+              primary: themeProvider.currentTheme.primaryColor,
+              onSurface: themeProvider.currentTheme.iconColor,
+            ),
+          ),
         ),
         home: const SplashPage(),
         debugShowCheckedModeBanner: false,

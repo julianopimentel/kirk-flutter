@@ -262,7 +262,6 @@ class _LoginPageState extends State<LoginPage> {
       NotificationService.showNotification('Por favor, preencha email e senha.', NotificationType.warning, context);
       return;
     }
-    SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() => _onSend = true);
     AccountProvider provider = context.read<AccountProvider>();
 

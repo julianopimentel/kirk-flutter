@@ -14,7 +14,6 @@ class CustomElevatedButton extends StatelessWidget {
    return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-        primary: Colors.blue,
         minimumSize: Size(150, 50), // Define o tamanho mínimo do botão
       ),
       child: Text(

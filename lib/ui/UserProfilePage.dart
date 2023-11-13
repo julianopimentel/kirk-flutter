@@ -4,12 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../model/person_me.dart';
-import '../model/users_me.dart';
 import '../provider/account_provider.dart';
-import 'componentes/data_field.dart';
 import 'componentes/email_field.dart';
 import 'componentes/fotoNova_field.dart';
-import 'componentes/foto_field.dart';
 import 'componentes/nome_field.dart';
 import 'componentes/telefone_field.dart';
 
@@ -48,7 +45,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
   Future<void> _loadUserData() async {
     try {
       // Obter os dados pessoais do usuário usando o método assíncrono
-      PersonMe personMe = await context.read<AccountProvider>().getDadosPessoais();
+      PersonMe personMe = await context.read<AccountProvider>().getDadosPessoais(context);
       // Preencher os controladores de texto com os dados obtidos
       _nameController.text = personMe.name ?? '';
       _phoneController.text = personMe.phone ?? '';

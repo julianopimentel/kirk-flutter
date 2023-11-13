@@ -7,29 +7,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../common/app_constant.dart';
 import '../common/token_manager.dart';
 import '../model/auth_token.dart';
+import '../service/DioService.dart';
 
 class ApiUserList {
-  static final Dio _dio = Dio(
-    BaseOptions(
-      baseUrl: AppConstant.baseUrl,
-      responseType: ResponseType.plain,
-      validateStatus: (int? code) {
-        return true;
-      },
-    ),
-  );
-
   //buscar lista com as contas do usuario
   static Future<List<Map<String, dynamic>>> getSchema() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? token = prefs.getString(AppConstant.keyToken);
-    Response<String> response = await _dio.get(
+    Dio dioInstance = DioService.dioInstance;
+    Response<String> response = await dioInstance.get(
       '/v1/usertenant',
-      options: Options(
-        headers: <String, String>{
-          'authorization': 'Bearer $token',
-        },
-      ),
     );
     if(response.data == "") {
       return [];
@@ -42,24 +27,17 @@ class ApiUserList {
 
   //setar a conta principal e receber o user_instance
   static Future<AuthToken> setSchema({required int userId, required int tenantId, required int personId}) async {
-
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? token = prefs.getString(AppConstant.keyToken);
-
+    Dio dioInstance = DioService.dioInstance;
     //setar a conta principal
-    Response<String> response = await _dio.post<String>(
+    Response<String> response = await dioInstance.post<String>(
       '/v1/usertenant/enter',
       data: <String, int>{
         'userId': userId,
         'tenantId': tenantId,
         'personId': personId,
       },
-      options: Options(
-        headers: <String, String>{
-          'authorization': 'Bearer $token',
-        })
     );
-
     //salvar o user_instance no shared_preferences
     TokenManager().setUserInstance(response.data ?? '{}');
     String userInstance = TokenManager().getUserInstance() ?? '';
@@ -68,14 +46,8 @@ class ApiUserList {
     //buscar as permissoes do usuario
     // Fazer a solicitação da API e processar os dados
     try {
-      Response<String> responseData = await _dio.get<String>(
+      Response<String> responseData = await dioInstance.get<String>(
         '/v1/permission',
-        options: Options(
-          headers: <String, String>{
-            'authorization': 'Bearer $token',
-            'user_instance': userInstance,
-          },
-        ),
       );
 
       SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -108,6 +80,6 @@ class ApiUserList {
       // Trate os erros, se necessário
       print("Erro ao buscar as permissões: $error");
     }
-    return AuthToken.fromJson(response.data ?? '{}');
+    return AuthToken.fromJsonTokenUser(response.data ?? '{}');
   }
 }

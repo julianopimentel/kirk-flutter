@@ -58,4 +58,31 @@ class ApiClient {
     return AuthToken.fromJson(response.data ?? '{}');
   }
 
+  static Future<TokenModal> refreshToken({required String refreshToken, String? token}) async {
+    Response<String> response = await _dio.post<String>(
+      '/auth/refreshtoken',
+      data: <String, String>{
+        'refreshToken': refreshToken,
+      },
+      options: Options(
+        headers: <String, String>{
+          'authorization': 'Bearer $token',
+        },
+      ),
+    );
+    return TokenModal.fromJson(response.data ?? '{}');
+  }
+
+  static Future<void> logout({
+    required String token}) async {
+    Response apiResponse = await _dio.post<String>(
+      '/auth/signout',
+      options: Options(
+        headers: <String, String>{
+          'authorization': 'Bearer $token',
+        },
+      ),
+    );
+    return apiResponse.data;
+  }
 }

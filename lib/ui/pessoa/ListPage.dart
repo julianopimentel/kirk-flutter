@@ -22,9 +22,6 @@ class _PessoaListPageState extends State<PessoaListPage> {
   void _loadData() async {
     PessoaProvider provider = context.read<PessoaProvider>();
     await provider.getList();
-    setState(() {
-
-    });
   }
 
   // Função para exibir um diálogo de confirmação
@@ -57,8 +54,11 @@ class _PessoaListPageState extends State<PessoaListPage> {
                 // Exclua o visitante e feche o diálogo
                 provider.delete(pessoa.id!, context);
                 // Atualize a lista e notifique os ouvintes
-                //provider.getList();
+                provider.getList();
+                //reload the list
+
                 Navigator.of(context).pop();
+                setState(() {});
               },
             ),
           ],

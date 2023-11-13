@@ -6,31 +6,14 @@ import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../common/app_constant.dart';
+import '../service/DioService.dart';
 
 class ApiVisitante{
-  static final Dio _dio = Dio(
-    BaseOptions(
-      baseUrl: AppConstant.baseUrl,
-      responseType: ResponseType.plain,
-      validateStatus: (int? code) {
-        return true;
-      },
-    ),
-  );
-
   static Future<List<Visitor>> getList() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? userInstance = prefs.getString(AppConstant.keyUserInstance);
-    String? token = prefs.getString('token');
+    Dio dioInstance = DioService.dioInstance;
 
-    Response<String> apiResponse = await _dio.get<String>(
-      '/v1/visitor/all', // Substitua pelo endpoint correto da API
-      options: Options(
-        headers: <String, String>{
-          'authorization': 'Bearer $token',
-          'user_instance': userInstance!,
-        },
-      ),
+    Response<String> apiResponse = await dioInstance.get<String>(
+      '/v1/visitor/all',
     );
 
     if (apiResponse.statusCode == 200) {
@@ -48,39 +31,21 @@ class ApiVisitante{
 
 
   static Future<Visitor> createVisitor(Visitor visitor) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? userInstance = prefs.getString(AppConstant.keyUserInstance);
-    String? token = prefs.getString('token');
-
+    Dio dioInstance = DioService.dioInstance;
     final Map<String, dynamic> visitorData = visitor.toJson();
 
-    Response<String> apiResponse = await _dio.post<String>(
+    Response<String> apiResponse = await dioInstance.post<String>(
       '/v1/visitor', // Substitua pelo endpoint correto da API
       data: visitorData,
-      options: Options(
-        headers: <String, String>{
-          'authorization': 'Bearer $token',
-          'user_instance': userInstance!,
-        },
-      ),
     );
 
     return Visitor.fromJson(json.decode(apiResponse.data ?? '{}'));
   }
 
   static Future<void> deleteVisitor(int visitorId) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? userInstance = prefs.getString(AppConstant.keyUserInstance);
-    String? token = prefs.getString('token');
-
-    Response<String> apiResponse = await _dio.delete<String>(
+    Dio dioInstance = DioService.dioInstance;
+    Response<String> apiResponse = await dioInstance.delete<String>(
       '/v1/visitor/$visitorId', // Substitua pelo endpoint correto da API com o ID do visitante
-      options: Options(
-        headers: <String, String>{
-          'authorization': 'Bearer $token',
-          'user_instance': userInstance!,
-        },
-      ),
     );
 
     // Você pode verificar o código de status da resposta aqui

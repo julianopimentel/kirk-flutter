@@ -11,6 +11,7 @@ class AppConstant {
   }
 
   static const String keyToken = 'token';
+  static const String keyRefreshToken = 'refresh_token';
   static const String keyUserInstance = 'user_instance';
   static const String keyPermission = 'permission';
   //usuario tem mais de uma conta?

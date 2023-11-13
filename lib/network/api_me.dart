@@ -1,37 +1,11 @@
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
-import '../common/app_constant.dart';
 import '../model/person_me.dart';
+import '../service/DioService.dart';
 
 class ApiMe {
-  static Future<Dio> createDioInstance() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? userInstance = prefs.getString(AppConstant.keyUserInstance);
-    String? token = prefs.getString(AppConstant.keyToken);
-
-    final dio = Dio(
-      BaseOptions(
-        baseUrl: AppConstant.baseUrl,
-        responseType: ResponseType.plain,
-        validateStatus: (int? code) {
-          return true;
-        },
-        headers: {
-          'authorization': 'Bearer $token',
-          'user_instance': userInstance!,
-        },
-      ),
-    );
-
-    return dio;
-  }
-
   static Future<PersonMe> getMe() async {
-    Dio dioInstance = await createDioInstance();
+    Dio dioInstance = DioService.dioInstance;
     Response apiResponse = await dioInstance.get('/v1/person/me');
 
     if (apiResponse.statusCode == 200) {
@@ -50,7 +24,7 @@ class ApiMe {
     required String phone,
     required String image,
   }) async {
-    Dio dioInstance = await createDioInstance();
+    Dio dioInstance = DioService.dioInstance;
     Response apiResponse = await dioInstance.put(
       '/v1/person/me',
       data: {
@@ -72,7 +46,7 @@ class ApiMe {
   static Future<void> saveTokenNotification({required String app_id}) async {
 
     String? platform = await getPlatform();
-    Dio dioInstance = await createDioInstance();
+    Dio dioInstance = DioService.dioInstance;
     Response apiResponse = await dioInstance.put(
       '/v1/app/notification',
       data: {
@@ -121,7 +95,7 @@ class ApiMe {
 
     String? platform = await getPlatform();
 
-    Dio dioInstance = await createDioInstance();
+    Dio dioInstance = DioService.dioInstance;
     Response apiResponse = await dioInstance.delete(
       '/v1/app/notification',
       data: {

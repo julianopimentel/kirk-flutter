@@ -41,13 +41,13 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    _loadSavedValues();
+    _loadSavedValues(context);
   }
 
-  Future<void> _loadSavedValues() async {
+  Future<void> _loadSavedValues(BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    personMe = await context.read<AccountProvider>().getDadosPessoais();
+    personMe = await context.read<AccountProvider>().getDadosPessoais(context);
     if(personMe == null){
       Navigator.push(context, MaterialPageRoute(
         builder: (BuildContext context) {

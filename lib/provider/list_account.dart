@@ -1,4 +1,3 @@
-import 'package:KirkDigital/common/token_manager.dart';
 import 'package:KirkDigital/model/person_me.dart';
 import 'package:KirkDigital/network/api_me.dart';
 import 'package:firebase_core/firebase_core.dart';

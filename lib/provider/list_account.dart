@@ -54,7 +54,7 @@ class ListAccountProvider with ChangeNotifier {
   Future<void> setSchema({
     required int tenantId,
     required int personId,
-    required String name_conta,
+    required String nameAccount,
     required BuildContext context
   }) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -75,7 +75,7 @@ class ListAccountProvider with ChangeNotifier {
       //salvar o tenantId e personId no shared_preferences
       prefs.setInt(AppConstant.keyTenantId, tenantId);
       prefs.setInt(AppConstant.keyPersonId, personId);
-      prefs.setString(AppConstant.keyNameConta, name_conta);
+      prefs.setString(AppConstant.keyNameConta, nameAccount);
 
       //consultar os dados pessoais
       PersonMe personMe = await ApiMe.getMe();

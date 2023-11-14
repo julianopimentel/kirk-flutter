@@ -99,7 +99,7 @@ class PessoaProvider with ChangeNotifier {
     try {
       _isLoading = true; // Define isLoading como verdadeiro ao iniciar a operação
       // Lógica para atualizar pessoa (provavelmente uma chamada à API)
-      Pessoa responseData = await ApiPerson.update(pessoa);
+      await ApiPerson.update(pessoa);
 
       // GetList para atualizar a lista de pessoas
       await getList();

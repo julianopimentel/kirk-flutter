@@ -101,7 +101,7 @@ Widget buildClickableRow(BuildContext context, String itemName, int tenantId, in
       context.read<ListAccountProvider>().setSchema(
         tenantId: tenantId,
         personId: personId,
-        name_conta: itemName,
+        nameAccount: itemName,
         context: context,
       );
     },

@@ -17,7 +17,6 @@ class PessoaDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    DateTime? _selectedDate;
 
     return FutureBuilder<Pessoa?>(
       future: context.read<PessoaProvider>().getById(id),
@@ -84,7 +83,6 @@ class PessoaDetailPage extends StatelessWidget {
                     DataField(
                         label: 'Data de nascimento',
                         onDataSelecionada: (data) {
-                          _selectedDate = data;
                         },
                         selectedDate: pessoa.birthAt == null
                             ? null

@@ -110,7 +110,7 @@ class AccountProvider with ChangeNotifier {
       listAccountProvider.setSchema(
           tenantId: _accountList[0].tenantId,
           personId: _accountList[0].personId,
-          name_conta: _accountList[0].nameConta,
+          nameAccount: _accountList[0].nameConta,
           context: context
       );
       notifyListeners(); // Notifique os ouvintes sobre a atualização

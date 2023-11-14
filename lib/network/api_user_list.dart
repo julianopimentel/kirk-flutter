@@ -79,11 +79,15 @@ class ApiUserList {
 
         prefs.setString(AppConstant.keyPermission, '');
         // Trate o caso em que a resposta da API está vazia
-        print('Resposta da API está vazia');
+        if (kDebugMode) {
+          print('Resposta da API está vazia');
+        }
       }
     } catch (error) {
       // Trate os erros, se necessário
-      print("Erro ao buscar as permissões: $error");
+      if (kDebugMode) {
+        print("Erro ao buscar as permissões: $error");
+      }
     }
     return AuthToken.fromJsonTokenUser(response.data ?? '{}');
   }

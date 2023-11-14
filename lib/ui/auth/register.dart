@@ -33,8 +33,7 @@ class _RegisterPageState extends State<RegisterPage> {
             if (value!.isEmpty ||
                 !value.contains('@') ||
                 !value.contains('.') ||
-                value.length < 8 ||
-                value == null) {
+                value.length < 8) {
               return 'Por favor, digite seu e-mail';
             }
           },

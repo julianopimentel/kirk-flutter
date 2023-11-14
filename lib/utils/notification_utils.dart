@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
@@ -28,7 +29,9 @@ Future<void> backgroundMessageHandler(RemoteMessage message) async {
     payload: message.data['payload'],
   );
 
-  print('onBackgroundMessage: $message');
+  if (kDebugMode) {
+    print('onBackgroundMessage: $message');
+  }
 }
 
 void createNotificationChannels() {

@@ -7,12 +7,14 @@ class AppTheme {
   final Color accentColor;
   final Color iconColor;
   final Color statusBarColor;
+  final String logo;
 
   AppTheme({
     required this.primaryColor,
     required this.accentColor,
     required this.iconColor,
     required this.statusBarColor,
+    required this.logo,
   });
 }
 

@@ -5,8 +5,10 @@ import '../share/clipper2.dart';
 import 'login.dart';
 
 class RegisterPage extends StatefulWidget {
+  const RegisterPage({super.key});
+
   @override
-  _RegisterPageState createState() => _RegisterPageState();
+  createState() => _RegisterPageState();
 }
 
 class _RegisterPageState extends State<RegisterPage> {
@@ -22,7 +24,7 @@ class _RegisterPageState extends State<RegisterPage> {
           color: Colors.white,
           boxShadow: [
             BoxShadow(
-              offset: Offset(3, 3),
+              offset: const Offset(3, 3),
               color: Colors.grey.shade400,
               blurRadius: 6,
             ),
@@ -36,6 +38,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 value.length < 8) {
               return 'Por favor, digite seu e-mail';
             }
+            return null;
           },
           controller: emailController,
           decoration: const InputDecoration(
@@ -54,7 +57,7 @@ class _RegisterPageState extends State<RegisterPage> {
           color: Colors.white,
           boxShadow: [
             BoxShadow(
-              offset: Offset(3, 3),
+              offset: const Offset(3, 3),
               color: Colors.grey.shade400,
               blurRadius: 6,
             ),
@@ -62,9 +65,10 @@ class _RegisterPageState extends State<RegisterPage> {
         ),
         child: TextFormField(
           validator: (value) {
-            if (value!.isEmpty || value.length < 6 || value == null) {
+            if (value!.isEmpty || value.length < 6) {
               return 'Por favor, digite sua senha';
             }
+            return null;
           },
           controller: passwordController,
           decoration: const InputDecoration(
@@ -83,7 +87,7 @@ class _RegisterPageState extends State<RegisterPage> {
           color: Colors.white,
           boxShadow: [
             BoxShadow(
-              offset: Offset(3, 3),
+              offset: const Offset(3, 3),
               color: Colors.grey.shade400,
               blurRadius: 6,
             ),
@@ -91,9 +95,10 @@ class _RegisterPageState extends State<RegisterPage> {
         ),
         child: TextFormField(
           validator: (value) {
-            if (value!.isEmpty || value == null) {
+            if (value!.isEmpty) {
               return 'Por favor, digite seu nome';
             }
+            return null;
           },
           controller: nameController,
           decoration: const InputDecoration(
@@ -112,7 +117,7 @@ class _RegisterPageState extends State<RegisterPage> {
           color: Colors.white,
           boxShadow: [
             BoxShadow(
-              offset: Offset(3, 3),
+              offset: const Offset(3, 3),
               color: Colors.grey.shade400,
               blurRadius: 6,
             ),
@@ -120,9 +125,10 @@ class _RegisterPageState extends State<RegisterPage> {
         ),
         child: TextFormField(
           validator: (value) {
-            if (value!.isEmpty || value.length < 6 || value == null) {
+            if (value!.isEmpty || value.length < 6) {
               return 'Por favor, confirme sua senha';
             }
+            return null;
           },
           controller: confirmPassword,
           decoration: const InputDecoration(
@@ -184,7 +190,7 @@ class _RegisterPageState extends State<RegisterPage> {
               ],
             ),
             Padding(
-                padding: EdgeInsets.symmetric(horizontal: 28),
+                padding: const EdgeInsets.symmetric(horizontal: 28),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
@@ -265,7 +271,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (_)=>LoginPage()));
+                                        builder: (_)=>const LoginPage()));
                               },
                               child: const Text(
                                 ' Entrar',
@@ -285,6 +291,6 @@ class _RegisterPageState extends State<RegisterPage> {
             )
           ],
         ),
-      );;
+      );
   }
 }

@@ -12,9 +12,10 @@ class ThemeProvider extends ChangeNotifier {
   Color accentColor = Colors.grey.shade700;
   Color iconColor = Colors.white;
   Color statusBarColor = Colors.blueGrey.shade900;
+  String logo = "";
 
   // Função para definir o tema com base no nome do tema
-  void switchTheme(String theme) {
+  void switchTheme(String theme, String logo) {
     switch (theme) {
       case "preto":
         primaryColor = Colors.blueGrey.shade900;
@@ -95,6 +96,7 @@ class ThemeProvider extends ChangeNotifier {
       accentColor: accentColor,
       iconColor: iconColor,
       statusBarColor: statusBarColor,
+      logo: logo,
     );
 
     setTheme(currentTheme);
@@ -109,6 +111,7 @@ class ThemeProvider extends ChangeNotifier {
     accentColor: Colors.grey.shade700,
     iconColor: Colors.white,
     statusBarColor: Colors.blueGrey.shade900,
+    logo: '',
   );
 
   AppTheme get currentTheme => _currentTheme;
@@ -121,18 +124,19 @@ class ThemeProvider extends ChangeNotifier {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     try {
       if (prefs.getString(AppConstant.keyCor) != null) {
-        switchTheme(prefs.getString(AppConstant.keyCor)!);
+        switchTheme(prefs.getString(AppConstant.keyCor)! , prefs.getString(AppConstant.keyLogo)!);
       }
       else{
         SkinData skinData = await ApiSkin.getSkinId(1);
         prefs.setString(AppConstant.keyCor, skinData.cor);
         prefs.setInt(AppConstant.keyIntegrador, skinData.integrador);
         prefs.setString(AppConstant.keyLogo, skinData.logo);
-        prefs.setString(AppConstant.keyLogoMenu, skinData.logoMenu);
-        switchTheme(skinData.cor);
+        switchTheme(skinData.cor, skinData.logo);
+        notifyListeners();
       }
     } catch (error) {
-      switchTheme("preto");
+      switchTheme("preto", '');
     }
   }
+
 }

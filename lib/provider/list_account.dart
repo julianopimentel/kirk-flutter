@@ -11,10 +11,11 @@ import '../firebase_options.dart';
 import '../model/user_list.dart'; // Importe a classe Account
 import '../model/users_me.dart';
 import '../network/api_UserList.dart';
-import '../service/notification_service.dart';
 import '../ui/home.dart';
 import '../common/app_constant.dart';
 import 'package:permission_handler/permission_handler.dart';
+
+import '../utils/toastr_utils.dart';
 
 class ListAccountProvider with ChangeNotifier {
   List<Account> _accountList = []; // Lista de contas
@@ -98,7 +99,7 @@ class ListAccountProvider with ChangeNotifier {
       prefs.remove(AppConstant.keyNameConta);
       // Trate os erros, se necessário
       print("Erro ao buscar os dados: $error");
-      NotificationService.showNotification('Erro ao selecionar a conta!', NotificationType.error, context);
+      NotificationUtils.showNotification('Erro ao selecionar a conta!', NotificationType.error, context);
     }
   }
 

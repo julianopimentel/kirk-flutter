@@ -12,9 +12,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shimmer/shimmer.dart';
 import '../common/app_constant.dart';
 import '../model/permission.dart';
-import '../provider/ThemeProvider.dart';
 import '../provider/account_provider.dart';
-import '../service/notification_service.dart';
+import '../service/theme/theme_provider.dart';
+import '../utils/toastr_utils.dart';
 import 'ListAccountPage.dart';
 import 'UserProfilePage.dart';
 import 'auth/login.dart';
@@ -68,7 +68,7 @@ class _HomePageState extends State<HomePage> {
     }
     else {
       //retornar para a tela de listagem de contas
-      NotificationService.showNotification(
+      NotificationUtils.showNotification(
           'Você não possui permissão para acessar o sistema, verifique com o administrador!',
           NotificationType.error, context);
       Navigator.push(context, MaterialPageRoute(
@@ -484,7 +484,7 @@ class _HomePageState extends State<HomePage> {
 
   Future<void> _logout(BuildContext context) async {
     await context.read<AccountProvider>().logout();
-    NotificationService.showNotification(
+    NotificationUtils.showNotification(
         'Logout realizado com sucesso!', NotificationType.success, context);
     Navigator.pushAndRemoveUntil(
       context,

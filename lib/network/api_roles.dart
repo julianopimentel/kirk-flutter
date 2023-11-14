@@ -3,7 +3,7 @@ import 'dart:convert';
 
 import 'package:KirkDigital/model/roles.dart';
 import 'package:dio/dio.dart';
-import '../service/DioService.dart';
+import '../service/dio_service.dart';
 
 class ApiRoles{
   static Future<List<RolesDto>> getList() async {

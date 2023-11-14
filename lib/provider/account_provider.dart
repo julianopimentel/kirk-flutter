@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:KirkDigital/network/api_me.dart';
 import 'package:KirkDigital/provider/list_account.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -16,9 +14,9 @@ import '../model/user_list.dart';
 import '../model/users_me.dart';
 import '../network/api_UserList.dart';
 import '../network/api_client.dart';
-import '../service/notification_service.dart';
 import '../ui/ListAccountPage.dart';
 import '../ui/auth/login.dart';
+import '../utils/toastr_utils.dart';
 
 class AccountProvider with ChangeNotifier {
   String? _token;
@@ -82,7 +80,7 @@ class AccountProvider with ChangeNotifier {
     _refreshToken = auth.refreshToken;
 
     if (auth.token == null) {
-      NotificationService.showNotification(auth.message ?? 'Seu email ou senha estão incorretos', NotificationType.warning, context);
+      NotificationUtils.showNotification(auth.message ?? 'Seu email ou senha estão incorretos', NotificationType.warning, context);
       return;
     }
 
@@ -97,7 +95,7 @@ class AccountProvider with ChangeNotifier {
 
     //retornar se a lista de contas for vazia
     if (jsonList.isEmpty) {
-      NotificationService.showNotification('Você não tem acesso a nenhuma conta', NotificationType.warning, context);
+      NotificationUtils.showNotification('Você não tem acesso a nenhuma conta', NotificationType.warning, context);
       return;
     }
     List<Account> accounts = jsonList.map((json) => Account.fromJson(json)).toList();
@@ -185,7 +183,7 @@ class AccountProvider with ChangeNotifier {
         ),
             (Route<dynamic> route) => false,
       );
-      NotificationService.showNotification('Faça o login novamente', NotificationType.warning, context);
+      NotificationUtils.showNotification('Faça o login novamente', NotificationType.warning, context);
       throw Exception('Erro ao obter os dados pessoais, saindo do app');
 
     }
@@ -226,10 +224,10 @@ class AccountProvider with ChangeNotifier {
               (Route<dynamic> route) => false,
         );
         // Tratar o erro na renovação do token (por exemplo, solicitar login novamente)
-        NotificationService.showNotification('Sua sessão expirou, faça o login novamente', NotificationType.warning, context);
+        NotificationUtils.showNotification('Sua sessão expirou, faça o login novamente', NotificationType.warning, context);
       }
     } catch (error) {
-      NotificationService.showNotification('Verifique sua conexão de internet!', NotificationType.warning, context);
+      NotificationUtils.showNotification('Verifique sua conexão de internet!', NotificationType.warning, context);
       Navigator.pushAndRemoveUntil(
         context as BuildContext,
         MaterialPageRoute(

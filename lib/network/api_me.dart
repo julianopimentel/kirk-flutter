@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import '../model/person_me.dart';
-import '../service/DioService.dart';
+import '../service/dio_service.dart';
 
 class ApiMe {
   static Future<PersonMe> getMe() async {

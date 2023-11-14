@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
-import '../../provider/ThemeProvider.dart';
+import '../../service/theme/theme_provider.dart';
 
 class FotoField extends StatefulWidget {
   final String? imageUrl;

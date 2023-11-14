@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../provider/ThemeProvider.dart';
 import '../../provider/account_provider.dart';
-import '../../service/notification_service.dart';
+import '../../service/theme/theme_provider.dart';
+import '../../utils/toastr_utils.dart';
 import '../share/clipper.dart';
 import '../share/clipper2.dart';
 import 'register.dart';
@@ -259,7 +258,7 @@ class _LoginPageState extends State<LoginPage> {
   Future<void> _login() async {
     // Verifica se o email e a senha estão preenchidos
     if (emailController.text.isEmpty || passwordController.text.isEmpty) {
-      NotificationService.showNotification('Por favor, preencha email e senha.', NotificationType.warning, context);
+      NotificationUtils.showNotification('Por favor, preencha email e senha.', NotificationType.warning, context);
       return;
     }
     setState(() => _onSend = true);
@@ -276,7 +275,7 @@ class _LoginPageState extends State<LoginPage> {
       // Se o login for realizado com sucesso, redireciona para a tela de home
       setState(() => _onSend = false);
     } catch (e) {
-      NotificationService.showNotification('Oops! Verifique sua conexão com a internet e tente novamente.'
+      NotificationUtils.showNotification('Oops! Verifique sua conexão com a internet e tente novamente.'
           , NotificationType.error, context);
 
     }

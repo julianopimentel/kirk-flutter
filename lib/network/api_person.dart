@@ -6,7 +6,7 @@ import 'package:KirkDigital/model/SimplesPessoaDto.dart';
 
 import 'package:dio/dio.dart';
 
-import '../service/DioService.dart';
+import '../service/dio_service.dart';
 
 class ApiPerson{
   static Future<List<SimplesPessoaDto>> getList() async {

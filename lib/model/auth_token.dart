@@ -43,7 +43,6 @@ class AuthToken {
     userId: json["id"],
     userEmail: json["email"],
     userInstance: json["user_instance"],
-    userRole: List<String>.from(json["roles"].map((x) => x)),
   );
 
   factory AuthToken.fromTokenUserMap(Map<String, dynamic> json) => AuthToken(
@@ -64,7 +63,6 @@ class AuthToken {
     "id": userId,
     "email": userEmail,
     "user_instance": userInstance,
-    "roles": userRole,
   };
   @override
   String toString() {

@@ -6,7 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../common/app_constant.dart';
 import '../model/personoffers.dart';
-import '../service/DioService.dart';
+import '../service/dio_service.dart';
 
 class ApiPersonOffers {
   static Future<List<PessoaOffer>> getList(int page, int size) async {

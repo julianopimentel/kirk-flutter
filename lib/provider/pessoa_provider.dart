@@ -2,11 +2,11 @@ import 'package:KirkDigital/model/SimplesPessoaDto.dart';
 import 'package:KirkDigital/model/person.dart'; // Alias para Pessoa
 import 'package:KirkDigital/model/roles.dart';
 import 'package:KirkDigital/network/api_person.dart';
-import 'package:KirkDigital/service/notification_service.dart';
 import 'package:flutter/material.dart';
 
 import '../network/api_roles.dart';
 import '../ui/componentes/dropdown_field.dart';
+import '../utils/toastr_utils.dart';
 
 class PessoaProvider with ChangeNotifier {
   List<SimplesPessoaDto> _pessoaDto = []; // Uma lista para armazenar os visitantes
@@ -57,14 +57,14 @@ class PessoaProvider with ChangeNotifier {
 
       Navigator.of(context).pop(); // Feche o diálogo
 
-      NotificationService.showNotification('Pessoa criada com sucesso', NotificationType.success, context);
+      NotificationUtils.showNotification('Pessoa criada com sucesso', NotificationType.success, context);
       // Retorne a lista de visitantes
     } catch (error) {
       _isLoading = false; // Define isLoading como falso ao ocorrer um erro
       //notifyListeners();
       // Trate os erros, se necessário
       //print("Erro ao buscar os dados: $error");
-      NotificationService.showNotification('Ocorreu um erro ao criar a pessoa ${error}', NotificationType.error, context);
+      NotificationUtils.showNotification('Ocorreu um erro ao criar a pessoa ${error}', NotificationType.error, context);
     }
   }
   // Método para buscar pessoa
@@ -107,14 +107,14 @@ class PessoaProvider with ChangeNotifier {
 
       Navigator.of(context).pop(); // Feche o diálogo
 
-      NotificationService.showNotification('Pessoa atualizada com sucesso', NotificationType.success, context);
+      NotificationUtils.showNotification('Pessoa atualizada com sucesso', NotificationType.success, context);
       // Retorne a lista de visitantes
     } catch (error) {
       _isLoading = false; // Define isLoading como falso ao ocorrer um erro
       //notifyListeners();
       // Trate os erros, se necessário
       //print("Erro ao buscar os dados: $error");
-      NotificationService.showNotification('Ocorreu um erro ao atualizar a pessoa ${error}', NotificationType.error, context);
+      NotificationUtils.showNotification('Ocorreu um erro ao atualizar a pessoa ${error}', NotificationType.error, context);
     }
   }
 
@@ -132,11 +132,11 @@ class PessoaProvider with ChangeNotifier {
       _isLoading = false;
       notifyListeners();
 
-      NotificationService.showNotification('Pessoa excluída com sucesso', NotificationType.success, context);
+      NotificationUtils.showNotification('Pessoa excluída com sucesso', NotificationType.success, context);
       // Retorne a lista de visitantes
     } catch (error) {
       _isLoading = false; // Define isLoading como falso ao ocorrer um erro
-      NotificationService.showNotification('Ocorreu um erro ao excluir a pessoa ${error}', NotificationType.error, context);
+      NotificationUtils.showNotification('Ocorreu um erro ao excluir a pessoa ${error}', NotificationType.error, context);
     }
   }
 

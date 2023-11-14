@@ -2,7 +2,6 @@ import 'package:KirkDigital/model/person.dart';
 import 'package:KirkDigital/model/users_me.dart';
 import 'package:KirkDigital/provider/account_provider.dart';
 import 'package:KirkDigital/provider/pessoa_provider.dart';
-import 'package:KirkDigital/service/notification_service.dart';
 import 'package:KirkDigital/ui/componentes/custom_elevated_button.dart';
 import 'package:KirkDigital/ui/componentes/email_field.dart';
 import 'package:KirkDigital/ui/componentes/nome_field.dart';
@@ -12,6 +11,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
+import '../../utils/toastr_utils.dart';
 import '../componentes/custom_campoNumerico_field.dart';
 import '../componentes/data_field.dart';
 import '../componentes/dropdown_field.dart';
@@ -266,7 +266,7 @@ class _EnviarOfertaPageState extends State<EnviarOfertaPage> {
             Clipboard.setData(ClipboardData(text: _pixCopiaCola));
             // O valor do PIX foi copiado para a área de transferência.
             // Exiba uma mensagem para o usuário.
-            NotificationService.showNotification(
+            NotificationUtils.showNotification(
               'Valor do PIX copiado para a área de transferência.',
               NotificationType.success,
               context,

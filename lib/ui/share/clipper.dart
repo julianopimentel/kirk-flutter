@@ -1,8 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-import '../../provider/ThemeProvider.dart';
 class RPSCustomPainter extends CustomPainter{
   @override
   void paint(Canvas canvas,Size size){

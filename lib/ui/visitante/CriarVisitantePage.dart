@@ -1,4 +1,3 @@
-import 'package:KirkDigital/service/notification_service.dart';
 import 'package:KirkDigital/ui/componentes/custom_elevated_button.dart';
 import 'package:KirkDigital/ui/componentes/data_field.dart';
 import 'package:KirkDigital/ui/componentes/email_field.dart';
@@ -8,6 +7,7 @@ import 'package:provider/provider.dart';
 
 import '../../model/visitante.dart'; // Importe a classe Visitor
 import '../../provider/visitante_provider.dart';
+import '../../utils/toastr_utils.dart';
 import '../componentes/dropdown_field.dart';
 import '../componentes/nome_field.dart'; // Importe o provider de visitante
 
@@ -85,7 +85,7 @@ class _CriarVisitantePageState extends State<CriarVisitantePage> {
       final VisitorProvider provider = context.read<VisitorProvider>();
       provider.createVisitor(newVisitor);
 
-      NotificationService.showNotification(
+      NotificationUtils.showNotification(
           'O visitante ${newVisitor.name} foi criado com sucesso.',
           NotificationType.success,
           context);

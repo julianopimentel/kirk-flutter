@@ -1,16 +1,83 @@
-import 'package:KirkDigital/provider/ThemeProvider.dart';
+import 'package:KirkDigital/service/theme/theme_provider.dart';
+import 'package:KirkDigital/utils/system_utils.dart';
+import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:provider/provider.dart';
+
 import 'package:KirkDigital/provider/account_provider.dart';
 import 'package:KirkDigital/provider/list_account.dart';
 import 'package:KirkDigital/provider/pessoa_provider.dart';
 import 'package:KirkDigital/provider/visitante_provider.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:provider/provider.dart';
-import 'dart:io'; // Importe a classe Platform do pacote dart:io
 import 'ui/splash/splash_page.dart';
-import 'package:flutter/services.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  initializeApp();
+  runApp(
+    ChangeNotifierProvider(
+      create: (_) => ThemeProvider(),
+      child: const MainApp(),
+    ),
+  );
+}
+
+class MainApp extends StatelessWidget {
+  const MainApp({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    themeProvider.refreshSkinApi();
+
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => AccountProvider()),
+        ChangeNotifierProvider(create: (_) => ListAccountProvider()),
+        ChangeNotifierProvider(create: (_) => VisitorProvider()),
+        ChangeNotifierProvider(create: (_) => PessoaProvider())
+      ],
+      child: MaterialApp(
+        theme: _buildThemeData(themeProvider),
+        home: const SplashPage(),
+        debugShowCheckedModeBanner: false,
+      ),
+    );
+  }
+
+  ThemeData _buildThemeData(ThemeProvider themeProvider) {
+    return ThemeData(
+      primaryColor: themeProvider.currentTheme.primaryColor,
+      iconTheme: IconThemeData(
+        color: themeProvider.currentTheme.iconColor,
+      ),
+      appBarTheme: AppBarTheme(
+        backgroundColor: themeProvider.currentTheme.primaryColor,
+        iconTheme: IconThemeData(
+          color: themeProvider.currentTheme.iconColor,
+        ),
+      ),
+      floatingActionButtonTheme: FloatingActionButtonThemeData(
+        backgroundColor: themeProvider.currentTheme.primaryColor,
+        foregroundColor: themeProvider.currentTheme.iconColor,
+      ),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          primary: themeProvider.currentTheme.primaryColor,
+          onPrimary: themeProvider.currentTheme.iconColor,
+        ),
+      ),
+      outlinedButtonTheme: OutlinedButtonThemeData(
+        style: OutlinedButton.styleFrom(
+          primary: themeProvider.currentTheme.primaryColor,
+          onSurface: themeProvider.currentTheme.iconColor,
+        ),
+      ),
+    );
+  }
+}
+
+/*
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -37,10 +104,10 @@ Future<void> _backgroundMessageHandler(RemoteMessage message) async {
   // Crie uma instância do AndroidNotificationDetails
   const AndroidNotificationDetails androidPlatformChannelSpecifics =
   AndroidNotificationDetails(
-    'meu_canal_padrao',
-    'Canal Padrão',
-    importance: Importance.max,
-    icon: '@mipmap/ic_launcher'
+      'meu_canal_padrao',
+      'Canal Padrão',
+      importance: Importance.max,
+      icon: '@mipmap/ic_launcher'
   );
 
   // Crie uma instância do NotificationDetails
@@ -63,7 +130,7 @@ Future<void> _backgroundMessageHandler(RemoteMessage message) async {
 // Função para criar canais de notificação no Android
 void _createNotificationChannels() {
   if (Platform.isAndroid) {
-    final AndroidNotificationChannel channel = AndroidNotificationChannel(
+    const AndroidNotificationChannel channel = AndroidNotificationChannel(
       'meu_canal_padrao',
       'Canal Padrão',
       importance: Importance.max,
@@ -80,7 +147,7 @@ void _createNotificationChannels() {
 }
 
 void setStatusBarColor() {
-  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: Colors.grey, // Cor da barra de status
     statusBarBrightness: Brightness.light, // Brilho do texto da barra de status
     statusBarIconBrightness: Brightness.light, // Cor dos ícones da barra de status (por exemplo, ícone de bateria)
@@ -93,8 +160,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
-
-    themeProvider.switchTheme("red");
+    themeProvider.refreshSkinApi();
 
     return MultiProvider(
       providers: [
@@ -116,15 +182,15 @@ class MainApp extends StatelessWidget {
             ),
           ),
           floatingActionButtonTheme: FloatingActionButtonThemeData(
-              backgroundColor: themeProvider.currentTheme.primaryColor,
-              foregroundColor: themeProvider.currentTheme.iconColor,
+            backgroundColor: themeProvider.currentTheme.primaryColor,
+            foregroundColor: themeProvider.currentTheme.iconColor,
           ),
           elevatedButtonTheme: ElevatedButtonThemeData(
-              style: ElevatedButton.styleFrom(
-                primary: themeProvider.currentTheme.primaryColor,
-                onPrimary: themeProvider.currentTheme.iconColor,
-              ),
+            style: ElevatedButton.styleFrom(
+              primary: themeProvider.currentTheme.primaryColor,
+              onPrimary: themeProvider.currentTheme.iconColor,
             ),
+          ),
           outlinedButtonTheme: OutlinedButtonThemeData(
             style: OutlinedButton.styleFrom(
               primary: themeProvider.currentTheme.primaryColor,
@@ -139,3 +205,4 @@ class MainApp extends StatelessWidget {
   }
 }
 
+*/

@@ -1,5 +1,5 @@
-import 'package:KirkDigital/service/notification_service.dart';
 import 'package:KirkDigital/ui/componentes/custom_elevated_button.dart';
+import 'package:KirkDigital/utils/toastr_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -81,7 +81,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
   await _loadUserData();
 
   // Exiba uma mensagem de sucesso
-  NotificationService.showNotification('Dados atualizados com sucesso', NotificationType.success, context);
+  NotificationUtils.showNotification('Dados atualizados com sucesso', NotificationType.success, context);
 
 
   }

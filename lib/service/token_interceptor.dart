@@ -59,11 +59,11 @@ class TokenInterceptor extends Interceptor {
       DateTime now = DateTime.now();
       Duration tokenUsageDuration = now.difference(issuedAt);
 
-      if (tokenUsageDuration.inHours >= 6) {
-        // O token é válido
-        return false;
+      if (tokenUsageDuration.inHours >= 20) {
+        // O token é válido, mas vai renovar a cada 20 horas
+        return true;
       } else {
-        // O token expirou
+        // O token expirou ou nao existe
         return true;
       }
     } catch (error) {

@@ -92,11 +92,19 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: Colors.grey[100],
       body: Column(
         children: [
+          // Logo Section
+          Container(
+            padding: const EdgeInsets.only(top: 35, left: 10, right: 10),
+            alignment: Alignment.center,
+            height: 80, // Ajuste conforme necessário
+            decoration: BoxDecoration(color: themeProvider.currentTheme.primaryColor),
+            child: themeProvider.getLogoMenuImage(),
+          ),
           // Header Section
           Container(
             padding: const EdgeInsets.symmetric(vertical: 22, horizontal: 22),
             alignment: Alignment.bottomCenter,
-            height: 180,
+            height: 110,
             decoration: BoxDecoration(color: themeProvider.currentTheme.primaryColor),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,

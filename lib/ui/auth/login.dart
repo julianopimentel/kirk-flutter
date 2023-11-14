@@ -27,18 +27,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
-    String logoBase64 = themeProvider.currentTheme.logo ?? '';
-    Image? logoImage;
-
-    // Verifica se a string é uma representação válida em base64
-    if (logoBase64.isNotEmpty) {
-      List<int> decodedBytes = base64Decode(logoBase64);
-      Uint8List bytes = Uint8List.fromList(decodedBytes);
-      logoImage = Image.memory(bytes, fit: BoxFit.contain, height: 200, width: 200);
-    } else {
-      // Se houver um erro, carrega a imagem dos assets
-      logoImage = Image.asset('assets/images/logo.png', fit: BoxFit.contain, height: 200, width: 200);
-    }
+    Image logoImage = themeProvider.getLogoImage();
 
     return Scaffold(
       body: SingleChildScrollView(

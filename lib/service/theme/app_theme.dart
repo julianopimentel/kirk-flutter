@@ -8,6 +8,7 @@ class AppTheme {
   final Color iconColor;
   final Color statusBarColor;
   final String logo;
+  final String logoMenu;
 
   AppTheme({
     required this.primaryColor,
@@ -15,6 +16,7 @@ class AppTheme {
     required this.iconColor,
     required this.statusBarColor,
     required this.logo,
+    required this.logoMenu,
   });
 }
 

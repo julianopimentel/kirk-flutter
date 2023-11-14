@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:KirkDigital/common/app_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -13,9 +16,10 @@ class ThemeProvider extends ChangeNotifier {
   Color iconColor = Colors.white;
   Color statusBarColor = Colors.blueGrey.shade900;
   String logo = "";
+  String logoMenu = "";
 
   // Função para definir o tema com base no nome do tema
-  void switchTheme(String theme, String logo) {
+  void switchTheme(String theme, String logo, String logoMenu) {
     switch (theme) {
       case "preto":
         primaryColor = Colors.blueGrey.shade900;
@@ -97,6 +101,7 @@ class ThemeProvider extends ChangeNotifier {
       iconColor: iconColor,
       statusBarColor: statusBarColor,
       logo: logo,
+      logoMenu: logoMenu,
     );
 
     setTheme(currentTheme);
@@ -112,6 +117,7 @@ class ThemeProvider extends ChangeNotifier {
     iconColor: Colors.white,
     statusBarColor: Colors.blueGrey.shade900,
     logo: '',
+    logoMenu: '',
   );
 
   AppTheme get currentTheme => _currentTheme;
@@ -124,19 +130,67 @@ class ThemeProvider extends ChangeNotifier {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     try {
       if (prefs.getString(AppConstant.keyCor) != null) {
-        switchTheme(prefs.getString(AppConstant.keyCor)! , prefs.getString(AppConstant.keyLogo)!);
+        String cor = prefs.getString(AppConstant.keyCor)!;
+        String logo = prefs.getString(AppConstant.keyLogo)!;
+        String logoMenu = prefs.getString(AppConstant.keyLogoMenu)!;
+        switchTheme(cor, logo, logoMenu);
       }
       else{
         SkinData skinData = await ApiSkin.getSkinId(1);
         prefs.setString(AppConstant.keyCor, skinData.cor);
         prefs.setInt(AppConstant.keyIntegrador, skinData.integrador);
         prefs.setString(AppConstant.keyLogo, skinData.logo);
-        switchTheme(skinData.cor, skinData.logo);
+        prefs.setString(AppConstant.keyLogoMenu, skinData.logoMenu);
+        switchTheme(skinData.cor, skinData.logo, skinData.logoMenu);
         notifyListeners();
       }
     } catch (error) {
-      switchTheme("preto", '');
+      switchTheme("preto", '', '');
     }
+  }
+
+  //funcao para tratar a imagem do logo
+  Image getLogoImage({bool isLess = false}) {
+    String logoBase64 = _currentTheme.logo ?? '';
+    Image? logoImage;
+
+    //tamanho da imagem quando é para o login ou quando for para o menu
+    double height = 200;
+    double width = 200;
+    //se for para o menu, a imagem é menor
+    if (isLess) {
+      height = 100;
+      width = 100;
+    }
+    if (logoBase64.isNotEmpty) {
+      List<int> decodedBytes = base64Decode(logoBase64);
+      Uint8List bytes = Uint8List.fromList(decodedBytes);
+      logoImage = Image.memory(bytes, fit: BoxFit.contain, height: height, width: width);
+    } else {
+      // Se não houver uma representação válida em base64, carrega a imagem dos assets
+      logoImage = Image.asset('assets/images/logo.png', fit: BoxFit.contain, height: height, width: width);
+    }
+    return logoImage;
+  }
+
+  //funcao para tratar a imagem do logo
+  Image getLogoMenuImage() {
+    String logoBase64 = _currentTheme.logoMenu ?? '';
+    Image? logoImage;
+
+    //tamanho da imagem quando é para o login ou quando for para o menu
+    double height = 80;
+    double width = 200;
+    //se for para o menu, a imagem é menor
+    if (logoBase64.isNotEmpty) {
+      List<int> decodedBytes = base64Decode(logoBase64);
+      Uint8List bytes = Uint8List.fromList(decodedBytes);
+      logoImage = Image.memory(bytes, fit: BoxFit.contain, height: height, width: width);
+    } else {
+      // Se não houver uma representação válida em base64, carrega a imagem dos assets
+      logoImage = Image.asset('assets/images/logoMenu.png', fit: BoxFit.contain, height: height, width: width);
+    }
+    return logoImage;
   }
 
 }

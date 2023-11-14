@@ -2,10 +2,7 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
-import '../common/app_constant.dart';
-import '../model/personoffers.dart';
+import '../model/person_offers.dart';
 import '../service/dio_service.dart';
 
 class ApiPersonOffers {

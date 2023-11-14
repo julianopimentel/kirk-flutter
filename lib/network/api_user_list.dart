@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:KirkDigital/model/permission.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../common/app_constant.dart';
@@ -42,6 +43,10 @@ class ApiUserList {
     TokenManager().setUserInstance(response.data ?? '{}');
     String userInstance = TokenManager().getUserInstance() ?? '';
     prefs.setString(AppConstant.keyUserInstance, userInstance);
+
+    if (kDebugMode) {
+      print('user_instance: $userInstance');
+    }
 
     //buscar as permissoes do usuario
     // Fazer a solicitação da API e processar os dados

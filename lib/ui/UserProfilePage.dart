@@ -55,7 +55,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
       }); // Atualizar o estado para exibir a imagem
     } catch (error) {
       // Lidar com erros, se necessário
-      print("Erro ao carregar os dados do usuário: $error");
+      print("Erro no carregamento do usuário person: $error");
     }
   }
 

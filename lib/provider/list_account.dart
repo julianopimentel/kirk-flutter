@@ -2,7 +2,6 @@ import 'package:KirkDigital/model/person_me.dart';
 import 'package:KirkDigital/network/api_me.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -10,7 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../firebase_options.dart';
 import '../model/user_list.dart'; // Importe a classe Account
 import '../model/users_me.dart';
-import '../network/api_UserList.dart';
+import '../network/api_user_list.dart';
 import '../ui/home.dart';
 import '../common/app_constant.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -46,7 +45,9 @@ class ListAccountProvider with ChangeNotifier {
       notifyListeners(); // Notifique os ouvintes sobre a atualização
     } catch (error) {
       // Trate os erros, se necessário
-      print("Erro ao buscar os dados: $error");
+      if (kDebugMode) {
+        print("Erro ao buscar os dados: $error");
+      }
     }
   }
 
@@ -98,7 +99,9 @@ class ListAccountProvider with ChangeNotifier {
       prefs.remove(AppConstant.keyPersonId);
       prefs.remove(AppConstant.keyNameConta);
       // Trate os erros, se necessário
-      print("Erro ao buscar os dados: $error");
+      if (kDebugMode) {
+        print("Erro ao buscar os dados: $error");
+      }
       NotificationUtils.showNotification('Erro ao selecionar a conta!', NotificationType.error, context);
     }
   }
@@ -111,7 +114,9 @@ class ListAccountProvider with ChangeNotifier {
       FirebaseApp app = await Firebase.initializeApp(
         options: DefaultFirebaseOptions.currentPlatform,
       );
-      print('Initialized default app $app');
+      if (kDebugMode) {
+        print('Initialized default app $app');
+      }
 
       FirebaseMessaging messaging = FirebaseMessaging.instance;
       String? token = await messaging.getToken();
@@ -124,7 +129,9 @@ class ListAccountProvider with ChangeNotifier {
 
       saveTokenToDatabase(token!);
     } catch (e) {
-      print('Erro na inicialização do Firebase: $e');
+      if (kDebugMode) {
+        print('Erro na inicialização do Firebase: $e');
+      }
     }
   }
 
@@ -132,15 +139,22 @@ class ListAccountProvider with ChangeNotifier {
   Future<void> requestNotificationPermission() async {
     final PermissionStatus status = await Permission.notification.request();
     if (status.isGranted) {
-      print('Permissão de notificação concedida');
+      if (kDebugMode) {
+        print('Permissão de notificação concedida');
+      }
     } else {
-      print('Permissão de notificação negada');
+      if (kDebugMode) {
+        print('Permissão de notificação negada');
+      }
       // Você pode mostrar uma mensagem ao usuário para informar sobre a importância da permissão.
     }
   }
 
   Future<void> saveTokenToDatabase(String token) async {
     //identificar o tipo de plataforma
-    await ApiMe.saveTokenNotification(app_id: token);
+    await ApiMe.saveTokenNotification(appId: token);
+    if (kDebugMode) {
+      print('Token salvo no banco de dados $token');
+    }
   }
 }

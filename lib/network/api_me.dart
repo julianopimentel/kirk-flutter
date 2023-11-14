@@ -43,14 +43,14 @@ class ApiMe {
     }
   }
 
-  static Future<void> saveTokenNotification({required String app_id}) async {
+  static Future<void> saveTokenNotification({required String appId}) async {
 
     String? platform = await getPlatform();
     Dio dioInstance = DioService.dioInstance;
     Response apiResponse = await dioInstance.put(
       '/v1/app/notification',
       data: {
-        'app_id': app_id,
+        'app_id': appId,
         'platform': platform,
       },
     );
@@ -91,7 +91,7 @@ class ApiMe {
   }
 
   static Future<void> removeToken({
-    required String app_id}) async {
+    required String appId}) async {
 
     String? platform = await getPlatform();
 
@@ -99,7 +99,7 @@ class ApiMe {
     Response apiResponse = await dioInstance.delete(
       '/v1/app/notification',
       data: {
-        'app_id': app_id,
+        'app_id': appId,
         'platform': platform,
       },
     );

@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 
 import '../common/app_constant.dart';
 import '../model/auth_token.dart';
@@ -20,7 +21,9 @@ class ApiClient {
     required String password,
   }) async {
 
-    print('Destino API:' + AppConstant.baseUrl);
+    if (kDebugMode) {
+      print('Destino API:${AppConstant.baseUrl}');
+    }
     Response<String> response = await _dio.post<String>(
       '/auth/signin',
       //dados dentro do body
@@ -33,8 +36,8 @@ class ApiClient {
   }
 
 
-  static Future<UsersMe> getMe() async {
-    String token = await AppConstant.keyToken;
+  Future<UsersMe> getMe() async {
+    String token = AppConstant.keyToken;
     Response<String> response = await _dio.get(
       '/auth/user',
       options: Options(

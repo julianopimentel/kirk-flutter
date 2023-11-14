@@ -1,9 +1,10 @@
-import 'package:KirkDigital/model/SimplesPessoaDto.dart';
-import 'package:KirkDigital/model/person.dart'; // Alias para Pessoa
-import 'package:KirkDigital/model/roles.dart';
-import 'package:KirkDigital/network/api_person.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+import '../model/person.dart';
+import '../model/roles.dart';
+import '../model/simples_pessoa_dto.dart';
+import '../network/api_person.dart';
 import '../network/api_roles.dart';
 import '../ui/componentes/dropdown_field.dart';
 import '../utils/toastr_utils.dart';
@@ -85,7 +86,9 @@ class PessoaProvider with ChangeNotifier {
       // Retorne a lista de visitantes
     } catch (error) {
       _isLoading = false; // Define isLoading como falso ao ocorrer um erro
-      print("Erro ao buscar os dados: $error");
+      if (kDebugMode) {
+        print("Erro ao buscar os dados: $error");
+      }
       //notifyListeners();
       return null;
     }
@@ -113,7 +116,9 @@ class PessoaProvider with ChangeNotifier {
       _isLoading = false; // Define isLoading como falso ao ocorrer um erro
       //notifyListeners();
       // Trate os erros, se necessário
-      //print("Erro ao buscar os dados: $error");
+      if (kDebugMode) {
+        print("Erro ao buscar os dados: $error");
+      }
       NotificationUtils.showNotification('Ocorreu um erro ao atualizar a pessoa ${error}', NotificationType.error, context);
     }
   }
@@ -165,7 +170,9 @@ class PessoaProvider with ChangeNotifier {
       // Retorne a lista de visitantes
     } catch (error) {
       // Trate os erros, se necessário
-      print("Erro ao buscar os dados: $error");
+      if (kDebugMode) {
+        print("Erro ao buscar os dados: $error");
+      }
     }
   }
 

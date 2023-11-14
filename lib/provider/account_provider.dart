@@ -12,8 +12,8 @@ import '../model/auth_token.dart';
 import '../model/person_me.dart';
 import '../model/user_list.dart';
 import '../model/users_me.dart';
-import '../network/api_UserList.dart';
 import '../network/api_client.dart';
+import '../network/api_user_list.dart';
 import '../ui/ListAccountPage.dart';
 import '../ui/auth/login.dart';
 import '../utils/toastr_utils.dart';
@@ -150,7 +150,9 @@ class AccountProvider with ChangeNotifier {
       return personMe;
     } catch (error) {
       // Trate os erros, se necessário
-      print("Erro ao atualizar os dados: $error");
+      if (kDebugMode) {
+        print("Erro ao atualizar os dados: $error");
+      }
       throw Exception('Erro ao atualizar os dados');
     }
   }
@@ -247,7 +249,7 @@ class AccountProvider with ChangeNotifier {
     //remover o token no servidor
     await ApiClient.logout(token: token!);
     //
-    await ApiMe.removeToken(app_id: tokenFirebase!);
+    await ApiMe.removeToken(appId: tokenFirebase!);
     //remover o token do shared preferences
     await _preferences.remove(AppConstant.keyToken);
     await _preferences.remove(AppConstant.keyUserInstance);

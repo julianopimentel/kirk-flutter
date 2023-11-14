@@ -63,7 +63,9 @@ class VisitorProvider with ChangeNotifier {
       _isLoading = false; // Define isLoading como falso ao ocorrer um erro
       notifyListeners();
       // Trate os erros, se necessário
-      print("Erro ao buscar os dados: $error");
+      if (kDebugMode) {
+        print("Erro ao buscar os dados: $error");
+      }
     }
   }
 
@@ -80,7 +82,9 @@ class VisitorProvider with ChangeNotifier {
       notifyListeners();
     } catch (error) {
       // Trate os erros, se necessário
-      print("Erro ao buscar os dados: $error");
+      if (kDebugMode) {
+        print("Erro ao buscar os dados: $error");
+      }
     }
 
     notifyListeners();
@@ -99,7 +103,9 @@ class VisitorProvider with ChangeNotifier {
       notifyListeners();
     } catch (error) {
       // Trate os erros, se necessário
-      print("Erro ao buscar os dados: $error");
+      if (kDebugMode) {
+        print("Erro ao buscar os dados: $error");
+      }
     }
     notifyListeners();
   }

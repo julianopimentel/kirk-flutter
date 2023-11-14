@@ -1,10 +1,11 @@
-import 'package:KirkDigital/model/SimplesPessoaDto.dart';
+
 import 'package:KirkDigital/provider/pessoa_provider.dart';
 import 'package:KirkDigital/ui/componentes/foto_field.dart';
 import 'package:KirkDigital/ui/pessoa/DetailPage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../model/simples_pessoa_dto.dart';
 import 'CriarPessoaPage.dart';
 
 class PessoaListPage extends StatefulWidget {

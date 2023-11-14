@@ -3,9 +3,6 @@ import 'dart:convert';
 
 import 'package:KirkDigital/model/visitante.dart';
 import 'package:dio/dio.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
-import '../common/app_constant.dart';
 import '../service/dio_service.dart';
 
 class ApiVisitante{

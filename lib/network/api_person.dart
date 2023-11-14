@@ -1,11 +1,11 @@
 
 import 'dart:convert';
 
-import 'package:KirkDigital/model/person.dart';
-import 'package:KirkDigital/model/SimplesPessoaDto.dart';
-
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 
+import '../model/person.dart';
+import '../model/simples_pessoa_dto.dart';
 import '../service/dio_service.dart';
 
 class ApiPerson{
@@ -28,7 +28,9 @@ class ApiPerson{
 
   static Future<Pessoa> create(Pessoa pessoa) async {
     Dio dioInstance = DioService.dioInstance;
-    print('pessoa: ${pessoa.toJson()}');
+    if (kDebugMode) {
+      print('pessoa: ${pessoa.toJson()}');
+    }
 
     Response apiResponse = await dioInstance.post(
       '/v1/person',

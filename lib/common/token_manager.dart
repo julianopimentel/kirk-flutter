@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
+
 class TokenManager {
   static final TokenManager _instance = TokenManager._internal();
   factory TokenManager() => _instance;
@@ -19,7 +21,9 @@ class TokenManager {
       final String userInstanceValue = userInstanceMap['body']['user_instance'] as String;
         _userInstance = userInstanceValue;
     } catch (e) {
-      print("Erro ao decodificar o token JSON: $e");
+      if (kDebugMode) {
+        print("Erro ao decodificar o token JSON: $e");
+      }
     }
   }
   }

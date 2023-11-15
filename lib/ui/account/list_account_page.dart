@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../model/user_list.dart';
-import '../provider/list_account.dart';
+import '../../model/user_list.dart';
+import '../../provider/list_account.dart';
 
 class ListAccountPage extends StatefulWidget {
   const ListAccountPage({Key? key}) : super(key: key);
@@ -26,44 +26,50 @@ class _ListAccountPageState extends State<ListAccountPage> {
   void onSearchTextChanged(String query) {
     setState(() {
       searchText = query;
-      // Atualize a lista userList com os resultados filtrados
-      userList = userList.where((account) {
-        // Verifique se o nome da conta contém o texto de pesquisa, ignorando maiúsculas e minúsculas
+      // filtre na lista accountList com base no texto de pesquisa
+      userList = context.read<ListAccountProvider>().accountList.where((account) {
         return account.nameConta.toLowerCase().contains(searchText.toLowerCase());
       }).toList();
+
     });
+    // Se o texto de pesquisa estiver vazio, redefina a lista userList para a lista completa
+    if (searchText.isEmpty) {
+      setState(() {
+        userList = context.read<ListAccountProvider>().accountList;
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Selecionar conta'),
+        title: const Text('Selecionar conta'),
         // Desativar o botão de voltar
         automaticallyImplyLeading: false,
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: const EdgeInsets.all(16.0),
+          const Padding(
+            padding: EdgeInsets.all(16.0),
             child: Text(
               'Selecione uma conta:',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
             child: TextField(
               controller: searchController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: 'Pesquisar conta',
                 prefixIcon: Icon(Icons.search),
               ),
               onChanged: onSearchTextChanged,
             ),
           ),
-          Divider(
+          const Divider(
             thickness: 1,
           ),
           Expanded(
@@ -71,7 +77,7 @@ class _ListAccountPageState extends State<ListAccountPage> {
               builder: (context, provider, child) {
                 if (provider.accountList.isEmpty) {
                   provider.getSchema(context); // Chame a função para buscar os dados
-                  return Center(child: CircularProgressIndicator());
+                  return const Center(child: CircularProgressIndicator());
                 } else {
                   return ListView.builder(
                     itemCount: provider.accountList.length,
@@ -113,7 +119,7 @@ Widget buildClickableRow(BuildContext context, String itemName, int tenantId, in
         padding: const EdgeInsets.all(16),
         child: Row(
           children: [
-            Icon(
+            const Icon(
               Icons.layers_outlined,
               color: Colors.grey,
             ),

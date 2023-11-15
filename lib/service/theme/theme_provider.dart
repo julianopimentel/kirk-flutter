@@ -1,15 +1,14 @@
 import 'dart:convert';
-import 'dart:typed_data';
-
-import 'package:KirkDigital/common/app_constant.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:KirkDigital/service/theme/api_skin.dart';
-import 'package:KirkDigital/service/theme/app_theme.dart';
 
+import '../../common/app_constant.dart';
 import '../../common/cliente_constant.dart';
+
+import 'api_skin_data.dart';
+import 'app_theme.dart';
 
 
 class ThemeProvider extends ChangeNotifier {
@@ -124,7 +123,7 @@ class ThemeProvider extends ChangeNotifier {
   }
 
   AppTheme _currentTheme = AppTheme(
-    themeName: ClienteConstant.APP_COR,
+    themeName: ClienteConstant.appCor,
     primaryColor: Colors.blueGrey.shade900,
     accentColor: Colors.grey.shade700,
     iconColor: Colors.white,
@@ -140,7 +139,7 @@ class ThemeProvider extends ChangeNotifier {
     _currentTheme = theme;
   }
 
-  void aplicaThema(String app_cor) {
+  void aplicaThema(String appCor) {
     AppTheme newTheme = switchTheme(
         _currentTheme.themeName, _currentTheme.logo, _currentTheme.logoMenu);
     setTheme(newTheme);
@@ -152,7 +151,7 @@ class ThemeProvider extends ChangeNotifier {
 
   //funcao para tratar a imagem do logo
   Image getLogoImage({bool isLess = false}) {
-    String logoBase64 = _currentTheme.logo ?? '';
+    String logoBase64 = _currentTheme.logo;
     Image? logoImage;
 
     double height = 200;
@@ -170,7 +169,7 @@ class ThemeProvider extends ChangeNotifier {
               bytes, fit: BoxFit.contain, height: height, width: width);
     } else {
       // Se não houver uma representação válida em base64, carrega a imagem dos assets
-      logoImage = Image.asset(ClienteConstant.APP_LOGO, fit: BoxFit.contain,
+      logoImage = Image.asset(ClienteConstant.appLogo, fit: BoxFit.contain,
           height: height,
           width: width);
     }
@@ -194,7 +193,7 @@ class ThemeProvider extends ChangeNotifier {
               bytes, fit: BoxFit.contain, height: height, width: width);
     } else {
       // Se não houver uma representação válida em base64, carrega a imagem dos assets
-      logoImage = Image.asset(ClienteConstant.APP_LOGO_MENU, fit: BoxFit.contain,
+      logoImage = Image.asset(ClienteConstant.appLogoMenu, fit: BoxFit.contain,
           height: height,
           width: width);
     }
@@ -223,7 +222,7 @@ class ThemeProvider extends ChangeNotifier {
 
   Future<void> fetchAndSetDefaultSkin() async {
     try {
-      SkinData skinData = await ApiSkin.getSkinId(ClienteConstant.APP_INTEGRADOR);
+      SkinData skinData = await ApiSkinData.getSkinId(ClienteConstant.appIntegrador);
       SharedPreferences prefs = await SharedPreferences.getInstance();
 
       prefs.setString(AppConstant.keyCor, skinData.cor);
@@ -234,7 +233,7 @@ class ThemeProvider extends ChangeNotifier {
       AppTheme newTheme = switchTheme(skinData.cor, skinData.logo, skinData.logoMenu);
       setTheme(newTheme);
     } catch (error) {
-      aplicaThema(ClienteConstant.APP_COR);
+      aplicaThema(ClienteConstant.appCor);
       notifyListeners();
     }
     notifyListeners();

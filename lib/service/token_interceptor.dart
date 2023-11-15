@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:jwt_decode/jwt_decode.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -35,7 +36,9 @@ class TokenInterceptor extends Interceptor {
       }
     } catch (error) {
       // Tratar o erro na validação do token
-      print(error);
+      if (kDebugMode) {
+        print(error);
+      }
     }
 
     // Continue com a solicitação

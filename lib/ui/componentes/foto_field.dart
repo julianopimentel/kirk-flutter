@@ -14,6 +14,7 @@ class FotoField extends StatefulWidget {
   final bool? isEditable;
   final void Function(String?)? onImageSelected; // Atualize a definição
   final String? selectedImageFilePath;
+  @override
   final Key? key;
 
   const FotoField({

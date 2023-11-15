@@ -1,8 +1,8 @@
 
 import 'dart:convert';
 
-import 'package:KirkDigital/model/roles.dart';
 import 'package:dio/dio.dart';
+import '../model/roles.dart';
 import '../service/dio_service.dart';
 
 class ApiRoles{

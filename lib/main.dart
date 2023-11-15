@@ -1,6 +1,5 @@
 import 'package:KirkDigital/service/theme/theme_provider.dart';
 import 'package:KirkDigital/utils/system_utils.dart';
-import 'package:KirkDigital/utils/toastr_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';

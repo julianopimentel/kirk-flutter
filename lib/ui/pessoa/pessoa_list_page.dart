@@ -1,12 +1,13 @@
 
-import 'package:KirkDigital/provider/pessoa_provider.dart';
-import 'package:KirkDigital/ui/componentes/foto_field.dart';
-import 'package:KirkDigital/ui/pessoa/DetailPage.dart';
+import 'package:KirkDigital/ui/pessoa/pessoa_create_page.dart';
+import 'package:KirkDigital/ui/pessoa/pessoa_detail_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../model/simples_pessoa_dto.dart';
-import 'CriarPessoaPage.dart';
+import '../../provider/pessoa_provider.dart';
+import '../componentes/foto_field.dart';
+
 
 class PessoaListPage extends StatefulWidget {
   const PessoaListPage({super.key});
@@ -128,7 +129,7 @@ class _PessoaListPageState extends State<PessoaListPage> {
           Navigator.of(context).push(
             MaterialPageRoute(
               builder: (context) =>
-                  const CriarPersonPage(), // Substitua com o nome da sua tela de criação
+                  const PessoaCreatePage(), // Substitua com o nome da sua tela de criação
             ),
           );
         },

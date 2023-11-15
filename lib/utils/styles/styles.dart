@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-final kTitleStyle = const TextStyle(
+const kTitleStyle = TextStyle(
   color: Colors.white,
   fontFamily: 'CM Sans Serif',
   fontSize: 26.0,
   height: 1.5,
 );
 
-final kSubtitleStyle = const TextStyle(
+const kSubtitleStyle = TextStyle(
   color: Colors.white,
   fontSize: 18.0,
   height: 1.2,

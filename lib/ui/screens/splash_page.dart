@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../provider/account_provider.dart';
 import '../../service/theme/theme_provider.dart';
-import '../ListAccountPage.dart';
+import '../account/list_account_page.dart';
 import '../auth/login.dart';
 import '../home/home.dart';
 import 'onboarding_screen.dart';
@@ -39,13 +39,13 @@ class _SplashPageState extends State<SplashPage> {
 
     // Navegue para a próxima tela com base no estado do token
     if (provider.token == null && provider.isFistLogin == false) {
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => LoginPage()));
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const LoginPage()));
     } else if (provider.token != null && provider.userInstance == null) {
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => ListAccountPage()));
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const ListAccountPage()));
     } else if (provider.token != null && provider.userInstance != null) {
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => HomePage()));
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const HomePage()));
     } else {
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => OnboardingScreen()));
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const OnboardingScreen()));
     }
 
     // Complete o Future quando a navegação estiver concluída

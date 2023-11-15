@@ -1,9 +1,8 @@
-import 'package:KirkDigital/network/api_visitante.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 
 
 import '../model/visitante.dart';
+import '../network/api_visitante.dart';
 
 class VisitorProvider with ChangeNotifier {
   List<Visitor> _visitors = []; // Uma lista para armazenar os visitantes

@@ -1,8 +1,9 @@
 
 import 'dart:convert';
 
-import 'package:KirkDigital/model/visitante.dart';
 import 'package:dio/dio.dart';
+
+import '../model/visitante.dart';
 import '../service/dio_service.dart';
 
 class ApiVisitante{

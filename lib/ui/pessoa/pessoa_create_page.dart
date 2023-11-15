@@ -11,14 +11,14 @@ import 'package:provider/provider.dart';
 import '../componentes/data_field.dart';
 import '../componentes/dropdown_field.dart';
 
-class CriarPersonPage extends StatefulWidget {
-  const CriarPersonPage({super.key});
+class PessoaCreatePage extends StatefulWidget {
+  const PessoaCreatePage({super.key});
 
   @override
-  createState() => _CriarPersonPageState();
+  createState() => _PessoaCreatePageState();
 }
 
-class _CriarPersonPageState extends State<CriarPersonPage> {
+class _PessoaCreatePageState extends State<PessoaCreatePage> {
   final PageController _pageController = PageController(initialPage: 0);
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();

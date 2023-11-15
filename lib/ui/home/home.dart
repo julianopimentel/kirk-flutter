@@ -1,24 +1,24 @@
 import 'dart:convert';
 
-import 'package:KirkDigital/model/person_me.dart';
-import 'package:KirkDigital/ui/pessoa/CriarPessoaPage.dart';
-import 'package:KirkDigital/ui/pessoa/ListPage.dart';
-import 'package:KirkDigital/ui/visitante/CriarVisitantePage.dart';
-import 'package:KirkDigital/ui/visitante/visitanteListPage.dart';
-import 'package:KirkDigital/ui/oferta/EnviarOfertaPage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shimmer/shimmer.dart';
 import '../../common/app_constant.dart';
 import '../../model/permission.dart';
+import '../../model/person_me.dart';
 import '../../provider/account_provider.dart';
 import '../../service/theme/theme_provider.dart';
 import '../../utils/toastr_utils.dart';
-import '../ListAccountPage.dart';
-import '../UserProfilePage.dart';
+import '../account/list_account_page.dart';
+import '../oferta/enviar_oferta_page.dart';
+import '../pessoa/pessoa_create_page.dart';
+import '../pessoa/pessoa_list_page.dart';
+import '../profile/user_profile_page.dart';
 import '../auth/login.dart';
 import '../componentes/foto_field.dart';
+import '../visitante/create_visitant_page.dart';
+import '../visitante/visitante_list_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -202,7 +202,7 @@ class _HomePageState extends State<HomePage> {
                   selectedIndex = index;
                   if (index == 1) {
                     Navigator.of(context).push(MaterialPageRoute<void>(
-                      builder: (BuildContext context) => UserProfilePage(),
+                      builder: (BuildContext context) => const UserProfilePage(),
                     ));
                   }
                 });
@@ -303,7 +303,7 @@ class _HomePageState extends State<HomePage> {
               return const VisitanteListPage();
             }
             if (menuItem.route == 'personPage') {
-              return UserProfilePage();
+              return const UserProfilePage();
             }
             if (menuItem.route == 'PessoaListPage') {
               return const PessoaListPage();
@@ -311,7 +311,7 @@ class _HomePageState extends State<HomePage> {
             if (menuItem.route == 'EnviarOfertaPage') {
               return const EnviarOfertaPage();
             }
-            return UserProfilePage();
+            return const UserProfilePage();
           }));
         }
       },
@@ -518,7 +518,7 @@ class _HomePageState extends State<HomePage> {
                 Navigator.pop(context);
                 Navigator.of(context).push(
                     MaterialPageRoute<void>(builder: (BuildContext context) {
-                  return const CriarVisitantePage();
+                  return const CreateVisitPage();
                 }));
               },
             ),
@@ -530,7 +530,7 @@ class _HomePageState extends State<HomePage> {
                 Navigator.pop(context);
                 Navigator.of(context).push(
                     MaterialPageRoute<void>(builder: (BuildContext context) {
-                  return const CriarPersonPage();
+                  return const PessoaCreatePage();
                 }));
               },
             ),
@@ -542,7 +542,7 @@ class _HomePageState extends State<HomePage> {
                 Navigator.pop(context);
                 Navigator.of(context).push(
                     MaterialPageRoute<void>(builder: (BuildContext context) {
-                  return UserProfilePage();
+                  return const UserProfilePage();
                 }));
               },
             ),

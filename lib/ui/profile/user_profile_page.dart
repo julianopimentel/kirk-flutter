@@ -1,18 +1,21 @@
-import 'package:KirkDigital/ui/componentes/custom_elevated_button.dart';
-import 'package:KirkDigital/utils/toastr_utils.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../model/person_me.dart';
-import '../provider/account_provider.dart';
-import 'componentes/email_field.dart';
-import 'componentes/foto_nova_field.dart';
-import 'componentes/nome_field.dart';
-import 'componentes/telefone_field.dart';
+import '../../model/person_me.dart';
+import '../../provider/account_provider.dart';
+import '../../utils/toastr_utils.dart';
+import '../componentes/custom_elevated_button.dart';
+import '../componentes/email_field.dart';
+import '../componentes/foto_nova_field.dart';
+import '../componentes/nome_field.dart';
+import '../componentes/telefone_field.dart';
 
 class UserProfilePage extends StatefulWidget {
+  const UserProfilePage({super.key});
+
   @override
-  _UserProfilePageState createState() => _UserProfilePageState();
+  createState() => _UserProfilePageState();
 }
 
 class _UserProfilePageState extends State<UserProfilePage> {
@@ -20,13 +23,6 @@ class _UserProfilePageState extends State<UserProfilePage> {
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   String? _selectedImageFile;
-
-
-  _phoneChanged(String value) {
-    setState(() {
-      _phoneController.text = value;
-    });
-  }
 
   @override
   void dispose() {
@@ -55,7 +51,9 @@ class _UserProfilePageState extends State<UserProfilePage> {
       }); // Atualizar o estado para exibir a imagem
     } catch (error) {
       // Lidar com erros, se necessário
-      print("Erro no carregamento do usuário person: $error");
+      if (kDebugMode) {
+        print("Erro no carregamento do usuário person: $error");
+      }
     }
   }
 
@@ -81,15 +79,14 @@ class _UserProfilePageState extends State<UserProfilePage> {
   await _loadUserData();
 
   // Exiba uma mensagem de sucesso
-  NotificationUtils.showSuccess(context, 'Dados atualizados com sucesso');
-
-
+    NotificationUtils.showSuccess(context, 'Dados atualizados com sucesso');
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Dados Pessoais'),
+        title: const Text('Dados Pessoais'),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),

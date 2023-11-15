@@ -1,24 +1,24 @@
-import 'package:KirkDigital/ui/componentes/custom_elevated_button.dart';
-import 'package:KirkDigital/ui/componentes/data_field.dart';
-import 'package:KirkDigital/ui/componentes/email_field.dart';
-import 'package:KirkDigital/ui/componentes/telefone_field.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../model/visitante.dart'; // Importe a classe Visitor
 import '../../provider/visitante_provider.dart';
 import '../../utils/toastr_utils.dart';
+import '../componentes/custom_elevated_button.dart';
+import '../componentes/data_field.dart';
 import '../componentes/dropdown_field.dart';
-import '../componentes/nome_field.dart'; // Importe o provider de visitante
+import '../componentes/email_field.dart';
+import '../componentes/nome_field.dart';
+import '../componentes/telefone_field.dart'; // Importe o provider de visitante
 
-class CriarVisitantePage extends StatefulWidget {
-  const CriarVisitantePage({super.key});
+class CreateVisitPage extends StatefulWidget {
+  const CreateVisitPage({super.key});
 
   @override
-  createState() => _CriarVisitantePageState();
+  createState() => _CreateVisitPageState();
 }
 
-class _CriarVisitantePageState extends State<CriarVisitantePage> {
+class _CreateVisitPageState extends State<CreateVisitPage> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();

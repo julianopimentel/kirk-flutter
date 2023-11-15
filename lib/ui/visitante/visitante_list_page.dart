@@ -3,8 +3,8 @@ import 'package:provider/provider.dart';
 
 import '../../model/visitante.dart';
 import '../../provider/visitante_provider.dart';
-import 'CriarVisitantePage.dart';
-import 'VisitorDetailPage.dart';
+import 'visitor_detail_page.dart';
+import 'create_visitant_page.dart';
 
 class VisitanteListPage extends StatefulWidget {
   const VisitanteListPage({super.key});
@@ -127,7 +127,7 @@ class _VisitanteListPageState extends State<VisitanteListPage> {
           Navigator.of(context).push(
             MaterialPageRoute(
               builder: (context) =>
-                  const CriarVisitantePage(), // Substitua com o nome da sua tela de criação
+                  const CreateVisitPage(), // Substitua com o nome da sua tela de criação
             ),
           );
         },

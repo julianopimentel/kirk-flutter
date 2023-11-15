@@ -1,11 +1,11 @@
-import 'package:KirkDigital/model/person_me.dart';
-import 'package:KirkDigital/network/api_me.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../model/person_me.dart';
+import '../network/api_me.dart';
 import '../utils/firebase/firebase_options.dart';
 import '../model/user_list.dart'; // Importe a classe Account
 import '../model/users_me.dart';
@@ -105,7 +105,7 @@ class ListAccountProvider with ChangeNotifier {
   }
 
   Future<void> setupToken() async {
-    Stream<String> _tokenStream;
+    Stream<String> tokenStream;
     requestNotificationPermission(); // Solicitar permissão de notificação ao iniciar o aplicativo.
 
     try {
@@ -119,8 +119,8 @@ class ListAccountProvider with ChangeNotifier {
       FirebaseMessaging messaging = FirebaseMessaging.instance;
       String? token = await messaging.getToken();
 
-      _tokenStream = FirebaseMessaging.instance.onTokenRefresh;
-      _tokenStream.listen((token) async {
+      tokenStream = FirebaseMessaging.instance.onTokenRefresh;
+      tokenStream.listen((token) async {
         SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.setString(AppConstant.tokenNotification, token);
       });

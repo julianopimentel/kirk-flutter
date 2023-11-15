@@ -1,5 +1,3 @@
-import 'package:KirkDigital/network/api_me.dart';
-import 'package:KirkDigital/provider/list_account.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -13,10 +11,12 @@ import '../model/person_me.dart';
 import '../model/user_list.dart';
 import '../model/users_me.dart';
 import '../network/api_client.dart';
+import '../network/api_me.dart';
 import '../network/api_user_list.dart';
-import '../ui/ListAccountPage.dart';
+import '../ui/account/list_account_page.dart';
 import '../ui/auth/login.dart';
 import '../utils/toastr_utils.dart';
+import 'list_account.dart';
 
 class AccountProvider with ChangeNotifier {
   String? _token;
@@ -158,7 +158,7 @@ class AccountProvider with ChangeNotifier {
       }
 
       //NotificationUtils.showError('Erro ao atualizar os dados');
-      throw error;
+      rethrow;
     }
   }
 
@@ -181,18 +181,8 @@ class AccountProvider with ChangeNotifier {
         return refreshedPersonMe;
       }
     } catch (error) {
-      Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(
-          builder: (BuildContext context) {
-            return LoginPage();
-          },
-        ),
-            (Route<dynamic> route) => false,
-      );
-      NotificationUtils.showWarning(context, 'Faça o login novamente');
-      throw Exception('Erro ao obter os dados pessoais, saindo do app');
-
+      NotificationUtils.showWarning(context, 'Verifique sua conexão com a internet');
+      throw Exception('Erro ao obter os dados pessoais');
     }
   }
 

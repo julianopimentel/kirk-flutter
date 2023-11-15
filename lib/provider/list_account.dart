@@ -10,11 +10,9 @@ import '../utils/firebase/firebase_options.dart';
 import '../model/user_list.dart'; // Importe a classe Account
 import '../model/users_me.dart';
 import '../network/api_user_list.dart';
-import '../ui/home.dart';
+import '../ui/home/home.dart';
 import '../common/app_constant.dart';
 import 'package:permission_handler/permission_handler.dart';
-
-import '../utils/toastr_utils.dart';
 
 class ListAccountProvider with ChangeNotifier {
   List<Account> _accountList = []; // Lista de contas

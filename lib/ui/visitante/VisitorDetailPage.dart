@@ -50,9 +50,9 @@ import '../../model/visitante.dart';
 class VisitorDetailModal extends StatelessWidget {
   final Visitor visitor;
 
-  VisitorDetailModal({super.key, required this.visitor});
+  const VisitorDetailModal({super.key, required this.visitor});
 
-  //converter a data para o formato dd/mm/yyyy
+  // converter a data para o formato dd/mm/yyyy
   DateTime convertListToDate(List<int> dateList) {
     if (dateList.length == 3) {
       int year = dateList[0];
@@ -84,16 +84,16 @@ class VisitorDetailModal extends StatelessWidget {
     }
 
     return Container(
-      padding: EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(16.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
             'Nome: ${visitor.name}',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
-          SizedBox(height: 12),
+          const SizedBox(height: 12),
           Text('Telefone: ${visitor.phone}'),
           Text('Email: ${visitor.email}'),
           Text(
@@ -103,12 +103,12 @@ class VisitorDetailModal extends StatelessWidget {
             'Data de Nascimento: ${visitor.birthAt != null ? formatDate(visitor.birthAt) : 'Não Informado'}',
           ),
 
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           ElevatedButton(
             onPressed: () {
               Navigator.of(context).pop(); // Fecha o modal
             },
-            child: Text('Fechar'),
+            child: const Text('Fechar'),
           ),
         ],
       ),

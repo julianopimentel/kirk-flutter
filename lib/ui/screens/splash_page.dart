@@ -6,7 +6,7 @@ import '../../provider/account_provider.dart';
 import '../../service/theme/theme_provider.dart';
 import '../ListAccountPage.dart';
 import '../auth/login.dart';
-import '../home.dart';
+import '../home/home.dart';
 import 'onboarding_screen.dart';
 
 class SplashPage extends StatefulWidget {

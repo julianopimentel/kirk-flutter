@@ -32,9 +32,7 @@ class Permission {
       if (json is Map<String, dynamic>) {
         return Permission.fromJson(json);
       } else {
-        // Trate o caso em que o elemento da lista não é um Map válido, se necessário.
-        // Por exemplo, você pode retornar um valor padrão ou lançar uma exceção.
-        return Permission(); // Retorna um objeto vazio como exemplo.
+        return Permission(); // Retorna um objeto vazio
       }
     }).toList();
   }

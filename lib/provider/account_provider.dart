@@ -225,7 +225,7 @@ class AccountProvider with ChangeNotifier {
           context as BuildContext,
           MaterialPageRoute(
             builder: (BuildContext context) {
-              return LoginPage();
+              return const LoginPage();
             },
           ),
               (Route<dynamic> route) => false,
@@ -239,7 +239,7 @@ class AccountProvider with ChangeNotifier {
         context as BuildContext,
         MaterialPageRoute(
           builder: (BuildContext context) {
-            return LoginPage();
+            return const LoginPage();
           },
         ),
             (Route<dynamic> route) => false,
@@ -267,19 +267,16 @@ class AccountProvider with ChangeNotifier {
     await _preferences.remove(AppConstant.keyUserInstance);
     _preferences.remove('_token');
     await _preferences.remove(AppConstant.tokenNotification);
-    _preferences.clear();
-
+    await _preferences.remove('keyMultiConta');
     return;
   }
 
   Future<bool> isTokenValid() {
     // Obtenha o token do SharedPreferences
     String? token = _preferences.getString(AppConstant.keyToken);
-
     // Verifique se há token disponível
     if (token == null) {
-    // Tratar a ausência de token (por exemplo, solicitar login novamente)
-    return Future.value(false);
+      return Future.value(false);
     }
 
     try {

@@ -25,9 +25,9 @@ class PessoaDetailPage extends StatelessWidget {
           // Se os dados ainda estão sendo carregados, você pode exibir um indicador de carregamento
           return Scaffold(
             appBar: AppBar(
-              title: Text('Detalhes da Pessoa'),
+              title: const Text('Detalhes da Pessoa'),
             ),
-            body: Center(
+            body: const Center(
               child: CircularProgressIndicator(),
             ),
           );
@@ -35,9 +35,9 @@ class PessoaDetailPage extends StatelessWidget {
           // Se ocorreu um erro ou a pessoa não foi encontrada
           return Scaffold(
             appBar: AppBar(
-              title: Text('Detalhes da Pessoa'),
+              title: const Text('Detalhes da Pessoa'),
             ),
-            body: Center(
+            body: const Center(
               child: Text('Pessoa não encontrada.'),
             ),
           );
@@ -54,7 +54,7 @@ class PessoaDetailPage extends StatelessWidget {
 
           return Scaffold(
             appBar: AppBar(
-              title: Text('Detalhes da Pessoa'),
+              title: const Text('Detalhes da Pessoa'),
             ),
             body: SingleChildScrollView(
               padding: const EdgeInsets.all(16.0),

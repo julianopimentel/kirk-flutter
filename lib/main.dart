@@ -29,7 +29,6 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
-
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => AccountProvider()),

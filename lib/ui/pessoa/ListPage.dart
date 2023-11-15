@@ -9,8 +9,10 @@ import '../../model/simples_pessoa_dto.dart';
 import 'CriarPessoaPage.dart';
 
 class PessoaListPage extends StatefulWidget {
+  const PessoaListPage({super.key});
+
   @override
-  _PessoaListPageState createState() => _PessoaListPageState();
+  createState() => _PessoaListPageState();
 }
 
 class _PessoaListPageState extends State<PessoaListPage> {
@@ -50,16 +52,10 @@ class _PessoaListPageState extends State<PessoaListPage> {
               },
             ),
             TextButton(
-              child: Text('Excluir'),
-              onPressed: () {
-                // Exclua o visitante e feche o diálogo
-                provider.delete(pessoa.id!, context);
-                // Atualize a lista e notifique os ouvintes
-                provider.getList();
-                //reload the list
-
-                Navigator.of(context).pop();
-                setState(() {});
+              child: const Text('Excluir'),
+              onPressed: () async {
+                _onDeleteConfirmed(pessoa, provider);
+                Navigator.of(context).pop(); // Feche o diálogo
               },
             ),
           ],
@@ -68,11 +64,17 @@ class _PessoaListPageState extends State<PessoaListPage> {
     );
   }
 
+  void _onDeleteConfirmed(SimplesPessoaDto pessoa, PessoaProvider provider) async {
+    await provider.delete(pessoa.id!, context);
+    await provider.getList();
+    setState(() {}); // Atualize a interface do usuário após a exclusão
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Lista de Pessoa'),
+        title: const Text('Lista de Pessoa'),
       ),
       body: Consumer<PessoaProvider>(
         builder: (context, provider, child) {
@@ -94,27 +96,26 @@ class _PessoaListPageState extends State<PessoaListPage> {
                 SimplesPessoaDto pessoa = provider.pessoas[index];
                 return Card(
                   elevation: 4, // Define a elevação do card
-                  margin: EdgeInsets.symmetric(
+                  margin: const EdgeInsets.symmetric(
                       vertical: 8, horizontal: 16), // Define as margens do card
-                  child: Container(
-                    child: ListTile(
-                      contentPadding: EdgeInsets.all(16),
-                      leading: FotoField(
-                        imageUrl: pessoa.image,
-                        name: pessoa.name,
-                      ),
-                      title: Text(
-                        pessoa.name ?? '',
-                        style: const TextStyle(
-                          fontSize:
-                              16, // Ajuste o tamanho da fonte conforme necessário
-                        ),
-                      ),
-                      onTap: () {
-                        // Exiba o diálogo de detalhes do visitante
-                        _mostrarMenuOpcoes(context, pessoa, provider);
-                      },
+                  child: ListTile(
+                    contentPadding: const EdgeInsets.all(16),
+                    leading: FotoField(
+                      imageUrl: pessoa.image,
+                      name: pessoa.name,
+                      key: ValueKey<int>(pessoa.id!),
                     ),
+                    title: Text(
+                      pessoa.name ?? '',
+                      style: const TextStyle(
+                        fontSize:
+                            16, // Ajuste o tamanho da fonte conforme necessário
+                      ),
+                    ),
+                    onTap: () {
+                      // Exiba o diálogo de detalhes do visitante
+                      _mostrarMenuOpcoes(context, pessoa, provider);
+                    },
                   ),
                 );
               },
@@ -127,11 +128,11 @@ class _PessoaListPageState extends State<PessoaListPage> {
           Navigator.of(context).push(
             MaterialPageRoute(
               builder: (context) =>
-                  CriarPersonPage(), // Substitua com o nome da sua tela de criação
+                  const CriarPersonPage(), // Substitua com o nome da sua tela de criação
             ),
           );
         },
-        child: Icon(Icons.add), // Ícone de adição
+        child: const Icon(Icons.add), // Ícone de adição
       ),
     );
   }
@@ -141,46 +142,43 @@ class _PessoaListPageState extends State<PessoaListPage> {
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
-        return Container(
-          // Personalize o conteúdo do modal aqui
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              ListTile(
-                leading: Icon(Icons.remove_red_eye),
-                title: Text('Visualizar'),
-                onTap: () {
-                  // Implemente a lógica para visualizar a pessoa
-                  Navigator.pop(context); // Feche o modal
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            ListTile(
+              leading: const Icon(Icons.remove_red_eye),
+              title: const Text('Visualizar'),
+              onTap: () {
+                // Implemente a lógica para visualizar a pessoa
+                Navigator.pop(context); // Feche o modal
 
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return PessoaDetailPage(id: pessoa.id!);
-                    },
-                  );
-                },
-              ),
-              ListTile(
-                leading: Icon(Icons.edit),
-                title: Text('Editar'),
-                onTap: () {
-                  // Implemente a lógica para editar a pessoa
-                  // Abra a tela de edição da pessoa
-                  Navigator.pop(context); // Feche o modal
-                },
-              ),
-              ListTile(
-                leading: Icon(Icons.delete),
-                title: Text('Excluir'),
-                onTap: () {
-                  Navigator.pop(context); // Feche o modal
-                  // Implemente a lógica para excluir a pessoa
-                  _showDeleteConfirmationDialog(pessoa, provider);
-                },
-              ),
-            ],
-          ),
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return PessoaDetailPage(id: pessoa.id!);
+                  },
+                );
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.edit),
+              title: const Text('Editar'),
+              onTap: () {
+                // Implemente a lógica para editar a pessoa
+                // Abra a tela de edição da pessoa
+                Navigator.pop(context); // Feche o modal
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.delete),
+              title: const Text('Excluir'),
+              onTap: () {
+                Navigator.pop(context); // Feche o modal
+                // Implemente a lógica para excluir a pessoa
+                _showDeleteConfirmationDialog(pessoa, provider);
+              },
+            ),
+          ],
         );
       },
     );

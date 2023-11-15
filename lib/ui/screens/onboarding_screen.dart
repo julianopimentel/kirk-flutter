@@ -208,7 +208,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     MaterialPageRoute(builder: (context) => const LoginPage())),
                 child: Center(
                   child: Padding(
-                    padding: EdgeInsets.only(bottom: 30.0),
+                    padding: const EdgeInsets.only(bottom: 30.0),
                     child: Text(
                       'Começar',
                       style: TextStyle(

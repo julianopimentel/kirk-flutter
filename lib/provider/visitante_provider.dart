@@ -77,7 +77,7 @@ class VisitorProvider with ChangeNotifier {
 
       // Adicione o visitante à lista _visitors
       _visitors.add(visitor);
-
+      notifyListeners();
     } catch (error) {
       // Trate os erros, se necessário
       if (kDebugMode) {
@@ -85,9 +85,6 @@ class VisitorProvider with ChangeNotifier {
       }
     }
 
-    //NotificationUtils.showSuccess(context, 'Mensagem de sucesso');
-
-    notifyListeners();
   }
 
   // Método para excluir um visitante

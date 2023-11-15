@@ -7,8 +7,10 @@ import 'CriarVisitantePage.dart';
 import 'VisitorDetailPage.dart';
 
 class VisitanteListPage extends StatefulWidget {
+  const VisitanteListPage({super.key});
+
   @override
-  _VisitanteListPageState createState() => _VisitanteListPageState();
+  createState() => _VisitanteListPageState();
 }
 
 class _VisitanteListPageState extends State<VisitanteListPage> {
@@ -32,8 +34,8 @@ class _VisitanteListPageState extends State<VisitanteListPage> {
           false, // O diálogo não pode ser fechado tocando fora dele
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Excluir Visitante'),
-          content: SingleChildScrollView(
+          title: const Text('Excluir Visitante'),
+          content: const SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
                 Text('Você tem certeza de que deseja excluir este visitante?'),
@@ -42,19 +44,18 @@ class _VisitanteListPageState extends State<VisitanteListPage> {
           ),
           actions: <Widget>[
             TextButton(
-              child: Text('Cancelar'),
+              child: const Text('Cancelar'),
               onPressed: () {
                 // Atualize a lista e notifique os ouvintes
                 Navigator.of(context).pop(); // Feche o diálogo
               },
             ),
             TextButton(
-              child: Text('Excluir'),
+              child: const Text('Excluir'),
               onPressed: () {
                 // Exclua o visitante e feche o diálogo
                 provider.deleteVisitor(visitor.id!);
                 // Atualize a lista e notifique os ouvintes
-                provider.getList();
                 Navigator.of(context).pop();
               },
             ),
@@ -68,16 +69,18 @@ class _VisitanteListPageState extends State<VisitanteListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Lista de visitantes'),
+        title: const Text('Lista de visitantes'),
       ),
       body: Consumer<VisitorProvider>(
         builder: (context, provider, child) {
           if (provider.isLoading) {
             // Se os dados ainda estão sendo carregados, exiba um indicador de carregamento
-            return CircularProgressIndicator();
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
           } else if (provider.visitors.isEmpty) {
             // Se não há visitantes, você pode exibir uma mensagem de "nenhum visitante encontrado"
-            return Center(
+            return const Center(
               child: Text('Nenhum visitante encontrado.'),
             );
           } else {
@@ -93,13 +96,14 @@ class _VisitanteListPageState extends State<VisitanteListPage> {
                     if (direction == DismissDirection.endToStart) {
                       // Exibir o diálogo de confirmação antes de excluir
                       _showDeleteConfirmationDialog(visitor, provider);
+                      //reload
                     }
                   },
                   background: Container(
                     color: Colors.red, // Cor de fundo quando arrastado
                     alignment: Alignment.centerRight,
-                    padding: EdgeInsets.only(right: 16.0),
-                    child: Icon(
+                    padding: const EdgeInsets.only(right: 16.0),
+                    child: const Icon(
                       Icons.delete,
                       color: Colors.white,
                     ),
@@ -123,11 +127,11 @@ class _VisitanteListPageState extends State<VisitanteListPage> {
           Navigator.of(context).push(
             MaterialPageRoute(
               builder: (context) =>
-                  CriarVisitantePage(), // Substitua com o nome da sua tela de criação
+                  const CriarVisitantePage(), // Substitua com o nome da sua tela de criação
             ),
           );
         },
-        child: Icon(Icons.add), // Ícone de adição
+        child: const Icon(Icons.add), // Ícone de adição
       ),
     );
   }

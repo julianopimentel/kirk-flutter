@@ -1,8 +1,21 @@
+import 'package:KirkDigital/utils/system_utils.dart';
 import 'package:flutter/material.dart';
 
 enum NotificationType { warning, success, error }
 
 class NotificationUtils {
+  static late GlobalKey<ScaffoldMessengerState> scaffoldKey;
+  // Função de inicialização para configurar a chave
+  static void init(BuildContext context) {
+    scaffoldKey = GlobalKey<ScaffoldMessengerState>();
+
+    // Verifique se o widget que contém a ScaffoldMessenger está montado antes de atribuir a chave
+    WidgetsBinding.instance?.addPostFrameCallback((_) {
+      scaffoldKey = GlobalKey<ScaffoldMessengerState>();
+      // Agora, scaffoldKey está inicializado e pronto para uso
+    });
+  }
+
   static void showNotification(String message, NotificationType type, BuildContext context) {
     Color backgroundColor;
     Color textColor;
@@ -32,10 +45,11 @@ class NotificationUtils {
     );
 
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    Navigator.of(context).pop();
   }
 
   static void showSuccess(BuildContext context, String message) {
-    showNotification(message, NotificationType.success, context);
+    showNotification(message, NotificationType.success,context);
   }
 
   static void showWarning(BuildContext context, String message) {

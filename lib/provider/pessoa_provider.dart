@@ -40,7 +40,9 @@ class PessoaProvider with ChangeNotifier {
       _isLoading = false; // Define isLoading como falso ao ocorrer um erro
       notifyListeners();
       // Trate os erros, se necessário
-      print("Erro ao buscar os dados: $error");
+      if (kDebugMode) {
+        print("Erro ao buscar os dados: $error");
+      }
     }
   }
 
@@ -55,8 +57,6 @@ class PessoaProvider with ChangeNotifier {
       // Notifique os ouvintes (consumers)
       _isLoading = false; // Define isLoading como falso ao concluir a operação com sucesso
       notifyListeners();
-
-      Navigator.of(context).pop(); // Feche o diálogo
 
       NotificationUtils.showSuccess(context, 'Pessoa criada com sucesso');
       // Retorne a lista de visitantes

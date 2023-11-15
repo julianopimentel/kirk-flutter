@@ -12,8 +12,10 @@ import '../componentes/data_field.dart';
 import '../componentes/dropdown_field.dart';
 
 class CriarPersonPage extends StatefulWidget {
+  const CriarPersonPage({super.key});
+
   @override
-  _CriarPersonPageState createState() => _CriarPersonPageState();
+  createState() => _CriarPersonPageState();
 }
 
 class _CriarPersonPageState extends State<CriarPersonPage> {
@@ -57,7 +59,7 @@ class _CriarPersonPageState extends State<CriarPersonPage> {
   void _nextPage() {
     if (_pageController.page! < _currentTotal) {
       _pageController.nextPage(
-          duration: Duration(milliseconds: 300), curve: Curves.ease);
+          duration: const Duration(milliseconds: 300), curve: Curves.ease);
       setState(() {
         _currentPage += 1;
       });
@@ -67,7 +69,7 @@ class _CriarPersonPageState extends State<CriarPersonPage> {
   void _previousPage() {
     if (_pageController.page! > 0) {
       _pageController.previousPage(
-          duration: Duration(milliseconds: 300), curve: Curves.ease);
+          duration: const Duration(milliseconds: 300), curve: Curves.ease);
       setState(() {
         _currentPage -= 1;
       });
@@ -92,11 +94,11 @@ class _CriarPersonPageState extends State<CriarPersonPage> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Erro de validação'),
-            content: Text('Por favor, preencha todos os campos obrigatórios.'),
+            title: const Text('Erro de validação'),
+            content: const Text('Por favor, preencha todos os campos obrigatórios.'),
             actions: [
               TextButton(
-                child: Text('OK'),
+                child: const Text('OK'),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
@@ -141,11 +143,11 @@ class _CriarPersonPageState extends State<CriarPersonPage> {
     var provider = context.watch<PessoaProvider>();
     return Scaffold(
       appBar: AppBar(
-        title: Text('Criar Pessoa'),
+        title: const Text('Criar Pessoa'),
       ),
       body: PageView(
         controller: _pageController,
-        physics: NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         children: [
           _buildBasicInfoPage(),
           _buildAdditionalInfoPage(),
@@ -161,7 +163,7 @@ class _CriarPersonPageState extends State<CriarPersonPage> {
               color: Colors.grey.withOpacity(0.5),
               spreadRadius: 1,
               blurRadius: 2,
-              offset: Offset(0, 1),
+              offset: const Offset(0, 1),
             ),
           ],
           color: Colors.white,
@@ -175,12 +177,12 @@ class _CriarPersonPageState extends State<CriarPersonPage> {
                 ElevatedButton(
                   onPressed: _previousPage,
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.grey,
+                    backgroundColor: Colors.grey,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12.0),
                     ),
                     padding:
-                        EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
+                        const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
                   ),
                   child: const Text(
                     'Voltar',
@@ -194,12 +196,12 @@ class _CriarPersonPageState extends State<CriarPersonPage> {
                 ElevatedButton(
                   onPressed: _nextPage,
                   style: ElevatedButton.styleFrom(
-                    primary: Theme.of(context).primaryColor,
+                    backgroundColor: Theme.of(context).primaryColor,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12.0),
                     ),
                     padding:
-                        EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
+                        const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0),
                   ),
                   child: const Text(
                     'Avançar',
@@ -236,16 +238,16 @@ class _CriarPersonPageState extends State<CriarPersonPage> {
 
   Widget _buildAdditionalInfoPage() {
     return ListView(
-      padding: EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(16.0),
       children: [
-        SizedBox(height: 20.0),
-        Center(
+        const SizedBox(height: 20.0),
+        const Center(
           child: Text(
             'Informações Adicionais',
             style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
           ),
         ),
-        SizedBox(height: 50.0),
+        const SizedBox(height: 50.0),
         DataField(
           label: 'Data de Nascimento',
           selectedDate: _selectedDate,
@@ -267,16 +269,16 @@ class _CriarPersonPageState extends State<CriarPersonPage> {
 
   Widget _buildPermissionsPage(PessoaProvider provider) {
     return ListView(
-      padding: EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(16.0),
       children: [
-        SizedBox(height: 20.0),
-        Center(
+        const SizedBox(height: 20.0),
+        const Center(
           child: Text(
             'Permissões',
             style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
           ),
         ),
-        SizedBox(height: 50.0),
+        const SizedBox(height: 50.0),
         DropdownField(
           label: 'Grupo de Permissão',
           required: true,
@@ -294,7 +296,7 @@ class _CriarPersonPageState extends State<CriarPersonPage> {
               'Criar acesso à plataforma?',
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
-            SizedBox(width: 7),
+            const SizedBox(width: 7),
             Checkbox(
               value: _acessoPlataforma,
               onChanged: (value) {
@@ -340,23 +342,23 @@ class _CriarPersonPageState extends State<CriarPersonPage> {
 
   Widget _buildFinishPage() {
     return ListView(
-      padding: EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(16.0),
       children: [
-        SizedBox(height: 20.0),
-        Center(
+        const SizedBox(height: 20.0),
+        const Center(
           child: Text(
             'Finalizar Cadastro',
             style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
           ),
         ),
-        SizedBox(height: 30.0),
-        Text(
+        const SizedBox(height: 150.0),
+        const Text(
           'Confira os dados e clique em "Salvar" para finalizar o cadastro.',
           textAlign: TextAlign.center,
         ),
-        SizedBox(height: 30.0),
+        const SizedBox(height: 30.0),
         CustomElevatedButton(onPressed: _criarPessoa, label: 'Salvar'),
-        SizedBox(height: 50.0),
+        const SizedBox(height: 50.0),
       ],
     );
   }

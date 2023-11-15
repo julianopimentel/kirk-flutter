@@ -12,8 +12,10 @@ import '../componentes/dropdown_field.dart';
 import '../componentes/nome_field.dart'; // Importe o provider de visitante
 
 class CriarVisitantePage extends StatefulWidget {
+  const CriarVisitantePage({super.key});
+
   @override
-  _CriarVisitantePageState createState() => _CriarVisitantePageState();
+  createState() => _CriarVisitantePageState();
 }
 
 class _CriarVisitantePageState extends State<CriarVisitantePage> {
@@ -43,7 +45,7 @@ class _CriarVisitantePageState extends State<CriarVisitantePage> {
     });
   }
 
-  void _criarVisitante() {
+  Future<void> _criarVisitante() async {
     final String name = _nameController.text;
     final String phone = _phoneController.text;
     final String email = _emailController.text;
@@ -56,11 +58,11 @@ class _CriarVisitantePageState extends State<CriarVisitantePage> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Erro de validação'),
-            content: Text('Por favor, preencha todos os campos obrigatórios.'),
+            title: const Text('Erro de validação'),
+            content: const Text('Por favor, preencha todos os campos obrigatórios.'),
             actions: [
               TextButton(
-                child: Text('OK'),
+                child: const Text('OK'),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
@@ -83,13 +85,10 @@ class _CriarVisitantePageState extends State<CriarVisitantePage> {
 
       // Acesse o provider e chame o método para criar um visitante
       final VisitorProvider provider = context.read<VisitorProvider>();
-      provider.createVisitor(newVisitor);
+      await provider.createVisitor(newVisitor);
 
-
-      Navigator.of(context).pop();
-      NotificationUtils.showSuccess(context, 'O visitante ${newVisitor.name} foi criado com sucesso.');
-
-      // Navegue de volta para a lista de visitantes após a criação bem-sucedida
+      NotificationUtils.showSuccess(context,
+          'O visitante ${newVisitor.name} foi criado com sucesso.');
     }
   }
 
@@ -97,10 +96,10 @@ class _CriarVisitantePageState extends State<CriarVisitantePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Criar Visitante'),
+        title: const Text('Criar Visitante'),
       ),
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 24.0), // Ajuste o espaçamento lateral e vertical conforme necessário
+        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 24.0), // Ajuste o espaçamento lateral e vertical conforme necessário
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -111,7 +110,7 @@ class _CriarVisitantePageState extends State<CriarVisitantePage> {
                 fontSize: 16, // Tamanho da fonte da frase introdutória
               ),
             ),
-            SizedBox(height: 20), // Espaçamento entre a frase e o campo de nome
+            const SizedBox(height: 20), // Espaçamento entre a frase e o campo de nome
             NomeField(controller: _nameController, required: true),
             TelefoneField(controller: _phoneController),
             EmailField(controller: _emailController),

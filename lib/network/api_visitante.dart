@@ -45,14 +45,10 @@ class ApiVisitante{
       '/v1/visitor/$visitorId', // Substitua pelo endpoint correto da API com o ID do visitante
     );
 
-    // Você pode verificar o código de status da resposta aqui
-    if (apiResponse.statusCode == 204) {
-      // O visitante foi excluído com sucesso
-      return;
-    } else {
-      // Lidar com erros, como visitante não encontrado, aqui
+    if(apiResponse.statusCode != 200){
       throw Exception('Erro ao excluir o visitante');
     }
+
   }
 
 }

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 
 class AppTheme {
+  final String themeName;
   final Color primaryColor;
   final Color accentColor;
   final Color iconColor;
@@ -11,6 +12,7 @@ class AppTheme {
   final String logoMenu;
 
   AppTheme({
+    required this.themeName,
     required this.primaryColor,
     required this.accentColor,
     required this.iconColor,

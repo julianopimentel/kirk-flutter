@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../provider/account_provider.dart';
+import '../../service/theme/theme_provider.dart';
 import '../ListAccountPage.dart';
 import '../auth/login.dart';
 import '../home.dart';
@@ -15,7 +16,12 @@ class SplashPage extends StatefulWidget {
 class _SplashPageState extends State<SplashPage> {
   Future<void> _initData() async {
     AccountProvider provider = context.read<AccountProvider>();
+    final themeProvider = Provider.of<ThemeProvider>(context, listen: false);
+
+
     await provider.init();
+    await themeProvider.refreshSkinApi();
+
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(

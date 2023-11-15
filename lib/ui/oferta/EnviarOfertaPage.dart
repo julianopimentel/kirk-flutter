@@ -1,24 +1,25 @@
-import 'package:KirkDigital/model/person.dart';
-import 'package:KirkDigital/model/users_me.dart';
-import 'package:KirkDigital/provider/account_provider.dart';
-import 'package:KirkDigital/provider/pessoa_provider.dart';
-import 'package:KirkDigital/ui/componentes/custom_elevated_button.dart';
-import 'package:KirkDigital/ui/componentes/email_field.dart';
-import 'package:KirkDigital/ui/componentes/nome_field.dart';
-import 'package:KirkDigital/ui/componentes/telefone_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
+import '../../model/users_me.dart';
+import '../../provider/account_provider.dart';
+import '../../provider/pessoa_provider.dart';
 import '../../utils/toastr_utils.dart';
 import '../componentes/custom_campo_numerico_field.dart';
+import '../componentes/custom_elevated_button.dart';
 import '../componentes/data_field.dart';
 import '../componentes/dropdown_field.dart';
+import '../componentes/email_field.dart';
+import '../componentes/nome_field.dart';
+import '../componentes/telefone_field.dart';
 
 class EnviarOfertaPage extends StatefulWidget {
+  const EnviarOfertaPage({super.key});
+
   @override
-  _EnviarOfertaPageState createState() => _EnviarOfertaPageState();
+  createState() => _EnviarOfertaPageState();
 }
 
 class _EnviarOfertaPageState extends State<EnviarOfertaPage> {
@@ -38,7 +39,7 @@ class _EnviarOfertaPageState extends State<EnviarOfertaPage> {
 
   DropdownItem? _selectedGenderItem;
   int _currentStep = 0;
-  String _pixCopiaCola = '00020126360014br.gov.bcb.pix0114+559299222840052040000530398654040.025802BR5925Juliano Pimentel Pinheiro6009Sao Paulo62070503***6304866E';
+  final String _pixCopiaCola = '00020126360014br.gov.bcb.pix0114+559299222840052040000530398654040.025802BR5925Juliano Pimentel Pinheiro6009Sao Paulo62070503***6304866E';
 
   @override
   void dispose() {
@@ -86,8 +87,8 @@ class _EnviarOfertaPageState extends State<EnviarOfertaPage> {
 
   void _enviarOferta() {
     final String name = _nameController.text;
-    final String phone = _phoneController.text;
-    final String email = _emailController.text;
+    //final String phone = _phoneController.text;
+    //final String email = _emailController.text;
 
     //convertendo a data para o formato yyyy-01-01
 
@@ -97,11 +98,11 @@ class _EnviarOfertaPageState extends State<EnviarOfertaPage> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Erro de validação'),
-            content: Text('Por favor, preencha todos os campos obrigatórios.'),
+            title: const Text('Erro de validação'),
+            content: const Text('Por favor, preencha todos os campos obrigatórios.'),
             actions: [
               TextButton(
-                child: Text('OK'),
+                child: const Text('OK'),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
@@ -111,19 +112,7 @@ class _EnviarOfertaPageState extends State<EnviarOfertaPage> {
         },
       );
     } else {
-      // Crie o objeto de visitante
-      Pessoa newPessoa = Pessoa(
-          name: name,
-          phone: phone,
-          email: email,
-          birthAt: _selectedDate != null
-              ? [_selectedDate!.year, _selectedDate!.month, _selectedDate!.day]
-              : null,
-          sex: _selectedGenderItem?.value,
-          createAccess: false);
-
       // Acesse o provider e chame o método para criar um visitante
-      final PessoaProvider provider = context.read<PessoaProvider>();
       //provider.create(newPessoa, context);
     }
   }
@@ -139,7 +128,7 @@ class _EnviarOfertaPageState extends State<EnviarOfertaPage> {
     var provider = context.watch<PessoaProvider>();
     return Scaffold(
       appBar: AppBar(
-        title: Text('Envio de Ofertas e Dizimos'),
+        title: const Text('Envio de Ofertas e Dizimos'),
       ),
       body: Stepper(
         currentStep: _currentStep,
@@ -147,27 +136,27 @@ class _EnviarOfertaPageState extends State<EnviarOfertaPage> {
         onStepCancel: _isFirstStep() ? null : _previousStep,
         steps: [
           Step(
-            title: Text('Informações Básicas'),
+            title: const Text('Informações Básicas'),
             content: _buildBasicInfoStep(),
             isActive: _currentStep >= 0,
           ),
           Step(
-            title: Text('Tipo de Movimentação'),
+            title: const Text('Tipo de Movimentação'),
             content: _buildPermissionsStep(provider),
             isActive: _currentStep >= 1,
           ),
           Step(
-            title: Text('Informações de Pagamento'),
+            title: const Text('Informações de Pagamento'),
             content: _buildAdditionalInfoStep(),
             isActive: _currentStep >= 2,
           ),
           Step(
-            title: Text('Transferência PIX'),
+            title: const Text('Transferência PIX'),
             content: _buildPixfoStep(),
             isActive: _currentStep >= 3,
           ),
           Step(
-            title: Text('Confirmação'),
+            title: const Text('Confirmação'),
             content: _buildFinishStep(),
 
           ),
@@ -196,7 +185,7 @@ class _EnviarOfertaPageState extends State<EnviarOfertaPage> {
             fontSize: 16,
           ),
         ),
-        SizedBox(height: 20),
+        const SizedBox(height: 20),
         DataField(
           label: 'Data de Pagamento',
           selectedDate: _selectedDate,
@@ -240,10 +229,10 @@ class _EnviarOfertaPageState extends State<EnviarOfertaPage> {
             fontSize: 16,
           ),
         ),
-        SizedBox(height: 20),
+        const SizedBox(height: 20),
         // Widget para exibir o QR Code
         _buildQRCode(),
-        SizedBox(height: 20),
+        const SizedBox(height: 20),
         // Copiar o valor do PIX
         Text(
           'Copie e cole o valor do PIX abaixo para realizar a transferência.',
@@ -252,7 +241,7 @@ class _EnviarOfertaPageState extends State<EnviarOfertaPage> {
             fontSize: 16,
           ),
         ),
-        SizedBox(height: 20),
+        const SizedBox(height: 20),
         SelectableText(
           _pixCopiaCola,
           style: TextStyle(
@@ -260,7 +249,7 @@ class _EnviarOfertaPageState extends State<EnviarOfertaPage> {
             fontSize: 16,
           ),
         ),
-        SizedBox(height: 20),
+        const SizedBox(height: 20),
         ElevatedButton(
           onPressed: () {
             Clipboard.setData(ClipboardData(text: _pixCopiaCola));
@@ -272,9 +261,9 @@ class _EnviarOfertaPageState extends State<EnviarOfertaPage> {
               context,
             );
           },
-          child: Text('Copiar PIX'),
+          child: const Text('Copiar PIX'),
         ),
-        SizedBox(height: 20),
+        const SizedBox(height: 20),
       ],
     );
   }
@@ -298,25 +287,23 @@ class _EnviarOfertaPageState extends State<EnviarOfertaPage> {
                   fontSize: 16,
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               CustomElevatedButton(
                 onPressed: _enviarOferta,
                 label: 'Finalizar',
               ),
             ],
           )
-        : SizedBox.shrink();
+        : const SizedBox.shrink();
   }
 
   Widget _buildQRCode() {
     // Substitua _pixCopiaCola pelo valor do seu PIX copiado e colado
     final String pixData = _pixCopiaCola;
-    return Container(
-      child: QrImageView(
-        data: pixData,
-        version: QrVersions.auto,
-        size: 200.0,
-      ),
+    return QrImageView(
+      data: pixData,
+      version: QrVersions.auto,
+      size: 200.0,
     );
   }
 

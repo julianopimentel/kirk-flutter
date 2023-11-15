@@ -8,7 +8,7 @@ import 'package:KirkDigital/provider/account_provider.dart';
 import 'package:KirkDigital/provider/list_account.dart';
 import 'package:KirkDigital/provider/pessoa_provider.dart';
 import 'package:KirkDigital/provider/visitante_provider.dart';
-import 'ui/splash/splash_page.dart';
+import 'ui/screens/splash_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

@@ -14,7 +14,6 @@ import '../model/user_list.dart';
 import '../model/users_me.dart';
 import '../network/api_client.dart';
 import '../network/api_user_list.dart';
-import '../service/theme/theme_provider.dart';
 import '../ui/ListAccountPage.dart';
 import '../ui/auth/login.dart';
 import '../utils/toastr_utils.dart';
@@ -22,12 +21,14 @@ import '../utils/toastr_utils.dart';
 class AccountProvider with ChangeNotifier {
   String? _token;
   String? _refreshToken;
+  bool _isFirstLogin = true;
   String? _userInstance;
   String? _dadosDaPessoa;
   late final SharedPreferences _preferences;
-  List<Account> _accountList = []; // Lista de contas
+  List<Account> _accountList = [];
 
   String? get token => _token;
+  bool get isFistLogin => _isFirstLogin;
   String? get refreshToken => _refreshToken;
   String? get userInstance => _userInstance;
   String? get dadosDaPessoa => _dadosDaPessoa;
@@ -38,6 +39,7 @@ class AccountProvider with ChangeNotifier {
     _token = _preferences.getString(AppConstant.keyToken);
     _userInstance = _preferences.getString(AppConstant.keyUserInstance);
     _dadosDaPessoa = _preferences.getString(AppConstant.keyDadosPessoais);
+    _isFirstLogin = _preferences.getBool(AppConstant.keyIsFirstLogin) ?? true;
   }
 
   Future<void> register({
@@ -178,7 +180,7 @@ class AccountProvider with ChangeNotifier {
       }
     } catch (error) {
       Navigator.pushAndRemoveUntil(
-        context as BuildContext,
+        context,
         MaterialPageRoute(
           builder: (BuildContext context) {
             return LoginPage();
@@ -299,4 +301,7 @@ class AccountProvider with ChangeNotifier {
     }
   }
 
+  void keyIsFirstLogin(bool bool) {
+    _preferences.setBool('keyIsFirstLogin', bool);
+  }
 }

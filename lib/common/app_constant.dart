@@ -23,6 +23,9 @@ class AppConstant {
   static const String keyLogo = 'logo';
   static const String keyLogoMenu = 'logoMenu';
 
+  //lgin
+  static const String keyIsFirstLogin = 'keyIsFirstLogin';
+
 
 
   static String get baseUrl {
@@ -42,4 +45,6 @@ class AppConstant {
   String get getbaseUrl {
     return baseUrl;
   }
+
+
 }

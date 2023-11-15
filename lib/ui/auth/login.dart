@@ -23,6 +23,9 @@ class _LoginPageState extends State<LoginPage> {
     final themeProvider = Provider.of<ThemeProvider>(context);
     Image logoImage = themeProvider.getLogoImage();
 
+    // marcar o keyIsFirstLogin como false para que o usuário não veja a tela de onboarding novamente
+    context.read<AccountProvider>().keyIsFirstLogin(false);
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(

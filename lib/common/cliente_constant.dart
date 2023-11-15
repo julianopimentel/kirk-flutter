@@ -1,5 +1,5 @@
 class ClienteConstant {
-  static const String APP_COR = "violeta";
+  static const String APP_COR = "vermelho";
   static const int APP_INTEGRADOR = 1;
   static const String APP_LOGO = "assets/images/logo.png";
   static const String APP_LOGO_MENU = "assets/images/logoMenu.png";

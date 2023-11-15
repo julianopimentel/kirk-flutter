@@ -2,19 +2,19 @@ import 'package:flutter/material.dart';
 
 class DataField extends StatefulWidget {
   final DateTime? selectedDate;
-  final Function(DateTime)? onDataSelecionada;
+  final Function(DateTime)? onDataSelect;
   final bool enabled;
   final String? label;
 
-  DataField({
+  const DataField({super.key,
     required this.selectedDate,
-    this.onDataSelecionada,
+    this.onDataSelect,
     this.enabled = true,
     this.label,
   });
 
   @override
-  _DataFieldState createState() => _DataFieldState();
+  createState() => _DataFieldState();
 }
 
 class _DataFieldState extends State<DataField> {
@@ -28,7 +28,7 @@ class _DataFieldState extends State<DataField> {
       lastDate: DateTime.now(),
     );
     if (picked != null && picked != widget.selectedDate) {
-      widget.onDataSelecionada!(picked);
+      widget.onDataSelect!(picked);
     }
   }
 
@@ -39,11 +39,11 @@ class _DataFieldState extends State<DataField> {
       children: [
         Text(
           widget.label ?? 'Data',
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: const TextStyle(fontWeight: FontWeight.bold),
         ),
-        SizedBox(height: 7),
+        const SizedBox(height: 7),
         InputDecorator(
-          decoration: InputDecoration(
+          decoration: const InputDecoration(
             border: InputBorder.none,
           ),
           child: GestureDetector(
@@ -65,7 +65,7 @@ class _DataFieldState extends State<DataField> {
             ),
           ),
         ),
-        SizedBox(height: 20),
+        const SizedBox(height: 20),
       ],
     );
   }

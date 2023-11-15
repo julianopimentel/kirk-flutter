@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 class EmailField extends StatelessWidget {
   final TextEditingController controller;
-  final bool obrigatorio;
+  final bool required;
   final bool enabled;
 
-  EmailField({
+  const EmailField({super.key,
     required this.controller,
-    this.obrigatorio = false,
+    this.required = false,
     this.enabled = false,
   });
 
@@ -17,14 +17,14 @@ class EmailField extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Text(
-          'Email ${obrigatorio ? '*' : ''}',
-          style: TextStyle(fontWeight: FontWeight.bold),
+          'Email ${required ? '*' : ''}',
+          style: const TextStyle(fontWeight: FontWeight.bold),
         ),
         TextField(
           controller: controller,
           enabled: !enabled,
         ),
-        SizedBox(height: 20),
+        const SizedBox(height: 20),
       ],
     );
   }

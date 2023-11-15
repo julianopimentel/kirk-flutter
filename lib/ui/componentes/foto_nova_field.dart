@@ -15,7 +15,7 @@ class FotoNovaField extends StatefulWidget {
   final void Function(String?)? onImageSelected; // Atualize a definição
   final String? selectedImageFilePath;
 
-  FotoNovaField({
+  const FotoNovaField({super.key,
     this.imageUrl,
     this.imageSize = 48.0,
     this.name,
@@ -26,7 +26,7 @@ class FotoNovaField extends StatefulWidget {
   });
 
   @override
-  _FotoFieldState createState() => _FotoFieldState();
+  createState() => _FotoFieldState();
 }
 
 class _FotoFieldState extends State<FotoNovaField> {
@@ -94,14 +94,14 @@ class _FotoFieldState extends State<FotoNovaField> {
           ),
         ),
         if (widget.isEditable!)
-          SizedBox(height: 10.0), // Espaçamento entre o círculo e o botão
+          const SizedBox(height: 10.0), // Espaçamento entre o círculo e o botão
         if (widget.isEditable!)
           ElevatedButton(
             onPressed: _pickImage,
             style: ElevatedButton.styleFrom(
-              primary: themeProvider.currentTheme.accentColor,
+              backgroundColor: themeProvider.currentTheme.accentColor,
             ),
-            child: Text('Alterar foto'),
+            child: const Text('Alterar foto'),
           ),
       ],
     );

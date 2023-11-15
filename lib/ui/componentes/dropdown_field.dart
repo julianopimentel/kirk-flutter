@@ -5,16 +5,16 @@ class DropdownField extends StatelessWidget {
   final List<DropdownItem> items;
   final Function(DropdownItem?) onChanged;
   final String label;
-  final bool obrigatorio;
-  final bool desabilitado;
+  final bool required;
+  final bool disabled;
 
-  DropdownField({
+  const DropdownField({super.key,
     required this.label,
     required this.selectedValue,
     required this.items,
     required this.onChanged,
-    this.obrigatorio = false,
-    this.desabilitado = false,
+    this.required = false,
+    this.disabled = false,
   });
   @override
   Widget build(BuildContext context) {
@@ -22,8 +22,8 @@ class DropdownField extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Text(
-          label + (obrigatorio == true ? '*' : ''),
-          style: TextStyle(fontWeight: FontWeight.bold),
+          label + (required == true ? '*' : ''),
+          style: const TextStyle(fontWeight: FontWeight.bold),
         ),
         InputDecorator(
           decoration: const InputDecoration(
@@ -36,8 +36,8 @@ class DropdownField extends StatelessWidget {
             items: items.map((DropdownItem item) {
               return DropdownMenuItem<DropdownItem>(
                 value: item,
+                enabled: !disabled,
                 child: Text(item.title),
-                enabled: !desabilitado,
               );
             }).toList(),
             onChanged: onChanged,

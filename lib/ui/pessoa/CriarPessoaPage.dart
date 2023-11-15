@@ -227,7 +227,7 @@ class _CriarPersonPageState extends State<CriarPersonPage> {
           style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
         )),
         const SizedBox(height: 50.0),
-        NomeField(controller: _nameController, obrigatorio: true),
+        NomeField(controller: _nameController, required: true),
         TelefoneField(controller: _phoneController),
         EmailField(controller: _emailController),
       ],
@@ -249,7 +249,7 @@ class _CriarPersonPageState extends State<CriarPersonPage> {
         DataField(
           label: 'Data de Nascimento',
           selectedDate: _selectedDate,
-          onDataSelecionada: _atualizarDataSelecionada,
+          onDataSelect: _atualizarDataSelecionada,
         ),
         DropdownField(
           label: 'Gênero',
@@ -279,7 +279,7 @@ class _CriarPersonPageState extends State<CriarPersonPage> {
         SizedBox(height: 50.0),
         DropdownField(
           label: 'Grupo de Permissão',
-          obrigatorio: true,
+          required: true,
           selectedValue: _selectedRolesItem,
           items: provider.rolesItems,
           onChanged: (DropdownItem? newValue) {

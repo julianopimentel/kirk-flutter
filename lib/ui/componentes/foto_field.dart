@@ -15,7 +15,7 @@ class FotoField extends StatefulWidget {
   final void Function(String?)? onImageSelected; // Atualize a definição
   final String? selectedImageFilePath;
 
-  FotoField({
+  const FotoField({super.key,
     this.imageUrl = '',
     this.imageSize = 48.0,
     this.name,
@@ -26,7 +26,7 @@ class FotoField extends StatefulWidget {
   });
 
   @override
-  _FotoFieldState createState() => _FotoFieldState();
+  createState() => _FotoFieldState();
 }
 
 class _FotoFieldState extends State<FotoField> {
@@ -81,14 +81,14 @@ class _FotoFieldState extends State<FotoField> {
           ),
         ),
         if (widget.isEditable!)
-          SizedBox(height: 10.0), // Espaçamento entre o círculo e o botão
+          const SizedBox(height: 10.0), // Espaçamento entre o círculo e o botão
         if (widget.isEditable!)
           ElevatedButton(
             onPressed: _pickImage,
             style: ElevatedButton.styleFrom(
-              primary: themeProvider.currentTheme.accentColor,
+              backgroundColor: themeProvider.currentTheme.accentColor,
             ),
-            child: Text('Alterar foto'),
+            child: const Text('Alterar foto'),
 
           ),
       ],
@@ -97,7 +97,7 @@ class _FotoFieldState extends State<FotoField> {
 
   // Função para decodificar a imagem a partir de uma string Base64
   Uint8List _decodeBase64Image(String base64String) {
-    if(base64String.isEmpty || base64String == "" || base64String == null){
+    if(base64String.isEmpty || base64String == ""){
       return Uint8List(0);
     }
     return Uint8List.fromList(base64.decode(base64String));

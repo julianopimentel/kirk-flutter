@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import '../model/person_me.dart';
 import '../provider/account_provider.dart';
 import 'componentes/email_field.dart';
-import 'componentes/fotoNova_field.dart';
+import 'componentes/foto_nova_field.dart';
 import 'componentes/nome_field.dart';
 import 'componentes/telefone_field.dart';
 

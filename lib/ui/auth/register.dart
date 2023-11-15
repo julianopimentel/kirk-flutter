@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-import '../share/clipper.dart';
-import '../share/clipper2.dart';
+import '../../service/theme/theme_provider.dart';
 import 'login.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -143,6 +143,8 @@ class _RegisterPageState extends State<RegisterPage> {
 
     @override
     Widget build(BuildContext context) {
+      final themeProvider = Provider.of<ThemeProvider>(context);
+      Image logoImage = themeProvider.getLogoImage();
 
       return Scaffold(
         body: Column(
@@ -151,15 +153,14 @@ class _RegisterPageState extends State<RegisterPage> {
               children: [
                 CustomPaint(
                   size: Size(MediaQuery.of(context).size.width, 300),
-                  painter: RPSCustomPainter(),
                 ),
                 Positioned(
-                  top: 16,
-                  right: -5,
-                  child: CustomPaint(
-                    size: Size(MediaQuery.of(context).size.width, 300),
-                    painter: PSCustomPainter(),
-                  ),
+                  top: MediaQuery.of(context).size.height *
+                      0.05, // Ajuste conforme necessário
+                  right: 0,
+                  left: MediaQuery.of(context).size.width * 0.5 -
+                      150, // Centralize horizontalmente
+                  child: logoImage,
                 ),
                 const Positioned(
                   top: 220,

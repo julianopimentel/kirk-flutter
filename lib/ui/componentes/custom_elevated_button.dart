@@ -4,7 +4,7 @@ class CustomElevatedButton extends StatelessWidget {
   final VoidCallback onPressed;
   final String label; // Adicione esta propriedade
 
-  CustomElevatedButton({
+  const CustomElevatedButton({super.key,
     required this.onPressed,
     required this.label, // Inclua esta propriedade
   });
@@ -14,7 +14,7 @@ class CustomElevatedButton extends StatelessWidget {
    return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-        minimumSize: Size(150, 50), // Define o tamanho mínimo do botão
+        minimumSize: const Size(150, 50), // Define o tamanho mínimo do botão
       ),
       child: Text(
         label,

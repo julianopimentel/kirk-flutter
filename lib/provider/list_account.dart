@@ -6,7 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../firebase_options.dart';
+import '../utils/firebase/firebase_options.dart';
 import '../model/user_list.dart'; // Importe a classe Account
 import '../model/users_me.dart';
 import '../network/api_user_list.dart';

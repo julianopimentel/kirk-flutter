@@ -1,14 +1,9 @@
-import 'dart:convert';
-import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../provider/account_provider.dart';
 import '../../service/theme/theme_provider.dart';
 import '../../utils/toastr_utils.dart';
-import '../share/clipper.dart';
-import '../share/clipper2.dart';
 import 'register.dart';
 
 class LoginPage extends StatefulWidget {
@@ -21,7 +16,6 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  bool _onSend = false;
   bool _obscurePassword = true;
 
   @override
@@ -49,7 +43,7 @@ class _LoginPageState extends State<LoginPage> {
                 Positioned(
                   top: MediaQuery.of(context).size.height * 0.3,
                   left: 30,
-                  child: Column(
+                  child: const Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
@@ -274,7 +268,6 @@ class _LoginPageState extends State<LoginPage> {
           'Por favor, preencha email e senha.', context);
       return;
     }
-    setState(() => _onSend = true);
     AccountProvider provider = context.read<AccountProvider>();
 
     // Tenta realizar o login
@@ -285,8 +278,6 @@ class _LoginPageState extends State<LoginPage> {
         context: context,
       );
 
-      // Se o login for realizado com sucesso, redireciona para a tela de home
-      setState(() => _onSend = false);
     } catch (e) {
       NotificationUtils.showWarning(
           'Oops! Verifique sua conexão com a internet e tente novamente.',

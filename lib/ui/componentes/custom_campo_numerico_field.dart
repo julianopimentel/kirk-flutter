@@ -3,13 +3,13 @@ import 'package:flutter/services.dart';
 
 class CustomCampoNumericoField extends StatelessWidget {
   final TextEditingController controller;
-  final bool obrigatorio;
+  final bool required;
   final bool enabled;
   final String label;
 
-  CustomCampoNumericoField({
+  const CustomCampoNumericoField({super.key,
     required this.controller,
-    this.obrigatorio = false,
+    this.required = false,
     this.enabled = false,
     required this.label,
   });
@@ -20,8 +20,8 @@ class CustomCampoNumericoField extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Text(
-          '$label ${obrigatorio ? '*' : ''}',
-          style: TextStyle(fontWeight: FontWeight.bold),
+          '$label ${required ? '*' : ''}',
+          style: const TextStyle(fontWeight: FontWeight.bold),
         ),
         TextField(
           controller: controller,
@@ -31,7 +31,7 @@ class CustomCampoNumericoField extends StatelessWidget {
             FilteringTextInputFormatter.allow(RegExp(r'[0-9]')), // Aceita apenas números
           ],
         ),
-        SizedBox(height: 20),
+        const SizedBox(height: 20),
       ],
     );
   }

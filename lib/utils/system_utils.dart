@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'notification_utils.dart';
+import 'firebase/notification_utils.dart';
 
 void setStatusBarColor() {
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(

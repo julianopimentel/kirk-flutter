@@ -114,13 +114,13 @@ class _CriarVisitantePageState extends State<CriarVisitantePage> {
               ),
             ),
             SizedBox(height: 20), // Espaçamento entre a frase e o campo de nome
-            NomeField(controller: _nameController, obrigatorio: true),
+            NomeField(controller: _nameController, required: true),
             TelefoneField(controller: _phoneController),
             EmailField(controller: _emailController),
             DataField(
                 label: 'Data de nascimento',
                 selectedDate: _selectedDate,
-                onDataSelecionada: _atualizarDataSelecionada),
+                onDataSelect: _atualizarDataSelecionada),
             DropdownField(
               label: 'Gênero',
               selectedValue: _selectedGenderItem,

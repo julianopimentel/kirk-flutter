@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 
 class NomeField extends StatelessWidget {
   final TextEditingController controller;
-  final bool obrigatorio;
+  final bool required;
   final bool enabled;
   final ValueChanged<String>? onValueChanged; // Adicione esta linha
 
-  NomeField({
+  const NomeField({super.key,
     required this.controller,
-    this.obrigatorio = false,
+    this.required = false,
     this.enabled = false,
     this.onValueChanged,
   });
@@ -21,8 +21,8 @@ class NomeField extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Text(
-          'Nome ${obrigatorio ? '*' : ''}',
-          style: TextStyle(fontWeight: FontWeight.bold),
+          'Nome ${required ? '*' : ''}',
+          style: const TextStyle(fontWeight: FontWeight.bold),
         ),
         TextField(
           controller: controller,
@@ -33,7 +33,7 @@ class NomeField extends StatelessWidget {
             }
           },
         ),
-        SizedBox(height: 20),
+        const SizedBox(height: 20),
       ],
     );
   }

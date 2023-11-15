@@ -12,7 +12,7 @@ import 'package:provider/provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 import '../../utils/toastr_utils.dart';
-import '../componentes/custom_campoNumerico_field.dart';
+import '../componentes/custom_campo_numerico_field.dart';
 import '../componentes/data_field.dart';
 import '../componentes/dropdown_field.dart';
 
@@ -200,7 +200,7 @@ class _EnviarOfertaPageState extends State<EnviarOfertaPage> {
         DataField(
           label: 'Data de Pagamento',
           selectedDate: _selectedDate,
-          onDataSelecionada: _atualizarDataSelecionada,
+          onDataSelect: _atualizarDataSelecionada,
         ),
         CustomCampoNumericoField(
           label: 'Valor',

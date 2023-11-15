@@ -5,7 +5,7 @@ class GenericList<T> extends StatelessWidget {
   final String Function(T item) getName;
   final Function(T item) onTap;
 
-  GenericList({
+  const GenericList({super.key,
     required this.items,
     required this.getName,
     required this.onTap,

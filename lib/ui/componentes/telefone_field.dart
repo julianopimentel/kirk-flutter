@@ -6,7 +6,7 @@ class TelefoneField extends StatelessWidget {
   final bool enabled;
   final ValueChanged<String>? onValueChanged; // Adicione esta linha
 
-  TelefoneField({
+  const TelefoneField({super.key,
     required this.controller,
     this.obrigatorio = false,
     this.enabled = false,
@@ -20,7 +20,7 @@ class TelefoneField extends StatelessWidget {
       children: [
         Text(
           'Telefone ${obrigatorio ? '*' : ''}',
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: const TextStyle(fontWeight: FontWeight.bold),
         ),
         TextField(
           controller: controller,
@@ -31,7 +31,7 @@ class TelefoneField extends StatelessWidget {
             }
           },
         ),
-        SizedBox(height: 20),
+        const SizedBox(height: 20),
       ],
     );
   }

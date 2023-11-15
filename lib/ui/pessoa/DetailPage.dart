@@ -82,7 +82,7 @@ class PessoaDetailPage extends StatelessWidget {
                   if (pessoa.birthAt != null)
                     DataField(
                         label: 'Data de nascimento',
-                        onDataSelecionada: (data) {
+                        onDataSelect: (data) {
                         },
                         selectedDate: pessoa.birthAt == null
                             ? null

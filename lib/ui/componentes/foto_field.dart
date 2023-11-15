@@ -14,8 +14,7 @@ class FotoField extends StatefulWidget {
   final bool? isEditable;
   final void Function(String?)? onImageSelected; // Atualize a definição
   final String? selectedImageFilePath;
-  @override
-  final Key? key;
+  final Key? identifier;
 
   const FotoField({
     this.imageUrl = '',
@@ -25,8 +24,8 @@ class FotoField extends StatefulWidget {
     this.isEditable = false,
     this.selectedImageFilePath,
     this.onImageSelected,
-    this.key,
-  }) : super(key: key);
+    this.identifier,
+  }) : super(key: identifier);
 
   @override
   createState() => _FotoFieldState();

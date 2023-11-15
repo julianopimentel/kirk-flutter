@@ -1,12 +1,11 @@
-
-import 'package:KirkDigital/ui/pessoa/pessoa_create_page.dart';
-import 'package:KirkDigital/ui/pessoa/pessoa_detail_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../model/simples_pessoa_dto.dart';
 import '../../provider/pessoa_provider.dart';
 import '../componentes/foto_field.dart';
+import '../../ui/pessoa/pessoa_create_page.dart';
+import '../../ui/pessoa/pessoa_detail_page.dart';
 
 
 class PessoaListPage extends StatefulWidget {
@@ -104,7 +103,7 @@ class _PessoaListPageState extends State<PessoaListPage> {
                     leading: FotoField(
                       imageUrl: pessoa.image,
                       name: pessoa.name,
-                      key: ValueKey<int>(pessoa.id!),
+                      identifier: ValueKey<int>(pessoa.id!),
                     ),
                     title: Text(
                       pessoa.name ?? '',

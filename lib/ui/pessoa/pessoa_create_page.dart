@@ -1,15 +1,16 @@
-import 'package:KirkDigital/model/person.dart';
-import 'package:KirkDigital/provider/pessoa_provider.dart';
-import 'package:KirkDigital/ui/componentes/custom_elevated_button.dart';
-import 'package:KirkDigital/ui/componentes/email_field.dart';
-import 'package:KirkDigital/ui/componentes/foto_field.dart';
-import 'package:KirkDigital/ui/componentes/nome_field.dart';
-import 'package:KirkDigital/ui/componentes/telefone_field.dart';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../model/person.dart';
+import '../../provider/pessoa_provider.dart';
+import '../componentes/custom_elevated_button.dart';
 import '../componentes/data_field.dart';
 import '../componentes/dropdown_field.dart';
+import '../componentes/email_field.dart';
+import '../componentes/foto_field.dart';
+import '../componentes/nome_field.dart';
+import '../componentes/telefone_field.dart';
 
 class PessoaCreatePage extends StatefulWidget {
   const PessoaCreatePage({super.key});

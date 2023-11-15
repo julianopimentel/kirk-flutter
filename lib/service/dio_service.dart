@@ -1,7 +1,8 @@
-import 'package:KirkDigital/service/token_interceptor.dart';
+
 import 'package:dio/dio.dart';
 
 import '../common/app_constant.dart';
+import '/service/token_interceptor.dart';
 
 class DioService {
   static Dio? _dioInstance;

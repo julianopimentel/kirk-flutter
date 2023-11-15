@@ -1,14 +1,14 @@
-import 'package:KirkDigital/service/theme/theme_provider.dart';
-import 'package:KirkDigital/utils/system_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 
-import 'package:KirkDigital/provider/account_provider.dart';
-import 'package:KirkDigital/provider/list_account.dart';
-import 'package:KirkDigital/provider/pessoa_provider.dart';
-import 'package:KirkDigital/provider/visitante_provider.dart';
 import 'ui/screens/splash_page.dart';
+import 'service/theme/theme_provider.dart';
+import 'utils/system_utils.dart';
+import 'provider/account_provider.dart';
+import 'provider/list_account.dart';
+import 'provider/pessoa_provider.dart';
+import 'provider/visitante_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -61,14 +61,12 @@ class MainApp extends StatelessWidget {
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-          primary: themeProvider.currentTheme.primaryColor,
-          onPrimary: themeProvider.currentTheme.iconColor,
+          foregroundColor: themeProvider.currentTheme.iconColor, backgroundColor: themeProvider.currentTheme.primaryColor,
         ),
       ),
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
-          primary: themeProvider.currentTheme.primaryColor,
-          onSurface: themeProvider.currentTheme.iconColor,
+          foregroundColor: themeProvider.currentTheme.primaryColor, disabledForegroundColor: themeProvider.currentTheme.iconColor.withOpacity(0.38),
         ),
       ),
     );

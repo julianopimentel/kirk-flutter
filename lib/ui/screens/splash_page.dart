@@ -38,14 +38,14 @@ class _SplashPageState extends State<SplashPage> {
     await themeProvider.refreshSkinApi();
 
     // Navegue para a próxima tela com base no estado do token
-    if (provider.token == null && provider.isFistLogin == false) {
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const LoginPage()));
+    if (provider.isFistLogin == true) {
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const OnboardingScreen()));
     } else if (provider.token != null && provider.userInstance == null) {
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const ListAccountPage()));
     } else if (provider.token != null && provider.userInstance != null) {
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const HomePage()));
     } else {
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const OnboardingScreen()));
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const LoginPage()));
     }
 
     // Complete o Future quando a navegação estiver concluída

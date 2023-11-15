@@ -186,7 +186,7 @@ class AccountProvider with ChangeNotifier {
     }
   }
 
-  Future<void> refreshTokenConsulta(context) async {
+  Future<void> refreshTokenConsulta(BuildContext context) async {
     // Obtenha o refreshToken do SharedPreferences
     String? refreshToken = _preferences.getString(AppConstant.keyRefreshToken);
     String? token = _preferences.getString(AppConstant.keyToken);
@@ -212,7 +212,7 @@ class AccountProvider with ChangeNotifier {
         logout();
         //ir para a tela de login
         Navigator.pushAndRemoveUntil(
-          context as BuildContext,
+          context,
           MaterialPageRoute(
             builder: (BuildContext context) {
               return const LoginPage();
@@ -226,7 +226,7 @@ class AccountProvider with ChangeNotifier {
     } catch (error) {
       NotificationUtils.showError(context, 'Verifique sua conexão de internet!');
       Navigator.pushAndRemoveUntil(
-        context as BuildContext,
+        context,
         MaterialPageRoute(
           builder: (BuildContext context) {
             return const LoginPage();

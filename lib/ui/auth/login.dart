@@ -77,7 +77,7 @@ class _LoginPageState extends State<LoginPage> {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   const SizedBox(
-                    height: 25,
+                    height: 50,
                   ),
                   _buildEmail(),
                   const SizedBox(
@@ -103,7 +103,7 @@ class _LoginPageState extends State<LoginPage> {
                       _login(); // Ação a ser executada ao clicar no botão
                     },
                     style: ElevatedButton.styleFrom(
-                      primary: themeProvider.currentTheme.primaryColor,
+                      backgroundColor: themeProvider.currentTheme.primaryColor,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30),
                       ),
@@ -138,7 +138,7 @@ class _LoginPageState extends State<LoginPage> {
                     height: 20,
                   ),
                   const SizedBox(
-                    height: 150,
+                    height: 130,
                   ),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.end,

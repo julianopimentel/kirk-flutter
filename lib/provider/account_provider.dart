@@ -83,7 +83,7 @@ class AccountProvider with ChangeNotifier {
     _refreshToken = auth.refreshToken;
 
     if (auth.token == null) {
-      NotificationUtils.showNotification(auth.message ?? 'Seu email ou senha estão incorretos', NotificationType.warning, context);
+      NotificationUtils.showWarning(context, auth.message ?? 'Seu email ou senha estão incorretos');
       return;
     }
 
@@ -98,7 +98,7 @@ class AccountProvider with ChangeNotifier {
 
     //retornar se a lista de contas for vazia
     if (jsonList.isEmpty) {
-      NotificationUtils.showNotification('Você não tem acesso a nenhuma conta', NotificationType.warning, context);
+      NotificationUtils.showError(context, 'Você não tem acesso a nenhuma conta');
       return;
     }
     List<Account> accounts = jsonList.map((json) => Account.fromJson(json)).toList();
@@ -156,7 +156,9 @@ class AccountProvider with ChangeNotifier {
       if (kDebugMode) {
         print("Erro ao atualizar os dados: $error");
       }
-      throw Exception('Erro ao atualizar os dados');
+
+      //NotificationUtils.showError('Erro ao atualizar os dados');
+      throw error;
     }
   }
 
@@ -188,7 +190,7 @@ class AccountProvider with ChangeNotifier {
         ),
             (Route<dynamic> route) => false,
       );
-      NotificationUtils.showNotification('Faça o login novamente', NotificationType.warning, context);
+      NotificationUtils.showWarning(context, 'Faça o login novamente');
       throw Exception('Erro ao obter os dados pessoais, saindo do app');
 
     }
@@ -229,10 +231,10 @@ class AccountProvider with ChangeNotifier {
               (Route<dynamic> route) => false,
         );
         // Tratar o erro na renovação do token (por exemplo, solicitar login novamente)
-        NotificationUtils.showNotification('Sua sessão expirou, faça o login novamente', NotificationType.warning, context);
+        NotificationUtils.showWarning(context, 'Sua sessão expirou, faça o login novamente');
       }
     } catch (error) {
-      NotificationUtils.showNotification('Verifique sua conexão de internet!', NotificationType.warning, context);
+      NotificationUtils.showError(context, 'Verifique sua conexão de internet!');
       Navigator.pushAndRemoveUntil(
         context as BuildContext,
         MaterialPageRoute(

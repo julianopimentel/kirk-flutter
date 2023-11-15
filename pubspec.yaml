@@ -40,6 +40,7 @@ dependencies:
   firebase_core:
   shimmer:
   jwt_decode:
+  flutter_svg:
   flutter:
     sdk: flutter
 

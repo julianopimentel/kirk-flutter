@@ -102,7 +102,7 @@ class ListAccountProvider with ChangeNotifier {
       if (kDebugMode) {
         print("Erro ao buscar os dados: $error");
       }
-      NotificationUtils.showNotification('Erro ao selecionar a conta!', NotificationType.error, context);
+      //NotificationUtils.showError('Erro ao selecionar a conta!');
     }
   }
 

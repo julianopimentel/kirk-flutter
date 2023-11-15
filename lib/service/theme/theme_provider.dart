@@ -146,6 +146,10 @@ class ThemeProvider extends ChangeNotifier {
     setTheme(newTheme);
   }
 
+  AppTheme getTheme() {
+    return _currentTheme;
+  }
+
   //funcao para tratar a imagem do logo
   Image getLogoImage({bool isLess = false}) {
     String logoBase64 = _currentTheme.logo ?? '';

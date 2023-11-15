@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 
 
-import '../model/visitante.dart'; // Importe a classe Visitor
+import '../model/visitante.dart';
 
 class VisitorProvider with ChangeNotifier {
   List<Visitor> _visitors = []; // Uma lista para armazenar os visitantes
@@ -78,14 +78,14 @@ class VisitorProvider with ChangeNotifier {
       // Adicione o visitante à lista _visitors
       _visitors.add(visitor);
 
-      // Notifique os ouvintes (consumers)
-      notifyListeners();
     } catch (error) {
       // Trate os erros, se necessário
       if (kDebugMode) {
         print("Erro ao buscar os dados: $error");
       }
     }
+
+    //NotificationUtils.showSuccess(context, 'Mensagem de sucesso');
 
     notifyListeners();
   }

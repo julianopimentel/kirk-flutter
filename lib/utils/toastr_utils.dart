@@ -34,19 +34,19 @@ class NotificationUtils {
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
-  static void showSuccess(String message, BuildContext context) {
+  static void showSuccess(BuildContext context, String message) {
     showNotification(message, NotificationType.success, context);
   }
 
-  static void showWarning(String message, BuildContext context) {
+  static void showWarning(BuildContext context, String message) {
     showNotification(message, NotificationType.warning, context);
   }
 
-  static void showError(String message, BuildContext context) {
+  static void showError(BuildContext context, String message) {
     showNotification(message, NotificationType.error, context);
   }
 
-  static void showException(dynamic exception, BuildContext context) {
-    showNotification(exception.toString(), NotificationType.error, context);
+  static void showException(BuildContext context) {
+    showNotification('Erro interno', NotificationType.error, context);
   }
 }

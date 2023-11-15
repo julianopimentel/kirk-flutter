@@ -255,11 +255,8 @@ class _EnviarOfertaPageState extends State<EnviarOfertaPage> {
             Clipboard.setData(ClipboardData(text: _pixCopiaCola));
             // O valor do PIX foi copiado para a área de transferência.
             // Exiba uma mensagem para o usuário.
-            NotificationUtils.showNotification(
-              'Valor do PIX copiado para a área de transferência.',
-              NotificationType.success,
-              context,
-            );
+            NotificationUtils.showSuccess(context,
+                'Valor do PIX copiado para a área de transferência.');
           },
           child: const Text('Copiar PIX'),
         ),

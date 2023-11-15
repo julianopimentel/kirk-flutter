@@ -58,14 +58,14 @@ class PessoaProvider with ChangeNotifier {
 
       Navigator.of(context).pop(); // Feche o diálogo
 
-      NotificationUtils.showNotification('Pessoa criada com sucesso', NotificationType.success, context);
+      NotificationUtils.showSuccess(context, 'Pessoa criada com sucesso');
       // Retorne a lista de visitantes
     } catch (error) {
       _isLoading = false; // Define isLoading como falso ao ocorrer um erro
       //notifyListeners();
       // Trate os erros, se necessário
       //print("Erro ao buscar os dados: $error");
-      NotificationUtils.showNotification('Ocorreu um erro ao criar a pessoa ${error}', NotificationType.error, context);
+      //NotificationUtils.showError('Ocorreu um erro ao criar a pessoa ${error}');
     }
   }
   // Método para buscar pessoa
@@ -110,7 +110,7 @@ class PessoaProvider with ChangeNotifier {
 
       Navigator.of(context).pop(); // Feche o diálogo
 
-      NotificationUtils.showNotification('Pessoa atualizada com sucesso', NotificationType.success, context);
+      NotificationUtils.showSuccess(context, 'Pessoa atualizada com sucesso');
       // Retorne a lista de visitantes
     } catch (error) {
       _isLoading = false; // Define isLoading como falso ao ocorrer um erro
@@ -119,7 +119,7 @@ class PessoaProvider with ChangeNotifier {
       if (kDebugMode) {
         print("Erro ao buscar os dados: $error");
       }
-      NotificationUtils.showNotification('Ocorreu um erro ao atualizar a pessoa ${error}', NotificationType.error, context);
+      //NotificationUtils.showError('Ocorreu um erro ao atualizar a pessoa ${error}');
     }
   }
 
@@ -137,11 +137,11 @@ class PessoaProvider with ChangeNotifier {
       _isLoading = false;
       notifyListeners();
 
-      NotificationUtils.showNotification('Pessoa excluída com sucesso', NotificationType.success, context);
+      NotificationUtils.showSuccess(context, 'Pessoa excluída com sucesso');
       // Retorne a lista de visitantes
     } catch (error) {
       _isLoading = false; // Define isLoading como falso ao ocorrer um erro
-      NotificationUtils.showNotification('Ocorreu um erro ao excluir a pessoa ${error}', NotificationType.error, context);
+      //NotificationUtils.showError('Ocorreu um erro ao excluir a pessoa ${error}');
     }
   }
 
@@ -173,6 +173,7 @@ class PessoaProvider with ChangeNotifier {
       if (kDebugMode) {
         print("Erro ao buscar os dados: $error");
       }
+      //NotificationUtils.showError(context, 'Ocorreu um erro ao buscar as permissões de acesso ${error}');
     }
   }
 

@@ -81,7 +81,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
   await _loadUserData();
 
   // Exiba uma mensagem de sucesso
-  NotificationUtils.showNotification('Dados atualizados com sucesso', NotificationType.success, context);
+  NotificationUtils.showSuccess(context, 'Dados atualizados com sucesso');
 
 
   }

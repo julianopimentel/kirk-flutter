@@ -85,13 +85,11 @@ class _CriarVisitantePageState extends State<CriarVisitantePage> {
       final VisitorProvider provider = context.read<VisitorProvider>();
       provider.createVisitor(newVisitor);
 
-      NotificationUtils.showNotification(
-          'O visitante ${newVisitor.name} foi criado com sucesso.',
-          NotificationType.success,
-          context);
+
+      Navigator.of(context).pop();
+      NotificationUtils.showSuccess(context, 'O visitante ${newVisitor.name} foi criado com sucesso.');
 
       // Navegue de volta para a lista de visitantes após a criação bem-sucedida
-      Navigator.of(context).pop();
     }
   }
 

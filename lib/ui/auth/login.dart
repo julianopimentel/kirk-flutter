@@ -267,8 +267,8 @@ class _LoginPageState extends State<LoginPage> {
   Future<void> _login() async {
     // Verifica se o email e a senha estão preenchidos
     if (emailController.text.isEmpty || passwordController.text.isEmpty) {
-      NotificationUtils.showWarning(
-          'Por favor, preencha email e senha.', context);
+      NotificationUtils.showWarning(context,
+          'Por favor, preencha email e senha.');
       return;
     }
     AccountProvider provider = context.read<AccountProvider>();
@@ -282,9 +282,8 @@ class _LoginPageState extends State<LoginPage> {
       );
 
     } catch (e) {
-      NotificationUtils.showWarning(
-          'Oops! Verifique sua conexão com a internet e tente novamente.',
-          context);
+      NotificationUtils.showWarning(context,
+          'Oops! Verifique sua conexão com a internet e tente novamente.');
     }
   }
 }

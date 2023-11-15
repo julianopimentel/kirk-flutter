@@ -68,9 +68,8 @@ class _HomePageState extends State<HomePage> {
     }
     else {
       //retornar para a tela de listagem de contas
-      NotificationUtils.showNotification(
-          'Você não possui permissão para acessar o sistema, verifique com o administrador!',
-          NotificationType.error, context);
+      NotificationUtils.showWarning(context,
+          'Você não possui permissão para acessar o sistema, verifique com o administrador!');
       Navigator.push(context, MaterialPageRoute(
         builder: (BuildContext context) {
           return ListAccountPage();
@@ -492,8 +491,7 @@ class _HomePageState extends State<HomePage> {
 
   Future<void> _logout(BuildContext context) async {
     await context.read<AccountProvider>().logout();
-    NotificationUtils.showNotification(
-        'Logout realizado com sucesso!', NotificationType.success, context);
+    NotificationUtils.showSuccess(context, 'Logout realizado com sucesso!');
     Navigator.pushAndRemoveUntil(
       context,
       MaterialPageRoute(builder: (BuildContext context) {

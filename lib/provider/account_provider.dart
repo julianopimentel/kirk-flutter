@@ -158,7 +158,7 @@ class AccountProvider with ChangeNotifier {
       }
 
       //NotificationUtils.showError('Erro ao atualizar os dados');
-      rethrow;
+      throw error;
     }
   }
 
@@ -186,7 +186,7 @@ class AccountProvider with ChangeNotifier {
     }
   }
 
-  Future<void> refreshTokenConsulta(BuildContext context) async {
+  Future<void> refreshTokenConsulta(context) async {
     // Obtenha o refreshToken do SharedPreferences
     String? refreshToken = _preferences.getString(AppConstant.keyRefreshToken);
     String? token = _preferences.getString(AppConstant.keyToken);
@@ -222,6 +222,7 @@ class AccountProvider with ChangeNotifier {
         );
         // Tratar o erro na renovação do token (por exemplo, solicitar login novamente)
         NotificationUtils.showWarning(context, 'Sua sessão expirou, faça o login novamente');
+        throw Exception('Erro ao renovar o token');
       }
     } catch (error) {
       NotificationUtils.showError(context, 'Verifique sua conexão de internet!');
@@ -234,6 +235,7 @@ class AccountProvider with ChangeNotifier {
         ),
             (Route<dynamic> route) => false,
       );
+      throw Exception('Erro ao obter os dados pessoais');
     }
   }
 

@@ -1,26 +1,52 @@
+
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:kirkdigital/provider/account_provider.dart';
+import 'package:kirkdigital/provider/list_account.dart';
+import 'package:kirkdigital/provider/pessoa_provider.dart';
+import 'package:kirkdigital/provider/visitante_provider.dart';
+import 'package:kirkdigital/service/theme/theme_provider.dart';
+import 'package:kirkdigital/utils/firebase/firebase_options.dart';
+import 'package:kirkdigital/utils/system_utils.dart';
 import 'package:provider/provider.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 import 'ui/screens/splash_page.dart';
-import 'service/theme/theme_provider.dart';
-import 'utils/system_utils.dart';
-import 'provider/account_provider.dart';
-import 'provider/list_account.dart';
-import 'provider/pessoa_provider.dart';
-import 'provider/visitante_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  initializeApp();
-  runApp(
+
+  if(!kIsWeb) {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+    initializeApp();
+  }
+
+  // Sentry SDK
+  await SentryFlutter.init(
+          (options) {
+        options.dsn = 'https://052ea8023785ac8a0f01b92857fc16f3@o1292892.ingest.sentry.io/4506232232869888';
+        options.tracesSampleRate = 1.0;
+        options.tracesSampler = (samplingContext) {
+          if (samplingContext.transactionContext?.name?.contains('slow') == true) {
+            return 1.0;
+          }
+          return 0.0;
+        };
+      },
+      appRunner: () => runApp(
     ChangeNotifierProvider(
       create: (_) => ThemeProvider(),
       child: const MainApp(),
     ),
+  ),
   );
 }
+
 
 class MainApp extends StatelessWidget {
   const MainApp({Key? key}) : super(key: key);

@@ -44,10 +44,20 @@ class _HomePageState extends State<HomePage> {
     _loadSavedValues();
   }
 
+
+
   Future<void> _loadSavedValues() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     personMe = await context.read<AccountProvider>().getDadosPessoais(context);
+    if(personMe == null){
+      Navigator.push(context, MaterialPageRoute(
+        builder: (BuildContext context) {
+          return LoginPage();
+        },
+      ),
+      );
+    }
     nomeDaConta = prefs.getString(AppConstant.keyNameConta) ?? '';
     showMultiAccounts = prefs.getBool('keyMultiConta')!;
     // Verifique se a chave 'permissions' existe

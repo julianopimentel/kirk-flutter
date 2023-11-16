@@ -44,7 +44,6 @@ class NotificationUtils {
     );
 
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
-    Navigator.of(context).pop();
   }
 
   static void showSuccess(BuildContext context, String message) {

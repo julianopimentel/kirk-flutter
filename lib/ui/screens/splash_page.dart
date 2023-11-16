@@ -31,6 +31,7 @@ class _SplashPageState extends State<SplashPage> {
   }
 
   Future<void> _initData(BuildContext context) async {
+    Future.delayed(const Duration(seconds: 20));
     AccountProvider provider = context.read<AccountProvider>();
     final themeProvider = Provider.of<ThemeProvider>(context, listen: false);
 
@@ -38,14 +39,14 @@ class _SplashPageState extends State<SplashPage> {
     await themeProvider.refreshSkinApi();
 
     // Navegue para a próxima tela com base no estado do token
-    if (provider.isFistLogin == true) {
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const OnboardingScreen()));
+    if (provider.token == null && provider.isFistLogin == false) {
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const LoginPage()));
     } else if (provider.token != null && provider.userInstance == null) {
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const ListAccountPage()));
     } else if (provider.token != null && provider.userInstance != null) {
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const HomePage()));
     } else {
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const LoginPage()));
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const OnboardingScreen()));
     }
 
     // Complete o Future quando a navegação estiver concluída

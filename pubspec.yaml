@@ -38,7 +38,7 @@ dependencies:
   qr_flutter:
   firebase_messaging:
   firebase_core:
-  http:
+  ndialog:
   shimmer:
   jwt_decode:
   flutter_svg:

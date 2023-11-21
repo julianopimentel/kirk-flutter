@@ -33,20 +33,20 @@ class _LoginPageState extends State<LoginPage> {
             Stack(
               children: [
                 CustomPaint(
-                  size: Size(MediaQuery.of(context).size.width, 300),
+                  size: Size(MediaQuery.of(context).size.width, 50),
                 ),
                 Positioned(
                   top: MediaQuery.of(context).size.height *
                       0.05, // Ajuste conforme necessário
-                  right: 0,
+                  right: MediaQuery.of(context).size.width * 0.5 -
+                      150, // Centralize horizontalmente
                   left: MediaQuery.of(context).size.width * 0.5 -
                       150, // Centralize horizontalmente
                   child: logoImage,
                 ),
-                Positioned(
-                  top: MediaQuery.of(context).size.height * 0.3,
-                  left: 30,
-                  child: const Column(
+                const Padding(
+                  padding: EdgeInsets.only(top: 220, left: 30),
+                  child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
@@ -72,7 +72,7 @@ class _LoginPageState extends State<LoginPage> {
               ],
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 28),
+              padding: const EdgeInsets.symmetric(horizontal: 30),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
@@ -138,7 +138,7 @@ class _LoginPageState extends State<LoginPage> {
                     height: 20,
                   ),
                   const SizedBox(
-                    height: 130,
+                    height: 150,
                   ),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.end,
@@ -269,8 +269,8 @@ class _LoginPageState extends State<LoginPage> {
     if (emailController.text.isEmpty || passwordController.text.isEmpty) {
       NotificationUtils.showWarning(context,
           'Por favor, preencha email e senha.');
-      return;
     }
+
     AccountProvider provider = context.read<AccountProvider>();
 
     // Tenta realizar o login
@@ -282,7 +282,7 @@ class _LoginPageState extends State<LoginPage> {
       );
 
     } catch (e) {
-      NotificationUtils.showWarning(context,
+      NotificationUtils.showError(context,
           'Oops! Verifique sua conexão com a internet e tente novamente.');
     }
   }

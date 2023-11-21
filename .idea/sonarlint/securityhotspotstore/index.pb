@@ -1,11 +1,5 @@
 
 I
-lib/ui/share/clipper.dart,3\5\353caa6734ee9b00c6cd13427cf6fa310a2b94a7
-J
-lib/ui/share/clipper2.dart,7\e\7e187f1add5efdb2bbaab1d8a4e6ea85f4a836b6
-C
-lib/ui/project.dart,5\9\590d601b0c56eb80d9212b506d69d10a042f5dee
-I
 lib/ui/auth/register.dart,1\4\1421f4a025a8a6dfd353e3ad68194789941bd6c7
 G
 android/settings.gradle,a\4\a44f117a07597d287cedd2edb512680ab4b470f0
@@ -17,12 +11,8 @@ B
 android/.gitignore,f\1\f147f918c47edab19f40093aee6e93ae28629e1c
 T
 $lib/ui/componentes/generic_list.dart,8\2\827e92d88bf10ca01f261b7c2508a8f83bda2591
-X
-(lib/ui/visitante/CriarVisitantePage.dart,0\e\0e919ed59ac55f7dd9f5cc1602a302f2ff5b6509
 Z
 *lib/ui/componentes/custom_campo_field.dart,4\b\4bad8a9cb7f5f0deb9d5a09aa3e0d124bba06551
-b
-2lib/ui/componentes/custom_campoNumerico_field.dart,d\7\d73a9827166e4d96c3b3e1b1fdf9e482d6ea053c
 ^
 .lib/ui/componentes/custom_elevated_button.dart,f\5\f5c1220179f3e4aeebd4f42a5156668f88938065
 V
@@ -33,14 +23,10 @@ S
 #lib/ui/componentes/email_field.dart,7\c\7c31cb70f206911d1c1f89dfb2513197a5398bab
 I
 lib/model/permission.dart,2\7\279157ff99b4e669d97875d49ce073faee9ba4bf
-S
-#lib/ui/oferta/EnviarOfertaPage.dart,1\1\118e2b4cd54baf93061aa84d1f2ffb87539ccf3a
 E
 analysis_options.yaml,9\5\9573dd68c24611034c89c926cde7e71d100ed7ab
 M
 lib/common/token_manager.dart,7\e\7edcda70a57fcaf586eed782e1869af416213a1f
-M
-lib/network/api_UserList.dart,c\f\cf4c16238ec37353960d4f32eedec571a69ca256
 F
 lib/ui/auth/login.dart,3\3\3330ea45b985f246f6626c613bd0fabc49aca2d9
 G
@@ -55,28 +41,10 @@ H
 lib/model/visitante.dart,6\5\6589dbe32690a3e7f6d7802815fe0e6b2345a099
 K
 lib/network/api_client.dart,9\0\90449efc5011a2117df33e2ea43d40c2390af5b4
-U
-%lib/service/notification_service.dart,6\2\6201ef9261efffc7af2005db583154ce131250ae
-R
-"lib/ui/pessoa/CriarPessoaPage.dart,2\f\2f32e3d6b9279d6d06a5f8e013219886a8d2cf39
-W
-'lib/ui/visitante/VisitorDetailPage.dart,6\8\68a0263318a564769354d5cac0468161636fc70b
-O
-lib/model/SimplesPessoaDto.dart,c\8\c8023b5fce930e11ccca0f5ebeb746599a0d258f
-M
-lib/ui/pessoa/DetailPage.dart,4\6\46ccde98c73ca7ffdbcea6844e8e7a216dcbdf3a
-W
-'lib/ui/visitante/visitanteListPage.dart,1\3\135706fa534d73592c6bc0c76a84b238a810a5b2
-V
-&lib/ui/componentes/fotoNova_field.dart,8\f\8f21c3bf4217aee35304a12d9cae8ffc8dcd6cfc
 R
 "lib/ui/componentes/foto_field.dart,1\d\1d1543088d6005731e01297860d6091f87112c80
 R
 "lib/ui/componentes/nome_field.dart,8\c\8cd658036baa3468907128fe15678dec50cfa114
-K
-lib/ui/pessoa/ListPage.dart,1\0\105d763e01af29e781d817932d36ac8e244ca663
-K
-lib/ui/UserProfilePage.dart,2\7\2780ccd310f96ceb926282c4099031368643a7b4
 V
 &lib/ui/componentes/telefone_field.dart,7\0\707150dd00f8d4f83644d3a9c1af43fbaadab21a
 :
@@ -88,10 +56,6 @@ F
 linux/main.cc,7\7\77ed47152ab3585d070f0b1236a1ec91d1ecb3a9
 K
 lib/network/api_person.dart,c\e\cecda605ff1372e2ecf17fd0d08c700d6a3e76ef
-K
-lib/model/personoffers.dart,1\d\1dcf17f7bf4478d521488ce89b8700ad6214ff4e
-Q
-!lib/network/api_personoffers.dart,9\2\9247fe5e445143068eab0bd9ce0a78aa61e819a1
 U
 %macos/Runner/Configs/AppInfo.xcconfig,7\5\75e3aec2f7b1dab9d57d4f4ae57cc2929646c452
 E
@@ -108,27 +72,3 @@ F
 windows/CMakeLists.txt,3\a\3a6f76713657298f4e1772f82b70f7e415125c2e
 >
 web/index.html,4\9\49767019a2fee22a613912508aa2789b74108680
-K
-lib/ui/ListAccountPage.dart,9\7\972471242777020380caf3c4a8e3f6a3bee4d040
-X
-(android/app/src/main/AndroidManifest.xml,e\f\ef79bfd51db69a15dbf5807c05bb249bdccb0556
-A
-lib/AppTheme.dart,e\3\e3109be398d68f5d80d15a7814d52bacdd08ab34
-I
-lib/firebase_options.dart,0\f\0f4c3391435ed7c33948e13687a0bd929288bdb6
-L
-lib/common/app_constant.dart,d\9\d9940edf57bc522e62d816054618306a03e07090
-N
-lib/provider/list_account.dart,2\e\2e57fdd1798f79f60639cac4cb6343420437ab78
-=
-lib/main.dart,a\8\a8ea5273939a12e805641671b79e5eaeaab1e231
-<
-pubspec.yaml,e\8\e8e045469170189f1d6ef12576bd01af132b1018
-R
-"lib/provider/account_provider.dart,6\d\6de31fcce105505d4dd55316a10057b16acc0c34
-Y
-)android/app/src/debug/AndroidManifest.xml,e\9\e9b8a57f79617fe2b2612f997e0f60425ebc5097
-N
-lib/ui/splash/splash_page.dart,d\6\d66c423d8e314b9968d1544c4d953c4f97f45adb
-O
-lib/provider/ThemeProvider.dart,d\2\d2b964bfe8c5447b0d303bb616dadd4b7d5d831a

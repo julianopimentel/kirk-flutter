@@ -156,10 +156,11 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
                 Positioned(
                   top: MediaQuery.of(context).size.height *
-                      0.05, // Ajuste conforme necessário
-                  right: 0,
+                      0.05,
+                  right: MediaQuery.of(context).size.width * 0.5 -
+                      150,
                   left: MediaQuery.of(context).size.width * 0.5 -
-                      150, // Centralize horizontalmente
+                      150,
                   child: logoImage,
                 ),
                 const Positioned(

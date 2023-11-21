@@ -17,9 +17,10 @@ import 'package:sentry_flutter/sentry_flutter.dart';
 import 'ui/screens/splash_page.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+
 
   if(!kIsWeb) {
+    WidgetsFlutterBinding.ensureInitialized();
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:ndialog/ndialog.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shimmer/shimmer.dart';
@@ -483,10 +484,21 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  _logout() async {
+  _logout(BuildContext context) async {
+    Navigator.pop(context);
+
+    ProgressDialog progressDialog = ProgressDialog(
+      context,
+      blur: 10,
+      title: Text("Aguarde..."),
+      message: Text("Saindo da conta..."),
+    );
+    progressDialog.show();
+
     await context.read<AccountProvider>().logout();
     NotificationUtils.showSuccess(context, 'Logout realizado com sucesso!');
 
+    progressDialog.dismiss();
     _returnLogin();
   }
 
@@ -502,7 +514,7 @@ class _HomePageState extends State<HomePage> {
       content: const Text('Deseja realmente sair?'),
       actions: <Widget>[
         TextButton(
-          onPressed: () => _logout(),
+          onPressed: () => _logout(context),
           child: const Text('SAIR'),
         ),
         TextButton(

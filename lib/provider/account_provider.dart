@@ -1,6 +1,7 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:ndialog/ndialog.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:jwt_decode/jwt_decode.dart';
@@ -75,6 +76,16 @@ class AccountProvider with ChangeNotifier {
     required String password,
     required context,
   }) async {
+
+    ProgressDialog progressDialog = ProgressDialog(
+      context,
+      blur: 10,
+      title: Text("Aguarde..."),
+      message: Text("Verificando o seu usuário"),
+      onDismiss: () => print("Do something onDismiss"),
+    );
+    progressDialog.show();
+
     AuthToken auth = await ApiClient.login(
       email: email,
       password: password,
@@ -84,6 +95,7 @@ class AccountProvider with ChangeNotifier {
 
     if (auth.token == null) {
       NotificationUtils.showWarning(context, auth.message ?? 'Seu email ou senha estão incorretos');
+      progressDialog.dismiss();
       return;
     }
 
@@ -110,6 +122,8 @@ class AccountProvider with ChangeNotifier {
       ListAccountProvider listAccountProvider = Provider.of<ListAccountProvider>(context, listen: false);
       _preferences.setBool('keyMultiConta', false);
 
+      progressDialog.dismiss();
+
       listAccountProvider.setSchema(
           tenantId: _accountList[0].tenantId,
           personId: _accountList[0].personId,
@@ -120,6 +134,9 @@ class AccountProvider with ChangeNotifier {
     }
     else {
       _preferences.setBool('keyMultiConta', true);
+
+      progressDialog.dismiss();
+
         Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(
@@ -129,8 +146,10 @@ class AccountProvider with ChangeNotifier {
           ),
               (Route<dynamic> route) => false,
         );
-      notifyListeners(); // Notifique os ouvintes sobre a atualização
+
     }
+    notifyListeners(); // Notifique os ouvintes sobre a atualização
+
   }
 
   UsersMe getMe() {
@@ -241,12 +260,16 @@ class AccountProvider with ChangeNotifier {
 
 
   Future<void> logout() async {
-    String? tokenFirebase = await FirebaseMessaging.instance.getToken();
+    String? tokenNotification = _preferences.getString(AppConstant.tokenNotification);
+
     String? token = _preferences.getString(AppConstant.keyToken);
     //remover o token no servidor
     await ApiClient.logout(token: token!);
     //
-    await ApiMe.removeToken(appId: tokenFirebase!);
+    if (tokenNotification != null) {
+      String? tokenFirebase = await FirebaseMessaging.instance.getToken();
+      await ApiMe.removeToken(appId: tokenFirebase!);
+    }
     //remover o token do shared preferences
     await _preferences.remove(AppConstant.keyToken);
     await _preferences.remove(AppConstant.keyUserInstance);

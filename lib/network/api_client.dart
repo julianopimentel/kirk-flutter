@@ -32,7 +32,13 @@ class ApiClient {
         'password': password,
       },
     );
-    return AuthToken.fromJson(response.data ?? '{}');
+
+    try {
+      return AuthToken.fromJson(response.data ?? '{}');
+    } catch (e) {
+      rethrow;
+    }
+
   }
 
 

@@ -31,12 +31,13 @@ class _SplashPageState extends State<SplashPage> {
   }
 
   Future<void> _initData(BuildContext context) async {
-    Future.delayed(const Duration(seconds: 20));
     AccountProvider provider = context.read<AccountProvider>();
     final themeProvider = Provider.of<ThemeProvider>(context, listen: false);
 
     await provider.init();
     await themeProvider.refreshSkinApi();
+
+    Future.delayed(const Duration(seconds: 5));
 
     // Navegue para a próxima tela com base no estado do token
     if (provider.token == null && provider.isFistLogin == false) {

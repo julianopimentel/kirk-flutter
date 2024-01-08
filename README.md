@@ -17,3 +17,6 @@ Repositório Privado, a aplicação em Flutter (Android + IOS) é somente para u
 - Integração com o Firebase para as notificações
 - White Label (cor + logo personalizado)
 - Tradução para o Português, Inglês e Espanhol.
+
+
+Caso deseje utilizar em seu projeto, entre em contato pelo o e-mail kirkdigital@gmail.com

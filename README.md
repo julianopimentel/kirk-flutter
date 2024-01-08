@@ -19,4 +19,7 @@ Repositório Privado, a aplicação em Flutter (Android + IOS) é somente para u
 - Tradução para o Português, Inglês e Espanhol.
 
 
+#Imagem do App
+<img src="https://github.com/julianopimentel/kirk-flutter/blob/main/Screenshot_2023-10-27-19-02-16-966_com.example..jpg?raw=true" />
+
 Caso deseje utilizar em seu projeto, entre em contato pelo o e-mail kirkdigital@gmail.com

@@ -1,6 +1,6 @@
 # kirkdigital
 
-Necessário possuir o projeto principal para a comunicação com a API + Banco.
+Necessário possuir o projeto principal para a comunicação com a API + Banco, este reposítorio foi pausada e não recebe mais atualizações.
 
 https://gitlab.com/kirk/kirkdigital-api
 
